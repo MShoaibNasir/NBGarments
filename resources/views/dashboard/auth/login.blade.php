@@ -138,7 +138,7 @@
 <body>
     <div class="login-container">
         
-        <img src='{{asset("dashboard/img/loginLogo.png")}}' width="80" margin-bottom:"20px">
+        <h2 class="my-4">Admin Login</h2>
         <form method="POST" action="{{ route('login.user') }}">
             @csrf
             <div class="input-group">

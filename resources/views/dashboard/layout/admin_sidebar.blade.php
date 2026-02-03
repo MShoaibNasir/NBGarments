@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 @endcanany
-                {{--
+               
                 @canany(['role-create', 'role-list'])
 
                 <div class="nav-item dropdown custom-dropdown">
@@ -52,9 +52,9 @@
                     </div>
                 </div>
                 @endcanany
-                --}}
+               
                 
-                @canany(['invoice-create', 'invoice-list'])
+              {{--    @canany(['invoice-create', 'invoice-list'])
 
                 <div class="nav-item dropdown custom-dropdown">
                     <a href="#" class="nav-link d-flex justify-content-between align-items-center" id="userDropdownToggle">
@@ -71,7 +71,8 @@
                     </div>
                 </div>
                 @endcanany
-                @canany(['brand-create', 'brand-list'])
+                --}}
+                {{--@canany(['brand-create', 'brand-list'])
 
                 <div class="nav-item dropdown custom-dropdown">
                     <a href="#" class="nav-link d-flex justify-content-between align-items-center" id="userDropdownToggle">
@@ -88,6 +89,7 @@
                     </div>
                 </div>
                 @endcanany
+--}}
 
             </div>
         </div>

@@ -53,7 +53,7 @@
 
             <div class="card-body">
                 <div class="row g-4">
-@if(auth()->user()->hasRole('Admin'))
+                    @if(auth()->user()->hasRole('Admin'))
                     <!-- Total Users -->
                     <div class="col-lg-4 col-md-6 col-12">
                         <div class="p-4 rounded-4 text-center stat-card-box"
@@ -63,30 +63,32 @@
                             <div class="stat-label">Total Users</div>
                         </div>
                     </div>
-@endif
+                    @endif
                     <!-- Total Invoices -->
-                    <div class="col-lg-4 col-md-6 col-12">
+                    {{-- <div class="col-lg-4 col-md-6 col-12">
                         <div class="p-4 rounded-4 text-center stat-card-box"
                             style="background: linear-gradient(135deg, #B3D1D8, #9BBCC3); color: #333;">
                             <div class="stat-icon mb-2"><i class="fa fa-file-invoice"></i></div>
-                            <div class="stat-number">{{$invoices_count}}</div>
-                            <div class="stat-label">Total Invoices</div>
-                        </div>
-                    </div>
+                            <div class="stat-number">{{$invoices_count}}
+                </div>
+                <div class="stat-label">Total Invoices</div>
+            </div>
+        </div>
+        --}}
 
-                    <!-- Total Employees -->
-                    @if(auth()->user()->hasRole('Admin'))
-                    <div class="col-lg-4 col-md-6 col-12">
-                        <div class="p-4 rounded-4 text-center stat-card-box"
-                            style="background: linear-gradient(135deg, #FF3333, #C00000); color: #fff;">
-                            <div class="stat-icon mb-2"><i class="fa fa-user-tie"></i></div>
-                            <div class="stat-number">{{ $employees_count }}</div>
-                            <div class="stat-label">Total Employees</div>
-                        </div>
-                    </div>
-                    @endif
-                    <!-- Total Payment -->
-  @if(auth()->user()->hasRole('Admin'))                 
+        <!-- Total Employees -->
+        @if(auth()->user()->hasRole('Admin'))
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="p-4 rounded-4 text-center stat-card-box"
+                style="background: linear-gradient(135deg, #FF3333, #C00000); color: #fff;">
+                <div class="stat-icon mb-2"><i class="fa fa-user-tie"></i></div>
+                <div class="stat-number">{{ $employees_count }}</div>
+                <div class="stat-label">Total Employees</div>
+            </div>
+        </div>
+        @endif
+        <!-- Total Payment -->
+        {{--@if(auth()->user()->hasRole('Admin'))
 <div class="col-lg-12 col-md-12 col-12">
     <div class="p-4 rounded-4 stat-card-box shadow"
         style="background: linear-gradient(135deg, #17a2b8, #138496); color: #fff;">
@@ -112,25 +114,26 @@
 
                     <tr>
                         <td>{{$loop->index+1}}</td>
-                        <td>{{$data->name}}</td>
-                        <td>{{number_format(countInvoices($data->id))}}</td>
-                        <td>{{number_format(totalInvoiceAmount($data->id))}}</td>
-                        <td>{{number_format(totalInvoiceAmountRecieved($data->id))}}</td>
-                    </tr>
-                    @endforeach
-                    
-                </tbody>
-            </table>
-        </div>
+        <td>{{$data->name}}</td>
+        <td>{{number_format(countInvoices($data->id))}}</td>
+        <td>{{number_format(totalInvoiceAmount($data->id))}}</td>
+        <td>{{number_format(totalInvoiceAmountRecieved($data->id))}}</td>
+        </tr>
+        @endforeach
+
+        </tbody>
+        </table>
     </div>
 </div>
-  @endif
-                    
+</div>
+@endif
+--}}
 
-                </div>
-            </div>
-        </div>
-    </div>
+
+</div>
+</div>
+</div>
+</div>
 </div>
 
 <script>
