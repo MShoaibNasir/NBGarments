@@ -3,58 +3,68 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Customer;
+use App\Models\Bill;
 use Auth;
+use App\Models\Customer;
 
-class CustomerController extends Controller
+class BillManagementController extends Controller
 {
     public function index()
     {
         checkAuthentication();
-        $customer = Customer::where('user_id', Auth::user()->id)->get();
-        return view('dashboard.customer.index', compact('customer'));
+        $bill = Bill::where('user_id', Auth::user()->id)->get();
+        return view('dashboard.bill.index', compact('bill'));
     }
 
     public function create()
     {
         checkAuthentication();
-        return view('dashboard.customer.create');
+        $customer = Customer::where('user_id', Auth::user()->id)->get();
+        $bill = Bill::where('user_id', Auth::user()->id)->get();
+        return view('dashboard.bill.create', ['bill' => $bill, 'customer' => $customer]);
     }
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'address' => 'max:255'
+            'bill_no' => 'required|string|max:255',
+            'customer_id' => 'required',
+            'qty' => 'required',
+            'price' => 'required',
+            'total_amount' => 'required'
 
         ]);
         $data = $request->all();
         $data['user_id'] = Auth::user()->id;
-        Customer::create($data);
-        return redirect()->route('customer.list')->with('success', 'Customer Create Successfully!');
+        Bill::create($data);
+        return redirect()->route('bill.list')->with('success', 'Bill Create Successfully!');
     }
     public function edit($id)
     {
         checkAuthentication();
-        $customer = Customer::findOrFail($id);
-        return view('dashboard.customer.edit', compact('customer'));
+        $bill = Bill::findOrFail($id);
+        $customer = Customer::where('user_id', Auth::user()->id)->get();
+        return view('dashboard.bill.edit', compact('bill', 'customer'));
     }
     public function delete($id)
     {
-        $customers = Customer::findOrFail($id);
+        $customers = Bill::findOrFail($id);
         $customers->delete();
-        return redirect()->back()->with('success', 'Customer deleted successfully!');
+        return redirect()->back()->with('success', 'Bill deleted successfully!');
     }
     // ✅ Update brand
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'address' => 'max:255'
+            'bill_no' => 'required|string|max:255',
+            'customer_id' => 'required',
+            'qty' => 'required',
+            'price' => 'required',
+            'total_amount' => 'required'
 
         ]);
-        $brand = Customer::findOrFail($id);
+        $brand = Bill::findOrFail($id);
         $brand->update($validated);
-        return redirect()->route('customer.list')->with('success', 'Customer updated successfully!');
+        return redirect()->route('bill.list')->with('success', 'Bill updated successfully!');
     }
 
 
@@ -97,7 +107,7 @@ class CustomerController extends Controller
     //     // ✅ Sorting
     //     if ($sorting && $order) {
     //         $invoice->orderBy($sorting, $order);
-    //     }
+    //     }   
 
     //     // ✅ Build exportable data
     //     $i = 1;
@@ -127,7 +137,7 @@ class CustomerController extends Controller
 
     // public function filter(Request $request,$id)
     // {
-        
+
     //     checkAuthentication();
     //     return view('dashboard.customer.filter');
     // }

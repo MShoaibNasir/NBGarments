@@ -10,6 +10,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\InvoiceManagementController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\PayPalController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\BillManagementController;
 
 // Default redirect
 Route::get('/', function () {
@@ -52,6 +54,24 @@ Route::put('user/update/{id}', [CustomAuthController::class, 'userUpdate'])->nam
         Route::get('/delete/{id}', 'delete')->name('brand.delete');
         Route::get('/edit/{id}', 'edit')->name('brand.edit');
         Route::put('/update/{id}', 'update')->name('brand.update');
+    });
+    Route::prefix('customer')->controller(CustomerController::class)->group(function () {
+        Route::get('/index', 'index')->name('customer.list');
+        Route::get('/create', 'create')->name('customer.create');
+        Route::post('/store', 'store')->name('customer.store');
+        Route::get('/delete/{id}', 'delete')->name('customer.delete');
+        Route::get('/laser/{id}', 'filter')->name('customer.laser');
+        Route::get('/edit/{id}', 'edit')->name('customer.edit');
+        Route::put('/update/{id}', 'update')->name('customer.update');
+    });
+    Route::prefix('bill')->controller(BillManagementController::class)->group(function () {
+        Route::get('/index', 'index')->name('bill.list');
+        Route::get('/create', 'create')->name('bill.create');
+        Route::post('/store', 'store')->name('bill.store');
+        Route::get('/delete/{id}', 'delete')->name('bill.delete');
+        Route::get('/laser/{id}', 'filter')->name('bill.laser');
+        Route::get('/edit/{id}', 'edit')->name('bill.edit');
+        Route::put('/update/{id}', 'update')->name('bill.update');
     });
 
     Route::resource('roles', RoleController::class);

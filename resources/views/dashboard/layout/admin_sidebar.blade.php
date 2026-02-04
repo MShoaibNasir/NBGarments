@@ -1,3 +1,8 @@
+<style>
+    span {
+        font-size: 14px;
+    }
+</style>
 <div class="sidebar" id="sidebar">
     <!-- Sidebar Header with Logo -->
     <div class="sidebar-header">
@@ -34,7 +39,7 @@
                     </div>
                 </div>
                 @endcanany
-               
+
                 @canany(['role-create', 'role-list'])
 
                 <div class="nav-item dropdown custom-dropdown">
@@ -52,44 +57,60 @@
                     </div>
                 </div>
                 @endcanany
-               
-                
-              {{--    @canany(['invoice-create', 'invoice-list'])
+
+
+
+
+                @canany(['customer-create', 'customer-list'])
 
                 <div class="nav-item dropdown custom-dropdown">
                     <a href="#" class="nav-link d-flex justify-content-between align-items-center" id="userDropdownToggle">
-                        <span><i class="fas fa-file-invoice-dollar me-2"></i>Invoice Management</span>
+                        <span><i class="fas fa-tags me-2"></i>Customer Management</span>
                         <i class="fas fa-chevron-down ms-2"></i>
                     </a>
                     <div class="dropdown-menu-custom">
-                        @can('invoice-create')
-                        <a href="{{route('invoice.create')}}" class="dropdown-item">Create invoice</a>
+                        @can('customer-create')
+                        <a href="{{route('customer.create')}}" class="dropdown-item">Create Customer</a>
                         @endcan
-                        @can('invoice-list')
-                        <a href="{{route('invoice.filter')}}" class="dropdown-item">Invoice List</a>
+                        @can('customer-list')
+                        <a href="{{route('customer.list')}}" class="dropdown-item">Customer List</a>
                         @endcan
                     </div>
                 </div>
                 @endcanany
-                --}}
-                {{--@canany(['brand-create', 'brand-list'])
+                @canany(['bill-create', 'bill-list'])
 
                 <div class="nav-item dropdown custom-dropdown">
                     <a href="#" class="nav-link d-flex justify-content-between align-items-center" id="userDropdownToggle">
-                        <span><i class="fas fa-tags me-2"></i>Brand Management</span>
+                        <span><i class="fas fa-file-invoice-dollar me-2"></i>Bill Management</span>
                         <i class="fas fa-chevron-down ms-2"></i>
                     </a>
                     <div class="dropdown-menu-custom">
-                        @can('brand-create')
-                        <a href="{{route('brand.create')}}" class="dropdown-item">Create Brand</a>
+                        @can('bill-create')
+                        <a href="{{route('bill.create')}}" class="dropdown-item">Create Bill</a>
                         @endcan
-                        @can('brand-list')
-                        <a href="{{route('brand.list')}}" class="dropdown-item">Brand List</a>
+                        @can('bill-list')
+                        <a href="{{route('bill.list')}}" class="dropdown-item">Bill List</a>
                         @endcan
                     </div>
                 </div>
                 @endcanany
---}}
+                @canany(['product-create', 'product-list'])
+
+                <div class="nav-item dropdown custom-dropdown">
+                    <a href="#" class="nav-link d-flex justify-content-between align-items-center" id="userDropdownToggle">
+                        <span><i class="fas fa-file-invoice-dollar me-2"></i>Product Management</span>
+                        <i class="fas fa-chevron-down ms-2"></i>
+                    </a>
+                    <div class="dropdown-menu-custom">
+                        @can('product-create')
+                        <a href="{{route('products.create')}}" class="dropdown-item">Create Product</a>
+                        @endcan
+                      
+                    </div>
+                </div>
+                @endcanany
+
 
             </div>
         </div>
