@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Auth;
 use Illuminate\Http\RedirectResponse;
 
 class ProductController extends Controller
@@ -51,11 +52,12 @@ class ProductController extends Controller
     public function store(Request $request): RedirectResponse
     {
         request()->validate([
-            'name' => 'required',
-            'detail' => 'required',
+            'name' => 'required'
         ]);
-
-        Product::create($request->all());
+        $data=$request->all();
+        $data['user_id']=Auth::user()->id;
+ 
+        Product::create($data);
 
         return redirect()->route('products.index')
             ->with('success', 'Product created successfully.');
@@ -80,6 +82,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product): View
     {
+   
         return view('products.edit', compact('product'));
     }
 
@@ -90,11 +93,10 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product): RedirectResponse
+    public function update(Request $request, Product $product)
     {
         request()->validate([
-            'name' => 'required',
-            'detail' => 'required',
+            'name' => 'required'
         ]);
 
         $product->update($request->all());

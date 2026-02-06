@@ -106,6 +106,9 @@
                         @can('product-create')
                         <a href="{{route('products.create')}}" class="dropdown-item">Create Product</a>
                         @endcan
+                        @can('product-list')
+                        <a href="{{route('products.index')}}" class="dropdown-item">Products</a>
+                        @endcan
                       
                     </div>
                 </div>
