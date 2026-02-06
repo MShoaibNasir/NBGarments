@@ -87,6 +87,7 @@
                                 <th>#</th>
                                 <th>Bill No</th>
                                 <th>Customer Name</th>
+                                <th>Product Name</th>
                                 <th>QTY</th>
                                 <th>Price</th>
                                 <th>Total Amount</th>
@@ -101,6 +102,7 @@
                                 <td>{{ $index + 1 }}</td>
                                 <td>{{ $b->bill_no }}</td>
                                 <td>{{ $b->customer->name }}</td>
+                                <td>{{ $b->product->name }}</td>
                                 <td>{{ $b->qty }}</td>
                                 <td>{{ number_format($b->price) }}</td>
                                 <td>{{ number_format($b->total_amount) }}</td>

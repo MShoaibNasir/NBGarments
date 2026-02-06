@@ -94,6 +94,19 @@
                                 <span class="text-danger small">{{ $message }}</span>
                                 @enderror
                             </div>
+                            <div class="mb-3">
+                                <label for="link" class="form-label">Product Name</label>
+                                <select name="product_id" class="form-control">
+                                    <option>Select Product</option>
+                                    @foreach ($product as $item)
+                                    <option value="{{$item->id}}">{{ $item->name }}</option>
+                                    @endforeach
+
+                                </select>
+                                @error('address')
+                                <span class="text-danger small">{{ $message }}</span>
+                                @enderror
+                            </div>
 
 
                             <div class="mb-3">

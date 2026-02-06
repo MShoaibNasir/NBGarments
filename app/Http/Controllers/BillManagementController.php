@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Bill;
 use Auth;
 use App\Models\Customer;
+use App\Models\Product;
 
 class BillManagementController extends Controller
 {
@@ -20,8 +21,9 @@ class BillManagementController extends Controller
     {
         checkAuthentication();
         $customer = Customer::where('user_id', Auth::user()->id)->get();
+        $product = Product::where('user_id', Auth::user()->id)->get();
         $bill = Bill::where('user_id', Auth::user()->id)->get();
-        return view('dashboard.bill.create', ['bill' => $bill, 'customer' => $customer]);
+        return view('dashboard.bill.create', ['bill' => $bill, 'customer' => $customer,'product'=>$product]);
     }
     public function store(Request $request)
     {

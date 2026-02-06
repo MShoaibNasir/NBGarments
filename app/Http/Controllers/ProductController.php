@@ -29,7 +29,7 @@ class ProductController extends Controller
      */
     public function index(): View
     {
-        $products = Product::latest()->paginate(5);
+        $products = Product::where('user_id',Auth::user()->id)->latest()->get();
         return view('products.index', compact('products'));
     }
 
@@ -56,7 +56,6 @@ class ProductController extends Controller
         ]);
         $data=$request->all();
         $data['user_id']=Auth::user()->id;
- 
         Product::create($data);
 
         return redirect()->route('products.index')
