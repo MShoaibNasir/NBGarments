@@ -12,6 +12,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\BillManagementController;
+use App\Http\Controllers\ExpensesManagementController;
 
 // Default redirect
 Route::get('/', function () {
@@ -66,12 +67,25 @@ Route::put('user/update/{id}', [CustomAuthController::class, 'userUpdate'])->nam
     });
     Route::prefix('bill')->controller(BillManagementController::class)->group(function () {
         Route::get('/index', 'index')->name('bill.list');
+        Route::get('/filter', 'filter')->name('bill.filter');
+        Route::post('/list', 'list')->name('bill.index');
         Route::get('/create', 'create')->name('bill.create');
         Route::post('/store', 'store')->name('bill.store');
         Route::get('/delete/{id}', 'delete')->name('bill.delete');
         Route::get('/laser/{id}', 'filter')->name('bill.laser');
         Route::get('/edit/{id}', 'edit')->name('bill.edit');
         Route::put('/update/{id}', 'update')->name('bill.update');
+    });
+    Route::prefix('expenses')->controller(ExpensesManagementController::class)->group(function () {
+        Route::get('/index', 'index')->name('expenses.list');
+        Route::get('/filter', 'filter')->name('expenses.filter');
+        Route::post('/list', 'list')->name('expenses.index');
+        Route::get('/create', 'create')->name('expenses.create');
+        Route::post('/store', 'store')->name('expenses.store');
+        Route::get('/delete/{id}', 'delete')->name('expenses.delete');
+        Route::get('/laser/{id}', 'filter')->name('expenses.laser');
+        Route::get('/edit/{id}', 'edit')->name('expenses.edit');
+        Route::put('/update/{id}', 'update')->name('expenses.update');
     });
 
     Route::resource('roles', RoleController::class);

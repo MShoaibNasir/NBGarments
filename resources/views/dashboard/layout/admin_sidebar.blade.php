@@ -90,7 +90,24 @@
                         <a href="{{route('bill.create')}}" class="dropdown-item">Create Bill</a>
                         @endcan
                         @can('bill-list')
-                        <a href="{{route('bill.list')}}" class="dropdown-item">Bill List</a>
+                        <a href="{{route('bill.filter')}}" class="dropdown-item">Bill List</a>
+                        @endcan
+                    </div>
+                </div>
+                @endcanany
+                @canany(['expenses-create', 'expenses-list'])
+
+                <div class="nav-item dropdown custom-dropdown">
+                    <a href="#" class="nav-link d-flex justify-content-between align-items-center" id="userDropdownToggle">
+                        <span><i class="fas fa-file-invoice-dollar me-2"></i>Expenses Management</span>
+                        <i class="fas fa-chevron-down ms-2"></i>
+                    </a>
+                    <div class="dropdown-menu-custom">
+                        @can('expenses-create')
+                        <a href="{{route('expenses.create')}}" class="dropdown-item">Create Expenses</a>
+                        @endcan
+                        @can('expenses-list')
+                        <a href="{{route('expenses.filter')}}" class="dropdown-item">Expenses List</a>
                         @endcan
                     </div>
                 </div>

@@ -3,18 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Bill;
+use App\Models\Expenses;
 use Auth;
 use App\Models\Customer;
 use App\Models\Product;
 
-class BillManagementController extends Controller
+class ExpensesManagementController extends Controller
 {
     public function index()
     {
         checkAuthentication();
-        $bill = Bill::where('user_id', Auth::user()->id)->get();
-        return view('dashboard.bill.index', compact('bill'));
+        $bill = Expenses::where('user_id', Auth::user()->id)->get();
+        return view('dashboard.expenses.index', compact('expenses'));
     }
 
     public function create()
@@ -22,51 +22,49 @@ class BillManagementController extends Controller
         checkAuthentication();
         $customer = Customer::where('user_id', Auth::user()->id)->get();
         $product = Product::where('user_id', Auth::user()->id)->get();
-        $bill = Bill::where('user_id', Auth::user()->id)->get();
-        return view('dashboard.bill.create', ['bill' => $bill, 'customer' => $customer, 'product' => $product]);
+        $expenses = Expenses::where('user_id', Auth::user()->id)->get();
+        return view('dashboard.expenses.create', ['expenses' => $expenses, 'customer' => $customer, 'product' => $product]);
     }
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'bill_no' => 'required|string|max:255',
-            'customer_id' => 'required',
-            'qty' => 'required',
-            'price' => 'required',
-            'total_amount' => 'required'
+            'description' => 'required|string|max:255',
+            'amount' => 'required',
+            'refrence' => 'required',
+
 
         ]);
         $data = $request->all();
         $data['user_id'] = Auth::user()->id;
-        Bill::create($data);
-        return redirect()->route('bill.filter')->with('success', 'Bill Create Successfully!');
+        Expenses::create($data);
+        return redirect()->route('expenses.filter')->with('success', 'expenses Create Successfully!');
     }
     public function edit($id)
     {
         checkAuthentication();
-        $bill = Bill::findOrFail($id);
-        $customer = Customer::where('user_id', Auth::user()->id)->get();
-        return view('dashboard.bill.edit', compact('bill', 'customer'));
+        $expenses = expenses::findOrFail($id);
+        return view('dashboard.expenses.edit', compact('expenses', 'customer'));
     }
     public function delete($id)
     {
-        $customers = Bill::findOrFail($id);
+        $customers = Expenses::findOrFail($id);
         $customers->delete();
-        return redirect()->back()->with('success', 'Bill deleted successfully!');
+        return redirect()->back()->with('success', 'expenses deleted successfully!');
     }
     // ✅ Update brand
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'bill_no' => 'required|string|max:255',
+            'expenses_no' => 'required|string|max:255',
             'customer_id' => 'required',
             'qty' => 'required',
             'price' => 'required',
             'total_amount' => 'required'
 
         ]);
-        $brand = Bill::findOrFail($id);
+        $brand = Expenses::findOrFail($id);
         $brand->update($validated);
-        return redirect()->route('bill.filter')->with('success', 'Bill updated successfully!');
+        return redirect()->route('expenses.filter')->with('success', 'expenses updated successfully!');
     }
 
 
@@ -79,12 +77,12 @@ class BillManagementController extends Controller
         $custom_pagination_path = '';
 
         $first_name = $request->get('first_name');
-        $bill_no = $request->get('bill_no');
+        $expenses_no = $request->get('bill_no');
         $product_name = $request->get('product_name');
         $sorting = $request->get('sorting');
         $order = $request->get('direction');
 
-        $invoice = Bill::where('user_id', Auth::id());
+        $invoice = Expenses::where('user_id', Auth::id());
         $start_date = $request->get('start_date');
         $end_date = $request->get('end_date');
 
@@ -112,9 +110,9 @@ class BillManagementController extends Controller
             $invoice->where('created_at', '<=', $end_date . ' 23:59:59');
         }
 
-        if ($bill_no) {
-            $invoice->where('bill_no', 'like', '%' . $bill_no . '%');
-        }
+        // if ($bill_no) {
+        //     $invoice->where('bill_no', 'like', '%' . $bill_no . '%');
+        // }
 
         // ✅ Sorting
         if ($sorting && $order) {
@@ -141,16 +139,16 @@ class BillManagementController extends Controller
         // ✅ Pagination
         $data = $invoice->paginate($qty, ['*'], 'page', $page)
             ->setPath($custom_pagination_path);
-        $total_sell_amount=number_format($data->sum('total_amount'));
+        $total_sell_amount=number_format($data->sum('amount'));
         //  $jsondata = json_encode($selected_data);
 
-        return view('dashboard.bill.list', compact('data','total_sell_amount'))->render();
+        return view('dashboard.expenses.list', compact('data','total_sell_amount'))->render();
     }
 
     public function filter(Request $request)
     {
 
         checkAuthentication();
-        return view('dashboard.bill.filter');
+        return view('dashboard.expenses.filter');
     }
 }
