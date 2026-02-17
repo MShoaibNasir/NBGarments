@@ -130,6 +130,24 @@
                     </div>
                 </div>
                 @endcanany
+                @canany(['bank-create', 'bank-list'])
+
+                <div class="nav-item dropdown custom-dropdown">
+                    <a href="#" class="nav-link d-flex justify-content-between align-items-center" id="userDropdownToggle">
+                        <span><i class="fas fa-file-invoice-dollar me-2"></i>Bank Management</span>
+                        <i class="fas fa-chevron-down ms-2"></i>
+                    </a>
+                    <div class="dropdown-menu-custom">
+                        @can('bank-create')
+                        <a href="{{route('bank.create')}}" class="dropdown-item">Create Bank</a>
+                        @endcan
+                        @can('bank-list')
+                        <a href="{{route('bank.list')}}" class="dropdown-item">Banks</a>
+                        @endcan
+                      
+                    </div>
+                </div>
+                @endcanany
 
 
             </div>
