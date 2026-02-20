@@ -15,6 +15,7 @@ use App\Http\Controllers\BillManagementController;
 use App\Http\Controllers\ExpensesManagementController;
 use App\Http\Controllers\CustomerPaymentController;
 use App\Http\Controllers\BankController;
+use App\Http\Controllers\LedgerController;
 
 // Default redirect
 Route::get('/', function () {
@@ -108,6 +109,10 @@ Route::prefix('payment')->controller(CustomerPaymentController::class)->group(fu
     Route::get('/delete/{id}', 'delete')->name('payment.delete');
     Route::get('/edit/{payment}', 'edit')->name('payment.edit');
     Route::put('/update/{id}', 'update')->name('payment.update');
+});
+Route::prefix('ledger')->controller(LedgerController::class)->group(function () {
+    Route::get('/filter/{id}', 'filter')->name('ledger.filter');
+    Route::post('/list', 'list')->name('ledger.list');
 });
 
 

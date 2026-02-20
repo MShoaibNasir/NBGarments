@@ -17,4 +17,5 @@ class Ledger extends Model
     {
         return $this->belongsTo(Bill::class, 'primary_id', 'id');
     }
+  
 }

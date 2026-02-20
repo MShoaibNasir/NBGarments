@@ -103,7 +103,7 @@
                                 @if(Auth::user()->can('customer-edit') || Auth::user()->can('customer-delete'))
                                 <td class="text-center action-btns">
                                     @can('customer-laser')
-                                    <a href="{{ route('customer.laser', $b->id) }}" class="btn btn-info btn-sm">
+                                    <a href="{{ route('ledger.filter', $b->id) }}" class="btn btn-info btn-sm">
                                         <i class="bi bi-pen"></i>Show Laser
                                     </a>
                                     @endcan

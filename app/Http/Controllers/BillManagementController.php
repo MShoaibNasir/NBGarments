@@ -55,7 +55,7 @@ class BillManagementController extends Controller
 
             // Create Ledger Entry
             Ledger::create([
-                'table_name'  => 'bill',
+                'table_name'  => 'Bill',
                 'primary_id'  => $bill->id,
                 'user_id'     => Auth::id(),
                 'customer_id' => $request->customer_id,

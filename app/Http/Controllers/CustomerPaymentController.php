@@ -62,7 +62,7 @@ class CustomerPaymentController extends Controller
             $payment = Payment::create($data);
 
             Ledger::create([
-                'table_name'  => 'payment',
+                'table_name'  => 'Payment',
                 'primary_id'  => $payment->id,
                 'user_id'     => Auth::id(),
                 'customer_id' => $request->customer_id,
