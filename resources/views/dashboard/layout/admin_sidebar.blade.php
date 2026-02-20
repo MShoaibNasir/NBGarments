@@ -112,6 +112,25 @@
                     </div>
                 </div>
                 @endcanany
+
+
+                @canany(['payment-create', 'payment-list'])
+                <div class="nav-item dropdown custom-dropdown">
+                    <a href="#" class="nav-link d-flex justify-content-between align-items-center" id="userDropdownToggle">
+                        <span><i class="fas fa-file-invoice-dollar me-2"></i>Payment Management</span>
+                        <i class="fas fa-chevron-down ms-2"></i>
+                    </a>
+                    <div class="dropdown-menu-custom">
+                        @can('payment-create')
+                        <a href="{{route('payment.create')}}" class="dropdown-item">Create Payment</a>
+                        @endcan
+                        @can('payment-list')
+                        <a href="{{route('payment.filter')}}" class="dropdown-item">Payments</a>
+                        @endcan
+
+                    </div>
+                </div>
+                @endcanany
                 @canany(['product-create', 'product-list'])
 
                 <div class="nav-item dropdown custom-dropdown">
@@ -126,7 +145,7 @@
                         @can('product-list')
                         <a href="{{route('products.index')}}" class="dropdown-item">Products</a>
                         @endcan
-                      
+
                     </div>
                 </div>
                 @endcanany
@@ -144,11 +163,10 @@
                         @can('bank-list')
                         <a href="{{route('bank.list')}}" class="dropdown-item">Banks</a>
                         @endcan
-                      
+
                     </div>
                 </div>
                 @endcanany
-
 
             </div>
         </div>

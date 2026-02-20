@@ -101,12 +101,13 @@ Route::prefix('bank')->controller(BankController::class)->group(function () {
 
 
 Route::prefix('payment')->controller(CustomerPaymentController::class)->group(function () {
-    Route::get('/index', 'index')->name('payment.list');
+    Route::post('/list', 'list')->name('payment.list');
     Route::get('/create', 'create')->name('payment.create');
     Route::post('/store', 'store')->name('payment.store');
-    Route::delete('/delete/{payment}', 'delete')->name('payment.delete');
+    Route::get('/filter', 'filter')->name('payment.filter');
+    Route::get('/delete/{id}', 'delete')->name('payment.delete');
     Route::get('/edit/{payment}', 'edit')->name('payment.edit');
-    Route::put('/update/{payment}', 'update')->name('payment.update');
+    Route::put('/update/{id}', 'update')->name('payment.update');
 });
 
 

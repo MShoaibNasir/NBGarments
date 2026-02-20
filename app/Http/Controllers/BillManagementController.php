@@ -7,6 +7,8 @@ use App\Models\Bill;
 use Auth;
 use App\Models\Customer;
 use App\Models\Product;
+use App\Models\Ledger;
+use DB;
 
 class BillManagementController extends Controller
 {
@@ -27,18 +29,49 @@ class BillManagementController extends Controller
     }
     public function store(Request $request)
     {
+        // Strong validation
         $validated = $request->validate([
-            'bill_no' => 'required|string|max:255',
-            'customer_id' => 'required',
-            'qty' => 'required',
-            'price' => 'required',
-            'total_amount' => 'required'
-
+            'bill_no'      => 'required|string|max:255',
+            'customer_id'  => 'required|exists:customers,id',
+            'qty'          => 'required|numeric|min:1',
+            'price'        => 'required|numeric|min:0',
+            'total_amount' => 'required|numeric|min:0',
         ]);
-        $data = $request->all();
-        $data['user_id'] = Auth::user()->id;
-        Bill::create($data);
-        return redirect()->route('bill.filter')->with('success', 'Bill Create Successfully!');
+
+        DB::beginTransaction();
+
+        try {
+
+            // Create Bill
+            $bill = Bill::create([
+                'bill_no'      => $request->bill_no,
+                'customer_id'  => $request->customer_id,
+                'qty'          => $request->qty,
+                'price'        => $request->price,
+                'total_amount' => $request->total_amount,
+                'product_id' => $request->product_id,
+                'user_id'      => Auth::id(),
+            ]);
+
+            // Create Ledger Entry
+            Ledger::create([
+                'table_name'  => 'bill',
+                'primary_id'  => $bill->id,
+                'user_id'     => Auth::id(),
+                'customer_id' => $request->customer_id,
+            ]);
+
+            DB::commit();
+
+            return redirect()
+                ->route('bill.filter')
+                ->with('success', 'Bill Created Successfully!');
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return back()->with('error', 'Something went wrong!');
+        }
     }
     public function edit($id)
     {
@@ -141,10 +174,10 @@ class BillManagementController extends Controller
         // ✅ Pagination
         $data = $invoice->paginate($qty, ['*'], 'page', $page)
             ->setPath($custom_pagination_path);
-        $total_sell_amount=number_format($data->sum('total_amount'));
+        $total_sell_amount = number_format($data->sum('total_amount'));
         //  $jsondata = json_encode($selected_data);
 
-        return view('dashboard.bill.list', compact('data','total_sell_amount'))->render();
+        return view('dashboard.bill.list', compact('data', 'total_sell_amount'))->render();
     }
 
     public function filter(Request $request)

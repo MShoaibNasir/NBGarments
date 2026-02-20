@@ -1,7 +1,7 @@
     @extends('dashboard.layout.master')
     @section('content')
+
     <style>
-        /* Form styling */
         .form-container {
             background-color: #fff;
             border-radius: 12px;
@@ -31,68 +31,144 @@
             border: none;
         }
 
-        .btn-dark:hover {
-            background-color: #1edae8;
-        }
-
         .card-header {
             background-color: #1edae8;
             color: #fff;
         }
+
         h4.mb-0 {
             color: white;
         }
-            </style>
+
+        /* Chrome, Safari, Edge, Opera */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+    </style>
 
     <div class="content">
         @include('dashboard.layout.navbar')
 
         <div class="container py-4">
             <div class="card shadow-lg border-0">
+
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h4 class="mb-0"><i class="bi bi-plus-circle me-2"></i> Add New Payment</h4>
-                    <a href="{{ route('payment.list') }}" class="btn btn-outline-light btn-sm">
-                        <i class="bi bi-arrow-left"></i> Back
-                    </a>
+                    <h4 class="mb-0">Add New Payment</h4>
+                    <a href="{{ route('payment.list') }}" class="btn btn-outline-light btn-sm">Back</a>
                 </div>
 
                 <div class="card-body bg-light">
                     <div class="form-container mx-auto" style="max-width: 600px;">
-                        <form action="{{ route('payment.store') }}" method="POST" enctype="multipart/form-data">
+
+                        <form action="{{ route('payment.store') }}" method="POST">
                             @csrf
+
+                            {{-- Customer --}}
                             <div class="mb-3">
-                                <label for="name" class="form-label">Brand Name</label>
-                                <input type="text" name="name" id="name" value="{{ old('name') }}" class="form-control" placeholder="Enter brand name" required>
-                                @error('name')
-                                    <span class="text-danger small">{{ $message }}</span>
-                                @enderror
+                                <label class="form-label">Customer Name</label>
+                                <select name="customer_id" class="form-control" required>
+                                    <option value="">Select Customer</option>
+                                    @foreach($customers as $item)
+                                    <option value="{{$item->id}}">{{$item->name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
 
+                            {{-- Amount --}}
                             <div class="mb-3">
-                                <label for="link" class="form-label">Brand Link</label>
-                                <input type="url" name="link" id="link" value="{{ old('link') }}" class="form-control" placeholder="https://example.com" required>
-                                @error('link')
-                                    <span class="text-danger small">{{ $message }}</span>
-                                @enderror
+                                <label class="form-label">Amount</label>
+                                <input type="number" name="amount" class="form-control" placeholder="Enter Amount" required>
                             </div>
 
+                            {{-- Reference --}}
                             <div class="mb-3">
-                                <label for="link" class="form-label">Logo Image</label>
-                                <input type="file" name="logo" class="form-control"  required>
-                                @error('logo')
-                                    <span class="text-danger small">{{ $message }}</span>
-                                @enderror
+                                <label class="form-label">Reference</label>
+                                <input type="text" name="reference" class="form-control" placeholder="Optional">
+                            </div>
+                            {{-- description --}}
+                            <div class="mb-3">
+                                <label class="form-label">Description</label><br>
+                                <textarea name="description" id="description" class="form-control" placeholder="Enter Description (optional)"></textarea>
+                            </div>
+
+
+                            {{-- Is Cheque --}}
+                            <div class="mb-3">
+                                <label class="form-label">Is Cheque</label><br>
+                                <input type="checkbox" id="is_cheque" name="is_cheque" value="1">
+                            </div>
+
+                            {{-- Cheque Fields --}}
+                            <div id="chequeFields" style="display:none;">
+
+                                <div class="mb-3">
+                                    <label class="form-label">Bank Name</label>
+                                    <select name="bank_id" id="bank_id" class="form-control">
+                                        <option value="">Select Bank</option>
+                                        @foreach($banks as $item)
+                                        <option value="{{$item->id}}">{{$item->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Cheque No</label>
+                                    <input type="text" name="cheque_no" id="cheque_no" class="form-control" placeholder="Enter Cheque No">
+                                </div>
+
                             </div>
 
                             <div class="text-end">
-                                <button type="submit" class="btn btn-dark">
-                                    <i class="bi bi-save me-1"></i> Save Brand
-                                </button>
+                                <button type="submit" class="btn btn-dark">Save Payment</button>
                             </div>
+
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    {{-- Script --}}
+    <script>
+        const checkbox = document.getElementById('is_cheque');
+        const chequeFields = document.getElementById('chequeFields');
+        const bankField = document.getElementById('bank_id');
+        const chequeNoField = document.getElementById('cheque_no');
+
+        checkbox.addEventListener('change', function() {
+
+            if (this.checked) {
+                chequeFields.style.display = 'block';
+
+                // Make required
+                bankField.required = true;
+                chequeNoField.required = true;
+
+            } else {
+                chequeFields.style.display = 'none';
+
+                // Remove required
+                bankField.required = false;
+                chequeNoField.required = false;
+            }
+        });
+
+        // Maintain state on reload
+        window.onload = function() {
+            if (checkbox.checked) {
+                chequeFields.style.display = 'block';
+                bankField.required = true;
+                chequeNoField.required = true;
+            }
+        };
+    </script>
+
     @endsection
