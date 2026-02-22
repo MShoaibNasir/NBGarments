@@ -7,6 +7,8 @@ use App\Models\Expenses;
 use Auth;
 use App\Models\Customer;
 use App\Models\Product;
+use App\Models\CashRecords;
+use DB;
 
 class ExpensesManagementController extends Controller
 {
@@ -25,20 +27,72 @@ class ExpensesManagementController extends Controller
         $expenses = Expenses::where('user_id', Auth::user()->id)->get();
         return view('dashboard.expenses.create', ['expenses' => $expenses, 'customer' => $customer, 'product' => $product]);
     }
+    // public function store(Request $request)
+    // {
+    //     $validated = $request->validate([
+    //         'description' => 'required|string|max:255',
+    //         'amount' => 'required',
+    //         'refrence' => 'required',
+
+
+    //     ]);
+    //     $data = $request->all();
+    //     $data['user_id'] = Auth::user()->id;
+    //     $expenses=Expenses::create($data);
+
+
+    //         CashRecords::create([
+    //             'table_name'  => 'expenses',
+    //             'primary_id'  => $expenses->id,
+    //             'user_id'     => Auth::id(),
+    //             'customer_id' => null,
+    //         ]);
+
+    //     return redirect()->route('expenses.filter')->with('success', 'expenses Create Successfully!');
+    // }
+
+
     public function store(Request $request)
     {
+        // Validation
         $validated = $request->validate([
             'description' => 'required|string|max:255',
-            'amount' => 'required',
-            'refrence' => 'required',
-
-
+            'amount'      => 'required|numeric|min:1',
+            'refrence'   => 'required|string|max:255',
         ]);
-        $data = $request->all();
-        $data['user_id'] = Auth::user()->id;
-        Expenses::create($data);
-        return redirect()->route('expenses.filter')->with('success', 'expenses Create Successfully!');
+
+        // Add user_id safely
+        $validated['user_id'] = Auth::id();
+
+        // Use transaction because inserting in 2 tables
+        DB::beginTransaction();
+
+        try {
+            // Create Expense
+            $expenses = Expenses::create($validated);
+
+            // Create Cash Record
+            CashRecords::create([
+                'table_name'  => 'expenses',
+                'primary_id'  => $expenses->id,
+                'user_id'     => Auth::id(),
+                'customer_id' => null,
+            ]);
+
+            DB::commit();
+
+            return redirect()
+                ->route('expenses.filter')
+                ->with('success', 'Expense created successfully!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return back()->with('error', 'Something went wrong!');
+        }
     }
+
+
+
     public function edit($id)
     {
         checkAuthentication();
@@ -139,10 +193,10 @@ class ExpensesManagementController extends Controller
         // ✅ Pagination
         $data = $invoice->paginate($qty, ['*'], 'page', $page)
             ->setPath($custom_pagination_path);
-        $total_sell_amount=number_format($data->sum('amount'));
+        $total_sell_amount = number_format($data->sum('amount'));
         //  $jsondata = json_encode($selected_data);
 
-        return view('dashboard.expenses.list', compact('data','total_sell_amount'))->render();
+        return view('dashboard.expenses.list', compact('data', 'total_sell_amount'))->render();
     }
 
     public function filter(Request $request)

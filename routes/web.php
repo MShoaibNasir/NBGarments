@@ -16,6 +16,7 @@ use App\Http\Controllers\ExpensesManagementController;
 use App\Http\Controllers\CustomerPaymentController;
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\LedgerController;
+use App\Http\Controllers\CashRecordsController;
 
 // Default redirect
 Route::get('/', function () {
@@ -113,6 +114,10 @@ Route::prefix('payment')->controller(CustomerPaymentController::class)->group(fu
 Route::prefix('ledger')->controller(LedgerController::class)->group(function () {
     Route::get('/filter/{id}', 'filter')->name('ledger.filter');
     Route::post('/list', 'list')->name('ledger.list');
+});
+Route::prefix('cash-records')->controller(CashRecordsController::class)->group(function () {
+    Route::get('/filter', 'filter')->name('cashRecords.filter');
+    Route::post('/list', 'list')->name('cashRecords.list');
 });
 
 

@@ -13,7 +13,7 @@ class CustomerController extends Controller
         checkAuthentication();
         $customer = Customer::where('user_id', Auth::user()->id)->get();
         return view('dashboard.customer.index', compact('customer'));
-    }
+    }   
 
     public function create()
     {

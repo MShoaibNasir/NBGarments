@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Models\Payment;
 use App\Models\Ledger;
+use App\Models\CashRecords;
 use Auth;
 use DB;
 
@@ -62,6 +63,13 @@ class CustomerPaymentController extends Controller
             $payment = Payment::create($data);
 
             Ledger::create([
+                'table_name'  => 'Payment',
+                'primary_id'  => $payment->id,
+                'user_id'     => Auth::id(),
+                'customer_id' => $request->customer_id,
+            ]);
+
+            CashRecords::create([
                 'table_name'  => 'Payment',
                 'primary_id'  => $payment->id,
                 'user_id'     => Auth::id(),
