@@ -19,7 +19,7 @@
                         <th scope="col">Bill No</th>
                         <th scope="col">Customer Name</th>
                         <th scope="col">QTY</th>
-                       
+
                         <th scope="col">Totoal Amount</th>
                         <th scope="col">Date</th>
                         @if(Auth::user()->can('bill-edit') || Auth::user()->can('bill-delete'))
@@ -39,11 +39,16 @@
                         <td>{{$item->qty}}</td>
                         <td>{{ number_format($item->total_amount) }}</td>
                         <td>{{ $item->created_at->format('d-m-Y') }}</td>
-                        @if(Auth::user()->can('bill-edit') || Auth::user()->can('bill-delete'))
+                        @if(Auth::user()->can('bill-edit') || Auth::user()->can('bill-delete') || Auth::user()->can('bill-show'))
                         <td class="text-center action-btns">
                             @can('bill-edit')
                             <a href="{{ route('bill.edit', $item->id) }}" class="btn btn-success btn-sm">
                                 <i class="bi bi-pen"></i> Edit
+                            </a>
+                            @endcan
+                            @can('bill-show')
+                            <a href="{{ route('bill.show', $item->id) }}" class="btn btn-secondary btn-sm">
+                                <i class="bi bi-eye"></i> Show
                             </a>
                             @endcan
                             @can('bill-delete')

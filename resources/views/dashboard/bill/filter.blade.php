@@ -53,10 +53,11 @@
                                         <input type="text" id="first_name" class="form-control" placeholder="Customer Name">
                                     </div>
 
-                                    <div class="filters-toolbar__item mb-3 col-md-4">
+                                    {{-- <div class="filters-toolbar__item mb-3 col-md-4">
                                         <label for="last_name">Search By Product Name</label>
                                         <input type="text" id="product_name" class="form-control" placeholder="Product Name">
                                     </div>
+                                    --}}
 
 
                                     <div class="filters-toolbar__item mb-3 col-md-4">

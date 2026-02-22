@@ -64,7 +64,7 @@
             <div class="card shadow-lg border-0">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h4 class="mb-0"><i class="bi bi-plus-circle me-2"></i> Add New Expenses</h4>
-                    <a href="{{ route('expenses.list') }}" class="btn btn-outline-light btn-sm">
+                    <a href="{{ route('expenses.filter') }}" class="btn btn-outline-light btn-sm">
                         <i class="bi bi-arrow-left"></i> Back
                     </a>
                 </div>

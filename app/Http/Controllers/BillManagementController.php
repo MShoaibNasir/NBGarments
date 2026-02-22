@@ -7,6 +7,8 @@ use App\Models\Bill;
 use Auth;
 use App\Models\Customer;
 use App\Models\Product;
+use App\Models\Payment;
+use App\Models\CashRecords;
 use App\Models\Ledger;
 use App\Models\BillProducts;
 use DB;
@@ -30,7 +32,7 @@ class BillManagementController extends Controller
     }
     public function store(Request $request)
     {
-        // dd($request->all());
+
 
         // ✅ Correct Validation for arrays
         $validated = $request->validate([
@@ -65,6 +67,7 @@ class BillManagementController extends Controller
                 'qty'          => $totalQty,
                 'total_amount' => $totalAmount,
                 'user_id'      => Auth::id(),
+                'is_cash' => $request->cash ? 1 : 0
             ]);
 
             // ✅ Ledger Entry
@@ -84,6 +87,31 @@ class BillManagementController extends Controller
                     'qty'        => $request->qty[$key],
                     'price'      => $request->price[$key],
                     'amount'     => $request->amount[$key],
+                ]);
+            }
+
+            if (isset($request->cash)) {
+
+                $data = [
+                    'customer_id' => $request->customer_id,
+                    'amount'      => $totalAmount,
+                    'reference'   => null,
+                    'description' => null,
+                    'user_id'     => Auth::id(),
+                    'is_cheque'   => 0,
+                    'bank_id'     => null,
+                    'cheque_no'   => null,
+                ];
+
+
+
+                $payment = Payment::create($data);
+
+                CashRecords::create([
+                    'table_name'  => 'Payment',
+                    'primary_id'  => $payment->id,
+                    'user_id'     => Auth::id(),
+                    'customer_id' => $request->customer_id,
                 ]);
             }
 
@@ -114,27 +142,25 @@ class BillManagementController extends Controller
             'product'
         ));
     }
+    public function show($id)
+    {
+        $bill = Bill::with('customer')->findOrFail($id);
+        $billProducts = BillProducts::with('product')
+            ->where('bill_id', $id)
+            ->get();
+
+        return view('dashboard.bill.show', compact(
+            'bill',
+            'billProducts'
+        ));
+    }
     public function delete($id)
     {
         $customers = Bill::findOrFail($id);
         $customers->delete();
         return redirect()->back()->with('success', 'Bill deleted successfully!');
     }
-    // ✅ Update brand
-    // public function update(Request $request, $id)
-    // {
-    //     $validated = $request->validate([
-    //         'bill_no' => 'required|string|max:255',
-    //         'customer_id' => 'required',
-    //         'qty' => 'required',
-    //         'price' => 'required',
-    //         'total_amount' => 'required'
 
-    //     ]);
-    //     $brand = Bill::findOrFail($id);
-    //     $brand->update($validated);
-    //     return redirect()->route('bill.filter')->with('success', 'Bill updated successfully!');
-    // }
 
     public function update(Request $request, $id)
     {
@@ -161,7 +187,7 @@ class BillManagementController extends Controller
         try {
 
             $bill = Bill::findOrFail($id);
-            $ledger = Ledger::where('primary_id',$id)->where('table_name','Bill');
+            $ledger = Ledger::where('primary_id', $id)->where('table_name', 'Bill');
 
             // ⭐ Recalculate totals (IMPORTANT)
             $totalQty = array_sum($request->qty);
@@ -175,7 +201,7 @@ class BillManagementController extends Controller
                 'total_amount' => $totalAmount,
             ]);
 
-           $ledger->update([
+            $ledger->update([
                 'customer_id' => $request->customer_id,
             ]);
 

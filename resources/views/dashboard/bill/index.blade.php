@@ -90,9 +90,9 @@
                                 <th>Product Name</th>
                                 <th>QTY</th>
                                 <th>Total Amount</th>
-                                    @if(Auth::user()->can('bill-edit') || Auth::user()->can('bill-delete'))
-                                    <th class="text-center">Actions</th>
-                                    @endif
+                                @if(Auth::user()->can('bill-edit') || Auth::user()->can('bill-delete'))
+                                <th class="text-center">Actions</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -110,6 +110,12 @@
                                     @can('bill-edit')
                                     <a href="{{ route('bill.edit', $b->id) }}" class="btn btn-success btn-sm">
                                         <i class="bi bi-pen"></i> Edit
+                                    </a>
+                                    @endcan
+                                    djkgu
+                                    @can('bill-show')
+                                    <a href="{{ route('bill.show', $b->id) }}" class="btn btn-success btn-sm">
+                                        <i class="bi bi-pen"></i> Show
                                     </a>
                                     @endcan
                                     @can('bill-delete')

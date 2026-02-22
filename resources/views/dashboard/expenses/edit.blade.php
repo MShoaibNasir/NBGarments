@@ -78,7 +78,7 @@
                 <h4 class="mb-0">
                     <i class="bi bi-pencil-square me-2"></i> Edit Expenses
                 </h4>
-                <a href="{{ route('expenses.list') }}" class="btn btn-outline-light btn-sm">
+                <a href="{{ route('expenses.filter') }}" class="btn btn-outline-light btn-sm">
                     <i class="bi bi-arrow-left"></i> Back
                 </a>
             </div>

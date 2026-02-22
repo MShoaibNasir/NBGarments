@@ -78,6 +78,7 @@ Route::prefix('bill')->controller(BillManagementController::class)->group(functi
     Route::get('/delete/{id}', 'delete')->name('bill.delete');
     Route::get('/laser/{id}', 'filter')->name('bill.laser');
     Route::get('/edit/{id}', 'edit')->name('bill.edit');
+    Route::get('/show/{id}', 'show')->name('bill.show');
     Route::put('/update/{id}', 'update')->name('bill.update');
 });
 Route::prefix('expenses')->controller(ExpensesManagementController::class)->group(function () {

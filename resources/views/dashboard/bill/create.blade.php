@@ -1,5 +1,18 @@
 @extends('dashboard.layout.master')
 @section('content')
+<style>
+    /* Chrome, Safari, Edge, Opera */
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
 
 <div class="content">
     @include('dashboard.layout.navbar')
@@ -9,7 +22,7 @@
 
             <div class="card-header bg-info text-white d-flex justify-content-between">
                 <h4>Add New Bill</h4>
-                <a href="{{ route('bill.list') }}" class="btn btn-light btn-sm">Back</a>
+                <a href="{{ route('bill.filter') }}" class="btn btn-light btn-sm">Back</a>
             </div>
 
             <div class="card-body bg-light">
@@ -18,6 +31,13 @@
                     @csrf
 
                     <!-- Bill No -->
+
+                    <div class="mb-3">
+                        <label class="form-label">Is Cash Bill</label>
+                        <input type="checkbox" name="cash" >
+                    </div>
+
+
                     <div class="mb-3">
                         <label class="form-label">Bill No</label>
                         <input type="text" name="bill_no" class="form-control" required>
@@ -29,7 +49,7 @@
                         <select name="customer_id" class="form-control" required>
                             <option>Select Customer</option>
                             @foreach ($customer as $item)
-                                <option value="{{$item->id}}">{{ $item->name }}</option>
+                            <option value="{{$item->id}}">{{ $item->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -56,7 +76,7 @@
                                         <select name="product_id[]" class="form-control" required>
                                             <option>Select Product</option>
                                             @foreach ($product as $item)
-                                                <option value="{{$item->id}}">{{ $item->name }}</option>
+                                            <option value="{{$item->id}}">{{ $item->name }}</option>
                                             @endforeach
                                         </select>
                                     </td>
@@ -112,70 +132,70 @@
 
 <!-- JAVASCRIPT -->
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
 
-    const tableBody = document.querySelector("#productTable tbody");
-    const addRowBtn = document.getElementById("addRow");
+        const tableBody = document.querySelector("#productTable tbody");
+        const addRowBtn = document.getElementById("addRow");
 
-    function calculateTotals() {
+        function calculateTotals() {
 
-        let totalQty = 0;
-        let totalPrice = 0;
-        let grandTotal = 0;
+            let totalQty = 0;
+            let totalPrice = 0;
+            let grandTotal = 0;
 
-        document.querySelectorAll(".qty").forEach(el => {
-            totalQty += parseFloat(el.value) || 0;
+            document.querySelectorAll(".qty").forEach(el => {
+                totalQty += parseFloat(el.value) || 0;
+            });
+
+            document.querySelectorAll(".price").forEach(el => {
+                totalPrice += parseFloat(el.value) || 0;
+            });
+
+            document.querySelectorAll(".amount").forEach(el => {
+                grandTotal += parseFloat(el.value) || 0;
+            });
+
+            document.getElementById("totalQty").value = totalQty;
+            document.getElementById("totalPrice").value = totalPrice;
+            document.getElementById("grandTotal").value = grandTotal;
+        }
+
+        // Add Row
+        addRowBtn.addEventListener("click", function() {
+
+            let newRow = tableBody.rows[0].cloneNode(true);
+            newRow.querySelectorAll("input").forEach(input => input.value = "");
+            tableBody.appendChild(newRow);
+
         });
 
-        document.querySelectorAll(".price").forEach(el => {
-            totalPrice += parseFloat(el.value) || 0;
+        // Remove Row
+        document.addEventListener("click", function(e) {
+            if (e.target.classList.contains("removeRow")) {
+                if (tableBody.rows.length > 1) {
+                    e.target.closest("tr").remove();
+                    calculateTotals();
+                }
+            }
         });
 
-        document.querySelectorAll(".amount").forEach(el => {
-            grandTotal += parseFloat(el.value) || 0;
-        });
+        // Row Calculation
+        document.addEventListener("input", function(e) {
 
-        document.getElementById("totalQty").value = totalQty;
-        document.getElementById("totalPrice").value = totalPrice;
-        document.getElementById("grandTotal").value = grandTotal;
-    }
+            if (e.target.classList.contains("qty") || e.target.classList.contains("price")) {
 
-    // Add Row
-    addRowBtn.addEventListener("click", function () {
+                let row = e.target.closest("tr");
+                let qty = row.querySelector(".qty").value || 0;
+                let price = row.querySelector(".price").value || 0;
 
-        let newRow = tableBody.rows[0].cloneNode(true);
-        newRow.querySelectorAll("input").forEach(input => input.value = "");
-        tableBody.appendChild(newRow);
+                row.querySelector(".amount").value = qty * price;
 
-    });
-
-    // Remove Row
-    document.addEventListener("click", function(e){
-        if(e.target.classList.contains("removeRow")){
-            if(tableBody.rows.length > 1){
-                e.target.closest("tr").remove();
                 calculateTotals();
             }
-        }
-    });
 
-    // Row Calculation
-    document.addEventListener("input", function(e){
-
-        if(e.target.classList.contains("qty") || e.target.classList.contains("price")){
-
-            let row = e.target.closest("tr");
-            let qty = row.querySelector(".qty").value || 0;
-            let price = row.querySelector(".price").value || 0;
-
-            row.querySelector(".amount").value = qty * price;
-
-            calculateTotals();
-        }
+        });
 
     });
-
-});
 </script>
 
 @endsection
