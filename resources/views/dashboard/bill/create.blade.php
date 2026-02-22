@@ -1,154 +1,181 @@
-    @extends('dashboard.layout.master')
-    @section('content')
-    <style>
-        /* Form styling */
-        .form-container {
-            background-color: #fff;
-            border-radius: 12px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-        }
+@extends('dashboard.layout.master')
+@section('content')
 
-        .form-label {
-            font-weight: 600;
-            color: #000;
-        }
+<div class="content">
+    @include('dashboard.layout.navbar')
 
-        .form-control {
-            border: 1px solid #000;
-            border-radius: 8px;
-            padding: 10px;
-            color: #000;
-        }
+    <div class="container py-4">
+        <div class="card shadow-lg border-0">
 
-        .form-control:focus {
-            border-color: #1edae8;
-            box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.25);
-        }
+            <div class="card-header bg-info text-white d-flex justify-content-between">
+                <h4>Add New Bill</h4>
+                <a href="{{ route('bill.list') }}" class="btn btn-light btn-sm">Back</a>
+            </div>
 
-        .btn-dark {
-            background-color: #1edae8;
-            border: none;
-        }
+            <div class="card-body bg-light">
 
-        .btn-dark:hover {
-            background-color: #1edae8;
-        }
+                <form action="{{ route('bill.store') }}" method="POST">
+                    @csrf
 
-        .card-header {
-            background-color: #1edae8;
-            color: #fff;
-        }
-
-        h4.mb-0 {
-            color: white;
-        }
-
-        /* Chrome, Safari, Edge, Opera */
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-
-        /* Firefox */
-        input[type=number] {
-            -moz-appearance: textfield;
-        }
-    </style>
-
-    <div class="content">
-        @include('dashboard.layout.navbar')
-
-        <div class="container py-4">
-            <div class="card shadow-lg border-0">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h4 class="mb-0"><i class="bi bi-plus-circle me-2"></i> Add New Bill</h4>
-                    <a href="{{ route('bill.list') }}" class="btn btn-outline-light btn-sm">
-                        <i class="bi bi-arrow-left"></i> Back
-                    </a>
-                </div>
-
-                <div class="card-body bg-light">
-                    <div class="form-container mx-auto" style="max-width: 600px;">
-                        <form action="{{ route('bill.store') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Bill No</label>
-                                <input type="text" name="bill_no" id="name" value="{{ old('bill_no') }}" class="form-control" placeholder="Enter Bill No" required>
-                                @error('name')
-                                <span class="text-danger small">{{ $message }}</span>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="link" class="form-label">Customer Name</label>
-                                <select name="customer_id" class="form-control">
-                                    <option>Select Customer</option>
-                                    @foreach ($customer as $item)
-                                    <option value="{{$item->id}}">{{ $item->name }}</option>
-                                    @endforeach
-
-                                </select>
-                                @error('address')
-                                <span class="text-danger small">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="mb-3">
-                                <label for="link" class="form-label">Product Name</label>
-                                <select name="product_id" class="form-control">
-                                    <option>Select Product</option>
-                                    @foreach ($product as $item)
-                                    <option value="{{$item->id}}">{{ $item->name }}</option>
-                                    @endforeach
-
-                                </select>
-                                @error('address')
-                                <span class="text-danger small">{{ $message }}</span>
-                                @enderror
-                            </div>
-
-
-                            <div class="mb-3">
-                                <label class="form-label">QTY</label>
-                                <input type="number" name="qty" id="qty" class="form-control" placeholder="Quantity" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Price</label>
-                                <input type="number" name="price" id="price" class="form-control" placeholder="Price" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Total Amount</label>
-                                <input type="number" name="total_amount" id="total_amount" class="form-control" placeholder="Amount" readonly>
-                            </div>
-                            <div class="text-end">
-                                <button type="submit" class="btn btn-dark">
-                                    <i class="bi bi-save me-1"></i> Save Bill
-                                </button>
-                            </div>
-                        </form>
+                    <!-- Bill No -->
+                    <div class="mb-3">
+                        <label class="form-label">Bill No</label>
+                        <input type="text" name="bill_no" class="form-control" required>
                     </div>
-                </div>
+
+                    <!-- Customer -->
+                    <div class="mb-3">
+                        <label class="form-label">Customer</label>
+                        <select name="customer_id" class="form-control" required>
+                            <option>Select Customer</option>
+                            @foreach ($customer as $item)
+                                <option value="{{$item->id}}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Products Table -->
+                    <div class="mb-3">
+                        <label class="form-label">Products</label>
+
+                        <table class="table table-bordered" id="productTable">
+
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th width="120">Qty</th>
+                                    <th width="150">Price</th>
+                                    <th width="150">Amount</th>
+                                    <th width="80">Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <select name="product_id[]" class="form-control" required>
+                                            <option>Select Product</option>
+                                            @foreach ($product as $item)
+                                                <option value="{{$item->id}}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+
+                                    <td>
+                                        <input type="number" name="qty[]" class="form-control qty" required>
+                                    </td>
+
+                                    <td>
+                                        <input type="number" name="price[]" class="form-control price" required>
+                                    </td>
+
+                                    <td>
+                                        <input type="number" name="amount[]" class="form-control amount" readonly>
+                                    </td>
+
+                                    <td>
+                                        <button type="button" class="btn btn-danger removeRow">X</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                            <!-- TOTAL ROW -->
+                            <tfoot>
+                                <tr style="background:#f1f1f1; font-weight:bold;">
+                                    <td class="text-end">TOTAL:</td>
+                                    <td><input type="number" id="totalQty" name="totalQty" class="form-control" readonly></td>
+                                    <td><input type="number" id="totalPrice" name="totalPrice" class="form-control" readonly></td>
+                                    <td><input type="number" id="grandTotal" name="grandTotal" class="form-control" readonly></td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+
+                        </table>
+
+                        <button type="button" id="addRow" class="btn btn-primary">
+                            + Add Product
+                        </button>
+                    </div>
+
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-success">
+                            Save Bill
+                        </button>
+                    </div>
+
+                </form>
+
             </div>
         </div>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const qtyInput = document.getElementById('qty');
-            const priceInput = document.getElementById('price');
-            const totalInput = document.getElementById('total_amount');
+</div>
 
-            function calculateTotal() {
-                const qty = parseFloat(qtyInput.value) || 0;
-                const price = parseFloat(priceInput.value) || 0;
-                totalInput.value = qty * price;
-            }
+<!-- JAVASCRIPT -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
 
-            qtyInput.addEventListener('input', calculateTotal);
-            priceInput.addEventListener('input', calculateTotal);
+    const tableBody = document.querySelector("#productTable tbody");
+    const addRowBtn = document.getElementById("addRow");
+
+    function calculateTotals() {
+
+        let totalQty = 0;
+        let totalPrice = 0;
+        let grandTotal = 0;
+
+        document.querySelectorAll(".qty").forEach(el => {
+            totalQty += parseFloat(el.value) || 0;
         });
-    </script>
 
-    @endsection
+        document.querySelectorAll(".price").forEach(el => {
+            totalPrice += parseFloat(el.value) || 0;
+        });
+
+        document.querySelectorAll(".amount").forEach(el => {
+            grandTotal += parseFloat(el.value) || 0;
+        });
+
+        document.getElementById("totalQty").value = totalQty;
+        document.getElementById("totalPrice").value = totalPrice;
+        document.getElementById("grandTotal").value = grandTotal;
+    }
+
+    // Add Row
+    addRowBtn.addEventListener("click", function () {
+
+        let newRow = tableBody.rows[0].cloneNode(true);
+        newRow.querySelectorAll("input").forEach(input => input.value = "");
+        tableBody.appendChild(newRow);
+
+    });
+
+    // Remove Row
+    document.addEventListener("click", function(e){
+        if(e.target.classList.contains("removeRow")){
+            if(tableBody.rows.length > 1){
+                e.target.closest("tr").remove();
+                calculateTotals();
+            }
+        }
+    });
+
+    // Row Calculation
+    document.addEventListener("input", function(e){
+
+        if(e.target.classList.contains("qty") || e.target.classList.contains("price")){
+
+            let row = e.target.closest("tr");
+            let qty = row.querySelector(".qty").value || 0;
+            let price = row.querySelector(".price").value || 0;
+
+            row.querySelector(".amount").value = qty * price;
+
+            calculateTotals();
+        }
+
+    });
+
+});
+</script>
+
+@endsection

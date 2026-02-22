@@ -8,12 +8,14 @@
                     <tr>
                         <th>S No</th>
                         <th>Purpose</th>
+                        <th>Date</th>
+                        <th>QTY</th>
                         <th>Amount</th>
+                        <th>Total Amount</th>
                         <th>References</th>
                         <th>Bank Name</th>
                         <th>Cheque No</th>
-                        <th>Date</th>
-                        <th>Total Amount</th>
+                      
                     </tr>
                 </thead>
 
@@ -49,7 +51,11 @@
                     <tr style="background-color: {{ $rowColor }}; color:white;">
                         <td>{{ $loop->index + 1 }}</td>
                         <td>{{ $item->table_name }}</td>
+                        <td>{{ $item->created_at->format('d-m-Y') }}</td>
+                        <td>{{  $item->table_name == 'Bill' ? $item->bill->qty : '-----' }}</td>
                         <td>{{ number_format($amount) }}</td>
+                        <td><strong>{{ number_format($runningTotal) }} Rs</strong></td>
+
 
                         {{-- Reference --}}
                         <td>
@@ -79,10 +85,9 @@
                         </td>
 
                         {{-- Date --}}
-                        <td>{{ $item->created_at->format('d-m-Y') }}</td>
+                       
 
                         {{-- 🔥 Running Total --}}
-                        <td><strong>{{ number_format($runningTotal) }} Rs</strong></td>
                     </tr>
 
                     @endforeach

@@ -89,7 +89,6 @@
                                 <th>Customer Name</th>
                                 <th>Product Name</th>
                                 <th>QTY</th>
-                                <th>Price</th>
                                 <th>Total Amount</th>
                                     @if(Auth::user()->can('bill-edit') || Auth::user()->can('bill-delete'))
                                     <th class="text-center">Actions</th>
@@ -104,7 +103,6 @@
                                 <td>{{ $b->customer->name }}</td>
                                 <td>{{ $b->product->name }}</td>
                                 <td>{{ $b->qty }}</td>
-                                <td>{{ number_format($b->price) }}</td>
                                 <td>{{ number_format($b->total_amount) }}</td>
 
                                 @if(Auth::user()->can('bill-edit') || Auth::user()->can('bill-delete'))

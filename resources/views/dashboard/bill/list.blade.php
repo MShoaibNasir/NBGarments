@@ -18,9 +18,8 @@
                         <th scope="col">S No</th>
                         <th scope="col">Bill No</th>
                         <th scope="col">Customer Name</th>
-                        <th scope="col">Product Name</th>
                         <th scope="col">QTY</th>
-                        <th scope="col">Price</th>
+                       
                         <th scope="col">Totoal Amount</th>
                         <th scope="col">Date</th>
                         @if(Auth::user()->can('bill-edit') || Auth::user()->can('bill-delete'))
@@ -37,12 +36,9 @@
                         <td>{{$loop->index+1}}</td>
                         <td>{{$item->bill_no}}</td>
                         <td>{{$item->customer->name}}</td>
-                        <td>{{$item->product->name}}</td>
                         <td>{{$item->qty}}</td>
-                        <td>{{ number_format($item->price) }}</td>
                         <td>{{ number_format($item->total_amount) }}</td>
                         <td>{{ $item->created_at->format('d-m-Y') }}</td>
-
                         @if(Auth::user()->can('bill-edit') || Auth::user()->can('bill-delete'))
                         <td class="text-center action-btns">
                             @can('bill-edit')

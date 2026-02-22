@@ -8,6 +8,7 @@ use Auth;
 use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Ledger;
+use App\Models\BillProducts;
 use DB;
 
 class BillManagementController extends Controller
@@ -29,37 +30,62 @@ class BillManagementController extends Controller
     }
     public function store(Request $request)
     {
-        // Strong validation
+        // dd($request->all());
+
+        // ✅ Correct Validation for arrays
         $validated = $request->validate([
             'bill_no'      => 'required|string|max:255',
             'customer_id'  => 'required|exists:customers,id',
-            'qty'          => 'required|numeric|min:1',
-            'price'        => 'required|numeric|min:0',
-            'total_amount' => 'required|numeric|min:0',
+
+            'product_id'   => 'required|array',
+            'product_id.*' => 'required|exists:products,id',
+
+            'qty'          => 'required|array',
+            'qty.*'        => 'required|numeric|min:1',
+
+            'price'        => 'required|array',
+            'price.*'      => 'required|numeric|min:0',
+
+            'amount'       => 'required|array',
+            'amount.*'     => 'required|numeric|min:0',
         ]);
 
         DB::beginTransaction();
 
         try {
 
-            // Create Bill
+            // ⭐ Calculate totals from arrays
+            $totalQty = array_sum($request->qty);
+            $totalAmount = array_sum($request->amount);
+
+            // ✅ Create Main Bill
             $bill = Bill::create([
                 'bill_no'      => $request->bill_no,
                 'customer_id'  => $request->customer_id,
-                'qty'          => $request->qty,
-                'price'        => $request->price,
-                'total_amount' => $request->total_amount,
-                'product_id' => $request->product_id,
+                'qty'          => $totalQty,
+                'total_amount' => $totalAmount,
                 'user_id'      => Auth::id(),
             ]);
 
-            // Create Ledger Entry
+            // ✅ Ledger Entry
             Ledger::create([
                 'table_name'  => 'Bill',
                 'primary_id'  => $bill->id,
                 'user_id'     => Auth::id(),
                 'customer_id' => $request->customer_id,
             ]);
+
+            // ✅ Save Bill Products
+            foreach ($request->product_id as $key => $product_id) {
+
+                BillProducts::create([
+                    'bill_id'    => $bill->id,
+                    'product_id' => $product_id,
+                    'qty'        => $request->qty[$key],
+                    'price'      => $request->price[$key],
+                    'amount'     => $request->amount[$key],
+                ]);
+            }
 
             DB::commit();
 
@@ -75,10 +101,18 @@ class BillManagementController extends Controller
     }
     public function edit($id)
     {
-        checkAuthentication();
         $bill = Bill::findOrFail($id);
-        $customer = Customer::where('user_id', Auth::user()->id)->get();
-        return view('dashboard.bill.edit', compact('bill', 'customer'));
+        $billProducts = BillProducts::where('bill_id', $id)->get();
+
+        $customer = Customer::all();
+        $product = Product::all();
+
+        return view('dashboard.bill.edit', compact(
+            'bill',
+            'billProducts',
+            'customer',
+            'product'
+        ));
     }
     public function delete($id)
     {
@@ -87,19 +121,89 @@ class BillManagementController extends Controller
         return redirect()->back()->with('success', 'Bill deleted successfully!');
     }
     // ✅ Update brand
+    // public function update(Request $request, $id)
+    // {
+    //     $validated = $request->validate([
+    //         'bill_no' => 'required|string|max:255',
+    //         'customer_id' => 'required',
+    //         'qty' => 'required',
+    //         'price' => 'required',
+    //         'total_amount' => 'required'
+
+    //     ]);
+    //     $brand = Bill::findOrFail($id);
+    //     $brand->update($validated);
+    //     return redirect()->route('bill.filter')->with('success', 'Bill updated successfully!');
+    // }
+
     public function update(Request $request, $id)
     {
+        // ✅ Validation (same as store)
         $validated = $request->validate([
-            'bill_no' => 'required|string|max:255',
-            'customer_id' => 'required',
-            'qty' => 'required',
-            'price' => 'required',
-            'total_amount' => 'required'
+            'bill_no'      => 'required|string|max:255',
+            'customer_id'  => 'required|exists:customers,id',
 
+            'product_id'   => 'required|array',
+            'product_id.*' => 'required|exists:products,id',
+
+            'qty'          => 'required|array',
+            'qty.*'        => 'required|numeric|min:1',
+
+            'price'        => 'required|array',
+            'price.*'      => 'required|numeric|min:0',
+
+            'amount'       => 'required|array',
+            'amount.*'     => 'required|numeric|min:0',
         ]);
-        $brand = Bill::findOrFail($id);
-        $brand->update($validated);
-        return redirect()->route('bill.filter')->with('success', 'Bill updated successfully!');
+
+        DB::beginTransaction();
+
+        try {
+
+            $bill = Bill::findOrFail($id);
+            $ledger = Ledger::where('primary_id',$id)->where('table_name','Bill');
+
+            // ⭐ Recalculate totals (IMPORTANT)
+            $totalQty = array_sum($request->qty);
+            $totalAmount = array_sum($request->amount);
+
+            // ✅ Update Main Bill
+            $bill->update([
+                'bill_no'      => $request->bill_no,
+                'customer_id'  => $request->customer_id,
+                'qty'          => $totalQty,
+                'total_amount' => $totalAmount,
+            ]);
+
+           $ledger->update([
+                'customer_id' => $request->customer_id,
+            ]);
+
+
+            BillProducts::where('bill_id', $bill->id)->delete();
+
+            // ✅ Insert updated products
+            foreach ($request->product_id as $key => $product_id) {
+                BillProducts::create([
+                    'bill_id'    => $bill->id,
+                    'product_id' => $product_id,
+                    'qty'        => $request->qty[$key],
+                    'price'      => $request->price[$key],
+                    'amount'     => $request->amount[$key],
+                ]);
+            }
+
+            DB::commit();
+
+            return redirect()
+                ->route('bill.filter')
+                ->with('success', 'Bill Updated Successfully!');
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return back()->with('error', 'Something went wrong!');
+        }
     }
 
 

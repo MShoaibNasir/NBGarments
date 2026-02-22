@@ -111,7 +111,7 @@
                         <!-- Submit Button -->
                         <div class="text-end mt-4">
                             <button type="submit" class="btn btn-dark">
-                                <i class="bi bi-check-circle me-2"></i> Update Customer
+                                <i class="bi bi-check-circle me-2"></i> Update
                             </button>
                         </div>
                     </form>

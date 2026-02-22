@@ -97,7 +97,7 @@ class ExpensesManagementController extends Controller
     {
         checkAuthentication();
         $expenses = expenses::findOrFail($id);
-        return view('dashboard.expenses.edit', compact('expenses', 'customer'));
+        return view('dashboard.expenses.edit', compact('expenses'));
     }
     public function delete($id)
     {
