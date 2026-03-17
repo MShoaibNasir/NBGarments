@@ -5,19 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class Size extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
-      protected $table = 'products';
+      protected $table = 'size';
     /**
      * The attributes that are mass assignable.
      *	
      * @var array
      */
-
-      public function size()
-    {
-        return $this->belongsTo(Size::class, 'size_id', 'id');
-    }
 }

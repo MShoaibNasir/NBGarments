@@ -17,6 +17,7 @@ use App\Http\Controllers\CustomerPaymentController;
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\LedgerController;
 use App\Http\Controllers\CashRecordsController;
+use App\Http\Controllers\ProductCostController;
 
 // Default redirect
 Route::get('/', function () {
@@ -112,6 +113,7 @@ Route::prefix('payment')->controller(CustomerPaymentController::class)->group(fu
     Route::get('/edit/{payment}', 'edit')->name('payment.edit');
     Route::put('/update/{id}', 'update')->name('payment.update');
 });
+
 Route::prefix('ledger')->controller(LedgerController::class)->group(function () {
     Route::get('/filter/{id}', 'filter')->name('ledger.filter');
     Route::post('/list', 'list')->name('ledger.list');
@@ -119,6 +121,10 @@ Route::prefix('ledger')->controller(LedgerController::class)->group(function () 
 Route::prefix('cash-records')->controller(CashRecordsController::class)->group(function () {
     Route::get('/filter', 'filter')->name('cashRecords.filter');
     Route::post('/list', 'list')->name('cashRecords.list');
+});
+Route::prefix('product-cost')->controller(ProductCostController::class)->group(function () {
+    Route::post('/save/product', 'saveProduct')->name('save.product.cost');
+    Route::post('/list/product', 'listProduct')->name('list.product.cost');
 });
 
 
@@ -136,15 +142,20 @@ Route::domain('bookpublishersden.com')->group(function () {
 
 //Route::get('/paypal/pay/{id}', [PaypalController::class,'show'])->name('paypal.show');
 // Route::get('/paypal/pay/dummy/{brand_name}/{id}', [PaypalController::class,'checkoutDummy'])->name('dummy.paypal.show');
-Route::post('/paypal/create', [PaypalController::class, 'createPayment'])->name('paypal.create');
-Route::get('/paypal/success/{invoice_id}', [PaypalController::class, 'success'])->name('paypal.success');
-Route::get('/paypal/cancel/{invoice_id}', [PaypalController::class, 'cancel'])->name('paypal.cancel');
-Route::post('/api/paypal/create-order', [PaypalController::class, 'createPayment']);
-Route::post('/api/paypal/capture-order', [PaypalController::class, 'success']);
-Route::get('/paypal/card', function () {
-    return view('paypal.card-checkout');
-});
+// Route::post('/paypal/create', [PaypalController::class, 'createPayment'])->name('paypal.create');
+// Route::get('/paypal/success/{invoice_id}', [PaypalController::class, 'success'])->name('paypal.success');
+// Route::get('/paypal/cancel/{invoice_id}', [PaypalController::class, 'cancel'])->name('paypal.cancel');
+// Route::post('/api/paypal/create-order', [PaypalController::class, 'createPayment']);
+// Route::post('/api/paypal/capture-order', [PaypalController::class, 'success']);
+// Route::get('/paypal/card', function () {
+//     return view('paypal.card-checkout');
+// });
 
 
-Route::post('/create-paypal-order', [PaypalController::class, 'createOrder']);
-Route::post('/capture-paypal-order', [PaypalController::class, 'captureOrder']);
+// Route::post('/create-paypal-order', [PaypalController::class, 'createOrder']);
+// Route::post('/capture-paypal-order', [PaypalController::class, 'captureOrder']);
+Route::get('/paypalDemoPage', [PaypalController::class, 'paypalDemoPage']);
+
+
+Route::post('/demo/checkout/api/paypal/order/create', [PaypalController::class, 'createOrder']);
+Route::post('/demo/checkout/api/paypal/order/{id}/capture', [PaypalController::class, 'captureOrder']);

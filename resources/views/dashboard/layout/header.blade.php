@@ -12,7 +12,19 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link rel="icon" type="image/x-icon" href="{{asset('dashboard\img\logo.png')}}">
 
+    <style>
+        /* Chrome, Safari, Edge, Opera */
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
 
+        /* Firefox */
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+    </style>
 
     <!-- Favicon -->
     @include('dashboard.layout.css')
@@ -20,12 +32,12 @@
 
 
 <body>
-  
+
     <div id="hrupreloader">
         <div class="loader">
             <div class="loader-container">
                 <div class="loader-icon">
-                    
+
                     <img src="{{asset('dashboard\img\logo.png')}}"
                         alt="Preloader">
                 </div>
@@ -35,7 +47,7 @@
 
     <div class="container-fluid p-0">
         <!-- Sidebar Start -->
-     
+
         @include('dashboard.layout.admin_sidebar')
 
         <!-- Sidebar End -->

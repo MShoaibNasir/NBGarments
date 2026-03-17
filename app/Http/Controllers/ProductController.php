@@ -6,6 +6,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Auth;
+use DB;
 use Illuminate\Http\RedirectResponse;
 
 class ProductController extends Controller
@@ -40,7 +41,8 @@ class ProductController extends Controller
      */
     public function create(): View
     {
-        return view('products.create');
+        $size=DB::table('size')->get();
+        return view('products.create',['size'=>$size]);
     }
 
     /**

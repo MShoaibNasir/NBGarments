@@ -28,7 +28,7 @@
 
                     @php
                     if ($item->table_name == 'Payment') {
-                    $amount = $item->paymnent->amount;
+                    $amount = $item->paymnent->amount ?? null;
                     }
                     else{
 

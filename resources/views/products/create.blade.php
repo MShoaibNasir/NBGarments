@@ -8,36 +8,43 @@
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         padding: 30px;
     }
+
     .form-label {
         font-weight: 600;
         color: #000;
     }
+
     .form-control {
         border: 1px solid #000;
         border-radius: 8px;
         padding: 10px;
         color: #000;
     }
+
     .form-control:focus {
         border-color: #000;
         box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.25);
     }
+
     .btn-dark {
         background-color: #1edae8;
         border: none;
     }
+
     .btn-dark:hover {
         background-color: #1edae8;
     }
+
     .card-header {
         background-color: #1edae8;
         color: #fff;
     }
-    
+
     /* Password toggle styles */
     .password-input-group {
         position: relative;
     }
+
     .password-toggle {
         position: absolute;
         right: 12px;
@@ -54,15 +61,18 @@
         align-items: center;
         justify-content: center;
     }
+
     .password-toggle:hover {
         color: #000;
     }
+
     .password-toggle:focus {
         outline: none;
     }
-     h4.mb-0 {
-            color: white;
-        }
+
+    h4.mb-0 {
+        color: white;
+    }
 </style>
 
 <div class="content">
@@ -86,7 +96,7 @@
                     </ul>
                 </div>
                 @endif
-                
+
                 <div class="form-container mx-auto" style="max-width: 700px;">
                     <form method="POST" action="{{ route('products.store') }}">
                         @csrf
@@ -94,8 +104,19 @@
                             <label for="name" class="form-label">Product Name</label>
                             <input type="text" name="name" id="name" value="{{ old('name') }}" placeholder="Enter Product Name" class="form-control" required>
                         </div>
-                      
-                       
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Size</label>
+                            <select name="size_id" class="form-control" required>
+                                <option value="">Select Size</option>
+                                @foreach ($size as $item)
+                                <option value="{{ $item->id }}">{{ $item->size }}</option>
+
+                                @endforeach
+
+                            </select>
+                        </div>
+
+
                         <div class="text-end">
                             <button type="submit" class="btn btn-dark">
                                 <i class="bi bi-save me-1"></i> Save Product
@@ -112,13 +133,13 @@
     document.addEventListener('DOMContentLoaded', function() {
         // Password toggle functionality
         const toggleButtons = document.querySelectorAll('.password-toggle');
-        
+
         toggleButtons.forEach(button => {
             button.addEventListener('click', function() {
                 const targetId = this.getAttribute('data-target');
                 const passwordInput = document.getElementById(targetId);
                 const icon = this.querySelector('i');
-                
+
                 if (passwordInput.type === 'password') {
                     passwordInput.type = 'text';
                     icon.classList.remove('bi-eye');

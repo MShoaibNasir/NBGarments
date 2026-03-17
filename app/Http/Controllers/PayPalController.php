@@ -86,44 +86,43 @@ class PaypalController extends Controller
         $invoice=Invoice::where('secrete_id',$invoice_id)->first();
         return view('paypal.error',['invoice'=>$invoice]);
     }
-    public function createOrder(Request $request)
+public function createOrder()
 {
-    $amount = $request->amount;
+    $token = $this->getAccessToken();
 
-    $response = Http::withBasicAuth(env('PAYPAL_CLIENT_ID'), env('PAYPAL_SECRET'))
-        ->post("https://api-m.paypal.com/v2/checkout/orders", [
+    $response = Http::withToken($token)
+        ->post('https://api-m.sandbox.paypal.com/v2/checkout/orders', [
             "intent" => "CAPTURE",
             "purchase_units" => [
                 [
                     "amount" => [
                         "currency_code" => "USD",
-                        "value" => $amount
+                        "value" => "10.00"
                     ]
                 ]
             ]
         ]);
 
+    $data = $response->json();
+
     return response()->json([
-        'orderID' => $response['id']
+        'id' => $data['id']
     ]);
 }
 
-public function captureOrder(Request $request)
+public function captureOrder($id)
 {
-    $orderId = $request->order_id;
+    $token = $this->getAccessToken();
 
-    $response = Http::withBasicAuth(env('PAYPAL_CLIENT_ID'), env('PAYPAL_SECRET'))
-        ->post("https://api-m.paypal.com/v2/checkout/orders/{$orderId}/capture");
+    $response = Http::withToken($token)
+        ->post("https://api-m.sandbox.paypal.com/v2/checkout/orders/{$id}/capture");
 
-    // ✅ Save payment in database
-    Payment::create([
-        'invoice_id' => $request->invoice_id,
-        'paypal_order_id' => $orderId,
-        'status' => 'success',
-        'amount' => $response['purchase_units'][0]['payments']['captures'][0]['amount']['value']
-    ]);
+    return response()->json($response->json());
+}
 
-    return response()->json(['status' => 'success']);
+
+public function paypalDemoPage(){
+    return view('paypal');
 }
 
 
