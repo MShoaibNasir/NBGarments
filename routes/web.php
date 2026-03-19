@@ -125,6 +125,7 @@ Route::prefix('cash-records')->controller(CashRecordsController::class)->group(f
 Route::prefix('product-cost')->controller(ProductCostController::class)->group(function () {
     Route::post('/save/product', 'saveProduct')->name('save.product.cost');
     Route::post('/list/product', 'listProduct')->name('list.product.cost');
+    Route::get('/list/product/delete/{id}', 'delete')->name('list.product.delete');
 });
 
 

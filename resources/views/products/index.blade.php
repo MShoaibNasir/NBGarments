@@ -80,6 +80,7 @@
                                 <th>#</th>
                                 <th>Product Name</th>
                                 <th>Size</th>
+                                <th>Total Cost</th>
                                 <th class="text-center" width="250px">Actions</th>
                             </tr>
                         </thead>
@@ -89,6 +90,7 @@
                                 <td>{{ $index + 1 }}</td>
                                 <td>{{ ucfirst($product->name) }}</td>
                                 <td>{{ $product->size->size ?? '-----' }}</td>
+                                <td>{{ number_format($product->amount) ?? '-----' }}</td>
                                 <td class="text-center action-btns">
                                     @can('product-edit')
                                     <a href="{{ route('products.edit', $product->id) }}" class="btn btn-success btn-sm">

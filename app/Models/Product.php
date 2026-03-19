@@ -20,4 +20,8 @@ class Product extends Model
     {
         return $this->belongsTo(Size::class, 'size_id', 'id');
     }
+      public function ProductCost()
+    {
+        return $this->hasMany(ProductCost::class, 'product_id', 'id');
+    }
 }

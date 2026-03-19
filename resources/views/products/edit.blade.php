@@ -77,6 +77,9 @@
 
 <div class="content">
     @include('dashboard.layout.navbar')
+
+
+    
     <div class="container py-4">
         <div class="card shadow-lg border-0">
             <div class="card-header d-flex justify-content-between align-items-center">
@@ -96,6 +99,7 @@
                     </ul>
                 </div>
                 @endif
+
                 <input type="hidden" name="product_id" id="product_id" value="{{$product->id}}">
 
                 <div class="form-container mx-auto" style="max-width: 700px;">
