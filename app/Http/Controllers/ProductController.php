@@ -83,8 +83,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product): View
     {
-        
-        return view('products.edit', compact('product'));
+        $size=DB::table('size')->get();
+        return view('products.edit', compact('product','size'));
     }
 
     /**

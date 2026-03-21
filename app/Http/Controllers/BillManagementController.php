@@ -55,7 +55,7 @@ class BillManagementController extends Controller
         DB::beginTransaction();
 
         try {
-
+         
             // ⭐ Calculate totals from arrays
             $totalQty = array_sum($request->qty);
             $totalAmount = array_sum($request->amount);
@@ -81,12 +81,30 @@ class BillManagementController extends Controller
             // ✅ Save Bill Products
             foreach ($request->product_id as $key => $product_id) {
 
+
+                $product_amount = Product::where('id', $product_id)->select('amount')->first();
+                
+                $difference = $request->price[$key] - $product_amount->amount;
+              
+             
+                $status = null;
+                if ($difference > 0) {
+                    $status = "Profit";
+                } elseif ($difference < 0) {
+                    $status = "Loss";
+                } else {
+                    $status = "draw";
+                }
+
+
                 BillProducts::create([
                     'bill_id'    => $bill->id,
                     'product_id' => $product_id,
                     'qty'        => $request->qty[$key],
                     'price'      => $request->price[$key],
                     'amount'     => $request->amount[$key],
+                    'msn'     => $difference,
+                    'status'     => $status,
                 ]);
             }
 

@@ -79,7 +79,7 @@
     @include('dashboard.layout.navbar')
 
 
-    
+
     <div class="container py-4">
         <div class="card shadow-lg border-0">
             <div class="card-header d-flex justify-content-between align-items-center">
@@ -110,16 +110,31 @@
                             <label for="name" class="form-label">Product Name</label>
                             <input type="text" name="name" id="name" value="{{ $product->name }}" class="form-control" required>
                         </div>
-
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Size</label>
+                            <select name="size_id" class="form-control" required>
+                                <option value="">Select Size</option>
+                                @foreach ($size as $item)
+                                <option value="{{ $item->id }}" {{$item->id==$product->size_id ? 'selected' : ''}}>{{ $item->size }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Amount Per Piece</label>
+                            <input type="number" name="amount" class="form-control" value="{{$product->amount   }}">
+                        </div>
 
                         <div class="text-end">
                             <button type="submit" class="btn btn-dark">
                                 <i class="bi bi-save me-1"></i> Update Product
                             </button>
                         </div>
+
+
+
                     </form>
 
-                    <hr>
+                    {{-- <hr>
                     <br>
                     <div id="certificateContainer">
                         <div class="dynamic-section">
@@ -138,6 +153,7 @@
                     </div>
 
                     <div id="showCertificate"></div>
+                    --}}
 
                 </div>
             </div>
@@ -211,7 +227,7 @@
 
             success: function(response) {
                 console.log(response);
-                
+
                 $('#showCertificate').html(response);
             },
             error: function(xhr, status, error) {
