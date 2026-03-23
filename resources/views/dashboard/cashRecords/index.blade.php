@@ -22,16 +22,13 @@
                 <tbody>
 
                     {{-- 🔥 Running total variable --}}
-                    @php $runningTotal = 0; @endphp
-
+                   @php $runningTotal = $openingBalance; @endphp
                     @foreach($data as $item)
-
                     @php
                     if ($item->table_name == 'Payment') {
                     $amount = $item->paymnent->amount ?? null;
                     }
                     else{
-
                     $amount = $item->expenses->amount;
                     }
 

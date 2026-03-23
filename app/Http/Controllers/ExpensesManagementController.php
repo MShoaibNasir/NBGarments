@@ -193,7 +193,12 @@ class ExpensesManagementController extends Controller
         // ✅ Pagination
         $data = $invoice->paginate($qty, ['*'], 'page', $page)
             ->setPath($custom_pagination_path);
-        $total_sell_amount = number_format($data->sum('amount'));
+
+
+        $total_sell_amount = Expenses::where('user_id', Auth::id())
+            ->whereNotNull('amount')
+            ->sum('amount');
+        $total_sell_amount = number_format($total_sell_amount);
         //  $jsondata = json_encode($selected_data);
 
         return view('dashboard.expenses.list', compact('data', 'total_sell_amount'))->render();

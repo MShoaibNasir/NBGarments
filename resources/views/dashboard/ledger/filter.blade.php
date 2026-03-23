@@ -69,19 +69,20 @@
                                     <div class="filters-toolbar__item mb-3 col-md-4">
                                         <label for="direction">Direction</label>
                                         <select name="direction" id="direction" class="form-control">
-                                            <option value="asc">ASC</option>
-                                            <option value="desc" selected>DESC</option>
+                                            <option value="asc" selected>ASC</option>
+                                            <option value="desc"  >DESC</option>
                                         </select>
                                     </div>
 
                                     <div class="filters-toolbar__item mb-3 col-md-4">
                                         <label for="qty">Quantity</label>
                                         <select name="qty" id="qty" class="form-control">
-                                            <option value="10" selected>10</option>
+                                            <option value="5" >5</option>
                                             <option value="25">25</option>
                                             <option value="50">50</option>
                                             <option value="100">100</option>
                                             <option value="500" selected>500</option>
+                                            <option value="5000">5000</option>
                                         </select>
                                     </div>
                                     {{-- <div class="filters-toolbar__item mb-3 col-md-4">

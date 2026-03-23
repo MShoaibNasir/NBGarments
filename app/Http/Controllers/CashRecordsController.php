@@ -22,11 +22,9 @@ class CashRecordsController extends Controller
 
     public function list(Request $request)
     {
-
-        $page = $request->get('ayis_page');
-        $qty = $request->get('qty');
-        $status = $request->get('status');
-        $custom_pagination_path = '';
+        // ✅ Defaults
+        $page = (int) ($request->get('ayis_page') ?? 1);
+        $qty = (int) ($request->get('qty') ?? 10);
 
         $first_name = $request->get('first_name');
         $bill_no = $request->get('bill_no');
@@ -34,69 +32,86 @@ class CashRecordsController extends Controller
         $sorting = $request->get('sorting');
         $order = $request->get('direction');
 
-        $invoice = CashRecords::where('user_id', Auth::id());
-        //$customer_name=Customer::where('id',$request->customer_id)->select('name')->first();
-
         $start_date = $request->get('start_date');
         $end_date = $request->get('end_date');
 
+        $custom_pagination_path = '';
+
+        // ✅ Base Query (apply filters once)
+        $baseQuery = CashRecords::where('user_id', Auth::id());
+
         // ✅ Filters
         if ($first_name) {
-            $invoice->whereHas('customer', function ($q) use ($first_name) {
+            $baseQuery->whereHas('customer', function ($q) use ($first_name) {
                 $q->where('name', 'like', '%' . $first_name . '%');
             });
         }
+
         if ($product_name) {
-            $invoice->whereHas('product', function ($q) use ($product_name) {
+            $baseQuery->whereHas('product', function ($q) use ($product_name) {
                 $q->where('name', 'like', '%' . $product_name . '%');
             });
         }
 
-
         if ($start_date && $end_date) {
-            $invoice->whereBetween('created_at', [
+            $baseQuery->whereBetween('created_at', [
                 $start_date . ' 00:00:00',
                 $end_date . ' 23:59:59'
             ]);
         } elseif ($start_date) {
-            $invoice->where('created_at', '>=', $start_date . ' 00:00:00');
+            $baseQuery->where('created_at', '>=', $start_date . ' 00:00:00');
         } elseif ($end_date) {
-            $invoice->where('created_at', '<=', $end_date . ' 23:59:59');
+            $baseQuery->where('created_at', '<=', $end_date . ' 23:59:59');
         }
 
         if ($bill_no) {
-            $invoice->where('cheque_no', 'like', '%' . $bill_no . '%');
+            $baseQuery->where('cheque_no', 'like', '%' . $bill_no . '%');
         }
 
-        // ✅ Sorting
+        // ✅ Clone queries
+        $invoice = clone $baseQuery;
+        $previousRecordsQuery = clone $baseQuery;
+
+        // ✅ Sorting (same for both)
         if ($sorting && $order) {
             $invoice->orderBy($sorting, $order);
+            $previousRecordsQuery->orderBy($sorting, $order);
+        } else {
+            $invoice->orderBy('created_at', 'asc');
+            $previousRecordsQuery->orderBy('created_at', 'asc');
         }
 
-        // ✅ Build exportable data
-        $i = 1;
-        // $selected_data = $invoice->get()->map(function ($item) use (&$i) {
-        //     return [
-        //         'S No'        => $i++,
-        //         'Time'        => $item->created_at->format('d-m-Y H:i:s'),
-        //         'First Name'  => ucfirst($item->first_name),
-        //         'Last Name'   => ucfirst($item->last_name),
-        //         'Email'       => $item->email_address,
-        //         'Phone No'    => $item->phone_number,
-        //         'Address'     => $item->address,
-        //         'Amount'      => number_format($item->invoiceAmount->total_amount ?? 0, 2),
-        //         'URL'         => $item->url,
-        //         'Brand'       => $item->brand->link ?? null
-        //     ];
-        // })->toArray(); // ✅ convert to array for Excel
+        // ✅ Offset
+        $offset = ($page - 1) * $qty;
+
+        // ✅ Previous records for opening balance
+        $previousRecords = $previousRecordsQuery
+            ->take($offset)
+            ->get();
+       
+
+        // ✅ Opening Balance Calculation
+        $openingBalance = 0;
+
+        foreach ($previousRecords as $item) {            
+            if ($item->table_name == 'Payment') {
+                $openingBalance += $item->paymnent->amount ?? 0;
+            } else {
+                $openingBalance -= $item->expenses->amount ?? 0;
+            }
+        }
 
         // ✅ Pagination
         $data = $invoice->paginate($qty, ['*'], 'page', $page)
             ->setPath($custom_pagination_path);
-        $total_sell_amount = number_format($data->sum('amount'));
-        //  $jsondata = json_encode($selected_data);
-       
 
-        return view('dashboard.cashRecords.index', compact('data'))->render();
+        $total_sell_amount = number_format($data->sum('amount'));
+
+        // ✅ Return view
+        return view('dashboard.cashRecords.index', compact(
+            'data',
+            'openingBalance',
+            'total_sell_amount'
+        ))->render();
     }
 }

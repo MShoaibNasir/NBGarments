@@ -62,11 +62,24 @@ class CustomerPaymentController extends Controller
             // Create Payment
             $payment = Payment::create($data);
 
+
+            $ledger_update = Ledger::where('customer_id', $request->customer_id)->first();
+            $ledger_previous_amount = 0;
+            if ($ledger_update) {
+                $ledger_previous_amount = $ledger_update->remnaing_amount - $request->amount;
+            } else {
+                $ledger_previous_amount = $request->amount;
+            }
+
+
+
+
             Ledger::create([
                 'table_name'  => 'Payment',
                 'primary_id'  => $payment->id,
                 'user_id'     => Auth::id(),
                 'customer_id' => $request->customer_id,
+                'remnaing_amount' => $ledger_previous_amount
             ]);
 
             CashRecords::create([
@@ -124,6 +137,17 @@ class CustomerPaymentController extends Controller
 
         // Update payment
         $payment->update($data);
+
+
+        if (isset($request->amount)) {
+
+            $previous_amount = Ledger::where('customer_id', $request->customer_id)
+                ->latest()
+                ->skip(1)
+                ->first();
+            $ledger_update = Ledger::where('primary_id', $request->id)->where('table_name', 'Payment')->update(['remnaing_amount' => $previous_amount->remnaing_amount - $request->amount]);
+        }
+
 
         return redirect()
             ->route('payment.filter')

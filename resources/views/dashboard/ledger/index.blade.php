@@ -22,7 +22,7 @@
                 <tbody>
 
                     {{-- 🔥 Running total variable --}}
-                    @php $runningTotal = 0; @endphp
+                    @php $runningTotal = $openingBalance; @endphp
 
                     @foreach($data as $item)
 
@@ -37,11 +37,11 @@
 
                     // Payment = Incoming (Plus)
                     if ($item->table_name == 'Payment') {
-                    $runningTotal += $amount;
+                    $runningTotal -= $amount;
                     }
                     // Bill = Outgoing (Minus)
                     else {
-                    $runningTotal -= $amount;
+                    $runningTotal += $amount;
                     }
 
                     // Row color

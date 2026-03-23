@@ -71,6 +71,9 @@ class BillManagementController extends Controller
             ]);
 
             // ✅ Ledger Entry
+
+            
+
             Ledger::create([
                 'table_name'  => 'Bill',
                 'primary_id'  => $bill->id,
@@ -266,6 +269,9 @@ class BillManagementController extends Controller
         $order = $request->get('direction');
 
         $invoice = Bill::where('user_id', Auth::id());
+
+
+
         $start_date = $request->get('start_date');
         $end_date = $request->get('end_date');
 
@@ -322,7 +328,11 @@ class BillManagementController extends Controller
         // ✅ Pagination
         $data = $invoice->paginate($qty, ['*'], 'page', $page)
             ->setPath($custom_pagination_path);
-        $total_sell_amount = number_format($data->sum('total_amount'));
+        
+        $total_sell_amount = Bill::where('user_id', Auth::id())
+            ->whereNotNull('total_amount')
+            ->sum('total_amount');
+        $total_sell_amount = number_format($total_sell_amount);
         //  $jsondata = json_encode($selected_data);
 
         return view('dashboard.bill.list', compact('data', 'total_sell_amount'))->render();
@@ -335,3 +345,4 @@ class BillManagementController extends Controller
         return view('dashboard.bill.filter');
     }
 }
+    
