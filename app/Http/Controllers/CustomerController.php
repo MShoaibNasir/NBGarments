@@ -11,7 +11,7 @@ class CustomerController extends Controller
     public function index()
     {
         checkAuthentication();
-        $customer = Customer::where('user_id', Auth::user()->id)->get();
+        $customer = Customer::where('user_id', Auth::user()->id)->where('status','customer')->get();
         return view('dashboard.customer.index', compact('customer'));
     }   
 
@@ -24,7 +24,8 @@ class CustomerController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'address' => 'max:255'
+            'address' => 'max:255',
+            'status'=>'required'
 
         ]);
         $data = $request->all();
@@ -49,7 +50,8 @@ class CustomerController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'address' => 'max:255'
+            'address' => 'max:255',
+            'status'=>'required'
 
         ]);
         $brand = Customer::findOrFail($id);

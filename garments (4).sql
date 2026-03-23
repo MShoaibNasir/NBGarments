@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 19, 2026 at 07:13 AM
--- Server version: 9.3.0
--- PHP Version: 7.4.33
+-- Generation Time: Mar 23, 2026 at 04:48 PM
+-- Server version: 8.0.43
+-- PHP Version: 8.2.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -69,6 +69,13 @@ CREATE TABLE `bill` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `bill`
+--
+
+INSERT INTO `bill` (`id`, `bill_no`, `customer_id`, `product_id`, `user_id`, `qty`, `total_amount`, `status`, `is_cash`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'C-9000', 5, NULL, 6, 100, 280000, 0, 0, '2026-03-22 14:16:33', '2026-03-22 14:44:16', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -82,6 +89,8 @@ CREATE TABLE `bill_products` (
   `qty` bigint DEFAULT NULL,
   `price` varchar(255) DEFAULT NULL,
   `amount` varchar(255) DEFAULT NULL,
+  `msn` varchar(255) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -91,19 +100,20 @@ CREATE TABLE `bill_products` (
 -- Dumping data for table `bill_products`
 --
 
-INSERT INTO `bill_products` (`id`, `bill_id`, `product_id`, `qty`, `price`, `amount`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 8, 4, 100, '1900', '190000', '2026-02-22 01:19:56', '2026-02-22 01:39:35', '2026-02-22 01:39:35'),
-(2, 8, 4, 180, '3400', '612000', '2026-02-22 01:19:56', '2026-02-22 01:39:35', '2026-02-22 01:39:35'),
-(3, 8, 4, 100, '1900', '190000', '2026-02-22 01:39:35', '2026-02-22 01:48:52', '2026-02-22 01:48:52'),
-(4, 8, 4, 180, '3400', '612000', '2026-02-22 01:39:35', '2026-02-22 01:48:52', '2026-02-22 01:48:52'),
-(5, 8, 4, 100, '1900', '190000', '2026-02-22 01:48:52', '2026-02-22 01:56:26', '2026-02-22 01:56:26'),
-(6, 8, 4, 180, '3400', '612000', '2026-02-22 01:48:52', '2026-02-22 01:56:26', '2026-02-22 01:56:26'),
-(7, 8, 4, 100, '1900', '190000', '2026-02-22 01:56:26', '2026-02-22 01:57:09', '2026-02-22 01:57:09'),
-(8, 8, 4, 120, '3400', '408000', '2026-02-22 01:56:26', '2026-02-22 01:57:09', '2026-02-22 01:57:09'),
-(9, 8, 4, 100, '1900', '190000', '2026-02-22 01:57:09', '2026-02-22 01:57:09', NULL),
-(10, 8, 4, 40, '3400', '136000', '2026-02-22 01:57:09', '2026-02-22 01:57:09', NULL),
-(11, 9, 4, 144, '2300', '331200', '2026-02-22 12:46:26', '2026-02-22 12:46:26', NULL),
-(12, 9, 5, 200, '1900', '380000', '2026-02-22 12:46:26', '2026-02-22 12:46:26', NULL);
+INSERT INTO `bill_products` (`id`, `bill_id`, `product_id`, `qty`, `price`, `amount`, `msn`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 8, 4, 100, '1900', '190000', NULL, NULL, '2026-02-22 01:19:56', '2026-02-22 01:39:35', '2026-02-22 01:39:35'),
+(2, 8, 4, 180, '3400', '612000', NULL, NULL, '2026-02-22 01:19:56', '2026-02-22 01:39:35', '2026-02-22 01:39:35'),
+(3, 8, 4, 100, '1900', '190000', NULL, NULL, '2026-02-22 01:39:35', '2026-02-22 01:48:52', '2026-02-22 01:48:52'),
+(4, 8, 4, 180, '3400', '612000', NULL, NULL, '2026-02-22 01:39:35', '2026-02-22 01:48:52', '2026-02-22 01:48:52'),
+(5, 8, 4, 100, '1900', '190000', NULL, NULL, '2026-02-22 01:48:52', '2026-02-22 01:56:26', '2026-02-22 01:56:26'),
+(6, 8, 4, 180, '3400', '612000', NULL, NULL, '2026-02-22 01:48:52', '2026-02-22 01:56:26', '2026-02-22 01:56:26'),
+(7, 8, 4, 100, '1900', '190000', NULL, NULL, '2026-02-22 01:56:26', '2026-02-22 01:57:09', '2026-02-22 01:57:09'),
+(8, 8, 4, 120, '3400', '408000', NULL, NULL, '2026-02-22 01:56:26', '2026-02-22 01:57:09', '2026-02-22 01:57:09'),
+(15, 4, 4, 96, '1800', '172800', '170000', 'Profit', '2026-03-20 10:24:56', '2026-03-20 10:24:56', NULL),
+(16, 10, 4, 96, '3000', '288000', '200', 'Profit', '2026-03-20 10:30:38', '2026-03-20 10:30:38', NULL),
+(17, 11, 6, 40, '40000', '1600000', '38400', 'Profit', '2026-03-20 10:32:17', '2026-03-20 10:32:17', NULL),
+(18, 1, 4, 100, '2900', '290000', '100', 'Profit', '2026-03-22 14:16:33', '2026-03-22 14:44:16', '2026-03-22 14:44:16'),
+(19, 1, 4, 100, '2800', '280000', NULL, NULL, '2026-03-22 14:44:16', '2026-03-22 14:44:16', NULL);
 
 -- --------------------------------------------------------
 
@@ -146,7 +156,7 @@ CREATE TABLE `cache` (
 --
 
 INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
-('laravel-cache-spatie.permission.cache', 'a:3:{s:5:\"alias\";a:4:{s:1:\"a\";s:2:\"id\";s:1:\"b\";s:4:\"name\";s:1:\"c\";s:10:\"guard_name\";s:1:\"r\";s:5:\"roles\";}s:11:\"permissions\";a:35:{i:0;a:4:{s:1:\"a\";i:1;s:1:\"b\";s:9:\"role-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:1;a:4:{s:1:\"a\";i:2;s:1:\"b\";s:11:\"role-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:2;a:4:{s:1:\"a\";i:3;s:1:\"b\";s:9:\"role-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:3;a:4:{s:1:\"a\";i:4;s:1:\"b\";s:11:\"role-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:4;a:4:{s:1:\"a\";i:5;s:1:\"b\";s:12:\"product-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:5;a:4:{s:1:\"a\";i:6;s:1:\"b\";s:14:\"product-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:6;a:4:{s:1:\"a\";i:7;s:1:\"b\";s:12:\"product-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:7;a:4:{s:1:\"a\";i:8;s:1:\"b\";s:14:\"product-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:8;a:4:{s:1:\"a\";i:9;s:1:\"b\";s:9:\"user-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:9;a:4:{s:1:\"a\";i:10;s:1:\"b\";s:11:\"user-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:10;a:4:{s:1:\"a\";i:11;s:1:\"b\";s:11:\"user-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:11;a:4:{s:1:\"a\";i:12;s:1:\"b\";s:9:\"user-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:12;a:4:{s:1:\"a\";i:13;s:1:\"b\";s:11:\"bill-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:13;a:4:{s:1:\"a\";i:14;s:1:\"b\";s:9:\"bill-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:14;a:4:{s:1:\"a\";i:15;s:1:\"b\";s:13:\"customer-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:15;a:4:{s:1:\"a\";i:16;s:1:\"b\";s:15:\"customer-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:16;a:4:{s:1:\"a\";i:17;s:1:\"b\";s:15:\"customer-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:17;a:4:{s:1:\"a\";i:18;s:1:\"b\";s:13:\"customer-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:18;a:4:{s:1:\"a\";i:19;s:1:\"b\";s:9:\"bill-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:19;a:4:{s:1:\"a\";i:20;s:1:\"b\";s:11:\"bill-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:20;a:4:{s:1:\"a\";i:21;s:1:\"b\";s:14:\"customer-laser\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:21;a:4:{s:1:\"a\";i:22;s:1:\"b\";s:15:\"expenses-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:22;a:4:{s:1:\"a\";i:23;s:1:\"b\";s:13:\"expenses-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:23;a:4:{s:1:\"a\";i:24;s:1:\"b\";s:13:\"expenses-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:24;a:4:{s:1:\"a\";i:25;s:1:\"b\";s:15:\"expenses-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:25;a:4:{s:1:\"a\";i:26;s:1:\"b\";s:11:\"bank-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:26;a:4:{s:1:\"a\";i:27;s:1:\"b\";s:9:\"bank-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:27;a:4:{s:1:\"a\";i:28;s:1:\"b\";s:11:\"bank-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:28;a:4:{s:1:\"a\";i:29;s:1:\"b\";s:9:\"bank-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:29;a:4:{s:1:\"a\";i:30;s:1:\"b\";s:14:\"payment-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:30;a:4:{s:1:\"a\";i:31;s:1:\"b\";s:12:\"payment-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:31;a:4:{s:1:\"a\";i:32;s:1:\"b\";s:12:\"payment-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:32;a:4:{s:1:\"a\";i:33;s:1:\"b\";s:14:\"payment-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:33;a:4:{s:1:\"a\";i:34;s:1:\"b\";s:9:\"roznamcha\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:34;a:4:{s:1:\"a\";i:35;s:1:\"b\";s:9:\"bill-show\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}}s:5:\"roles\";a:2:{i:0;a:3:{s:1:\"a\";i:1;s:1:\"b\";s:5:\"Admin\";s:1:\"c\";s:3:\"web\";}i:1;a:3:{s:1:\"a\";i:2;s:1:\"b\";s:8:\"Employee\";s:1:\"c\";s:3:\"web\";}}}', 1773827602);
+('laravel-cache-spatie.permission.cache', 'a:3:{s:5:\"alias\";a:4:{s:1:\"a\";s:2:\"id\";s:1:\"b\";s:4:\"name\";s:1:\"c\";s:10:\"guard_name\";s:1:\"r\";s:5:\"roles\";}s:11:\"permissions\";a:35:{i:0;a:4:{s:1:\"a\";i:1;s:1:\"b\";s:9:\"role-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:1;a:4:{s:1:\"a\";i:2;s:1:\"b\";s:11:\"role-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:2;a:4:{s:1:\"a\";i:3;s:1:\"b\";s:9:\"role-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:3;a:4:{s:1:\"a\";i:4;s:1:\"b\";s:11:\"role-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:4;a:4:{s:1:\"a\";i:5;s:1:\"b\";s:12:\"product-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:5;a:4:{s:1:\"a\";i:6;s:1:\"b\";s:14:\"product-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:6;a:4:{s:1:\"a\";i:7;s:1:\"b\";s:12:\"product-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:7;a:4:{s:1:\"a\";i:8;s:1:\"b\";s:14:\"product-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:8;a:4:{s:1:\"a\";i:9;s:1:\"b\";s:9:\"user-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:9;a:4:{s:1:\"a\";i:10;s:1:\"b\";s:11:\"user-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:10;a:4:{s:1:\"a\";i:11;s:1:\"b\";s:11:\"user-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:11;a:4:{s:1:\"a\";i:12;s:1:\"b\";s:9:\"user-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:12;a:4:{s:1:\"a\";i:13;s:1:\"b\";s:11:\"bill-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:13;a:4:{s:1:\"a\";i:14;s:1:\"b\";s:9:\"bill-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:14;a:4:{s:1:\"a\";i:15;s:1:\"b\";s:13:\"customer-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:15;a:4:{s:1:\"a\";i:16;s:1:\"b\";s:15:\"customer-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:16;a:4:{s:1:\"a\";i:17;s:1:\"b\";s:15:\"customer-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:17;a:4:{s:1:\"a\";i:18;s:1:\"b\";s:13:\"customer-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:18;a:4:{s:1:\"a\";i:19;s:1:\"b\";s:9:\"bill-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:19;a:4:{s:1:\"a\";i:20;s:1:\"b\";s:11:\"bill-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:20;a:4:{s:1:\"a\";i:21;s:1:\"b\";s:14:\"customer-laser\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:21;a:4:{s:1:\"a\";i:22;s:1:\"b\";s:15:\"expenses-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:22;a:4:{s:1:\"a\";i:23;s:1:\"b\";s:13:\"expenses-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:23;a:4:{s:1:\"a\";i:24;s:1:\"b\";s:13:\"expenses-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:24;a:4:{s:1:\"a\";i:25;s:1:\"b\";s:15:\"expenses-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:25;a:4:{s:1:\"a\";i:26;s:1:\"b\";s:11:\"bank-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:26;a:4:{s:1:\"a\";i:27;s:1:\"b\";s:9:\"bank-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:27;a:4:{s:1:\"a\";i:28;s:1:\"b\";s:11:\"bank-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:28;a:4:{s:1:\"a\";i:29;s:1:\"b\";s:9:\"bank-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:29;a:4:{s:1:\"a\";i:30;s:1:\"b\";s:14:\"payment-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:30;a:4:{s:1:\"a\";i:31;s:1:\"b\";s:12:\"payment-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:31;a:4:{s:1:\"a\";i:32;s:1:\"b\";s:12:\"payment-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:32;a:4:{s:1:\"a\";i:33;s:1:\"b\";s:14:\"payment-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:33;a:4:{s:1:\"a\";i:34;s:1:\"b\";s:9:\"roznamcha\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:34;a:4:{s:1:\"a\";i:35;s:1:\"b\";s:9:\"bill-show\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}}s:5:\"roles\";a:2:{i:0;a:3:{s:1:\"a\";i:1;s:1:\"b\";s:5:\"Admin\";s:1:\"c\";s:3:\"web\";}i:1;a:3:{s:1:\"a\";i:2;s:1:\"b\";s:8:\"Employee\";s:1:\"c\";s:3:\"web\";}}}', 1774293208);
 
 -- --------------------------------------------------------
 
@@ -176,6 +186,16 @@ CREATE TABLE `cash_records` (
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `cash_records`
+--
+
+INSERT INTO `cash_records` (`id`, `table_name`, `primary_id`, `user_id`, `customer_id`, `created_at`, `updated_at`) VALUES
+(1, 'Payment', 1, 6, 5, '2026-03-22 14:24:49', '2026-03-22 14:24:49'),
+(2, 'Payment', 2, 6, 5, '2026-03-22 14:47:29', '2026-03-22 14:47:29'),
+(3, 'Payment', 3, 6, 5, '2026-03-22 14:47:50', '2026-03-22 14:47:50'),
+(4, 'expenses', 1, 6, NULL, '2026-03-22 15:21:35', '2026-03-22 15:21:35');
+
 -- --------------------------------------------------------
 
 --
@@ -187,6 +207,7 @@ CREATE TABLE `customers` (
   `name` varchar(255) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `user_id` int DEFAULT NULL,
+  `status` enum('customer','Supplier') NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -196,11 +217,13 @@ CREATE TABLE `customers` (
 -- Dumping data for table `customers`
 --
 
-INSERT INTO `customers` (`id`, `name`, `address`, `user_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(4, 'Vickey', 'Careem Center', 6, '2026-02-04 04:21:20', '2026-02-04 05:28:16', NULL),
-(5, 'Mana Careem Center', NULL, 6, '2026-02-07 08:05:58', '2026-02-07 08:05:58', NULL),
-(6, 'ubaid', 'makah center', 6, '2026-02-20 12:33:17', '2026-02-20 12:33:17', NULL),
-(7, 'cash', NULL, 6, '2026-02-20 12:36:15', '2026-02-22 00:58:14', '2026-02-22 00:58:14');
+INSERT INTO `customers` (`id`, `name`, `address`, `user_id`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(4, 'Vickey', 'Careem Center', 6, 'customer', '2026-02-04 04:21:20', '2026-02-04 05:28:16', NULL),
+(5, 'Mana Careem Center', NULL, 6, 'customer', '2026-02-07 08:05:58', '2026-02-07 08:05:58', NULL),
+(6, 'ubaid', 'makah center', 6, 'customer', '2026-02-20 12:33:17', '2026-02-20 12:33:17', NULL),
+(7, 'cash', NULL, 6, 'customer', '2026-02-20 12:36:15', '2026-02-22 00:58:14', '2026-02-22 00:58:14'),
+(8, 'shoaib', 'address', 6, 'customer', '2026-03-23 11:28:18', '2026-03-23 11:28:18', NULL),
+(9, 'Sami', 'Sami', 6, 'Supplier', '2026-03-23 11:35:41', '2026-03-23 11:35:41', NULL);
 
 -- --------------------------------------------------------
 
@@ -223,6 +246,15 @@ CREATE TABLE `customer_payments` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `customer_payments`
+--
+
+INSERT INTO `customer_payments` (`id`, `user_id`, `customer_id`, `amount`, `reference`, `is_cheque`, `bank_id`, `cheque_no`, `description`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 6, 5, 100000, 'cash (khud)', 0, NULL, NULL, 'cash (khud)', '2026-03-22 14:24:49', '2026-03-22 14:38:49', NULL),
+(2, 6, 5, 70000, NULL, 0, NULL, NULL, NULL, '2026-03-22 14:47:29', '2026-03-22 14:47:29', NULL),
+(3, 6, 5, 50000, NULL, 0, NULL, NULL, NULL, '2026-03-22 14:47:50', '2026-03-22 14:47:50', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -239,6 +271,13 @@ CREATE TABLE `expenses` (
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `expenses`
+--
+
+INSERT INTO `expenses` (`id`, `user_id`, `amount`, `description`, `refrence`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 6, 90000, 'sami crincal cash', 'sami crincal cash', '2026-03-22 15:21:35', '2026-03-22 15:21:35', NULL);
 
 -- --------------------------------------------------------
 
@@ -389,9 +428,20 @@ CREATE TABLE `ledger` (
   `primary_id` int DEFAULT NULL,
   `user_id` int DEFAULT NULL,
   `customer_id` int DEFAULT NULL,
+  `remnaing_amount` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `ledger`
+--
+
+INSERT INTO `ledger` (`id`, `table_name`, `primary_id`, `user_id`, `customer_id`, `remnaing_amount`, `created_at`, `updated_at`) VALUES
+(1, 'Bill', 1, 6, 5, '570000', '2026-03-22 14:16:33', '2026-03-22 14:44:16'),
+(2, 'Payment', 1, 6, 5, '190000', '2026-03-22 14:24:49', '2026-03-22 14:38:50'),
+(3, 'Payment', 2, 6, 5, '500000', '2026-03-22 14:47:29', '2026-03-22 14:47:29'),
+(4, 'Payment', 3, 6, 5, '520000', '2026-03-22 14:47:50', '2026-03-22 14:47:50');
 
 -- --------------------------------------------------------
 
@@ -575,7 +625,7 @@ CREATE TABLE `products` (
   `detail` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `user_id` int DEFAULT NULL,
   `size_id` int DEFAULT NULL,
-  `amount` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `amount` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'this is the cost column of product',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -585,9 +635,10 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `detail`, `user_id`, `size_id`, `amount`, `created_at`, `updated_at`) VALUES
-(4, 'Hayfa Case', NULL, 6, 1, NULL, '2026-02-06 07:40:09', '2026-02-06 07:40:09'),
-(5, 'KALI  WALA', NULL, 6, 2, NULL, '2026-02-08 13:00:46', '2026-02-08 13:00:46'),
-(6, 'Contrast Dobapata', NULL, 6, 2, '16300', '2026-03-17 05:06:53', '2026-03-18 01:23:44');
+(4, 'Hayfa Case', NULL, 6, 1, '2800', '2026-02-06 07:40:09', '2026-03-20 10:06:12'),
+(5, 'KALI  WALA', NULL, 6, 2, '2200', '2026-02-08 13:00:46', '2026-03-20 10:05:58'),
+(6, 'Contrast Dobapata', NULL, 6, 2, '1600', '2026-03-17 05:06:53', '2026-03-20 10:05:48'),
+(7, 'Net kali', NULL, 6, 1, '1300', '2026-03-20 10:06:26', '2026-03-20 10:06:26');
 
 -- --------------------------------------------------------
 
@@ -604,14 +655,6 @@ CREATE TABLE `product_cost` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `product_cost`
---
-
-INSERT INTO `product_cost` (`id`, `description`, `amount`, `product_id`, `user_id`, `created_at`, `updated_at`) VALUES
-(5, 'crincal kapra', '14300', 6, 6, '2026-03-18 01:23:08', '2026-03-18 01:23:08'),
-(6, 'malai 4*500', '2000', 6, 6, '2026-03-18 01:23:44', '2026-03-18 01:23:44');
 
 -- --------------------------------------------------------
 
@@ -710,7 +753,8 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('sEwjMZu7JalYOGXH8j2uhmuMRHu1jEVnwT9QhZNi', 6, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiMlBOQUdGTDFrOE0zbHJaQ1J1UUk5TTZFVG9qbFEyS2hnUEVzcVRQYiI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzY6Imh0dHA6Ly9wcmFjdGljZS50ZXN0L3Byb2R1Y3RzLzYvZWRpdCI7czo1OiJyb3V0ZSI7czoxMzoicHJvZHVjdHMuZWRpdCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjY7fQ==', 1773815040);
+('LPp6W8a5ccIKAGVdlECyjHQncCNRWf9Tt3fA9ICZ', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36 Edg/146.0.0.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoidHNiUndXT0trYU9JMjl1eFc3TVZyOEJ0Mm1jRUJLYWxycnJLcExZcSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzA6Imh0dHA6Ly9nYXJtZW50cy50ZXN0L3Nob3dMb2dpbiI7czo1OiJyb3V0ZSI7czoxMDoic2hvdy5sb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1774276398),
+('zYKiriSee3mzYoNOdbeucsUr53HnDqwFnC7Cs521', 6, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoickJ6OUd6YXBLNnVmU0NOZTltUERMQ3BYclVoVHFNalBmb0w0WEVONCI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzU6Imh0dHA6Ly9nYXJtZW50cy50ZXN0L2N1c3RvbWVyL2luZGV4IjtzOjU6InJvdXRlIjtzOjEzOiJjdXN0b21lci5saXN0Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6Njt9', 1774283741);
 
 -- --------------------------------------------------------
 
@@ -764,9 +808,9 @@ INSERT INTO `users` (`id`, `name`, `email`, `old_email`, `email_verified_at`, `p
 (2, 'shoaib', 'shoaibnasir315@gmail.com', NULL, NULL, '$2y$12$/aQ6Ef.Tm69MS1wKiSkVXeseTx1glpiXnVJ.FQD5BotB4o9xpLkI2', NULL, NULL, NULL, '2025-10-24 16:32:54', '2025-11-03 17:23:05'),
 (5, 'Demo', 'demo@gmail.com_2025-11-03 17:14:26', 'demo@gmail.com', NULL, '$2y$12$nYsrHtLG.5xWUXFHd6VM9uhblujw19I2/lFCfMNciCbBx9GAEm/AG', NULL, '2025-11-03 17:14:26', NULL, '2025-10-29 17:19:53', '2025-11-03 17:14:26'),
 (6, 'Super Admin', 'superadmin@gmail.com', NULL, NULL, '$2y$12$/aQ6Ef.Tm69MS1wKiSkVXeseTx1glpiXnVJ.FQD5BotB4o9xpLkI2', NULL, NULL, NULL, '2025-11-01 16:25:44', '2025-11-01 16:25:44'),
-(7, 'demo', 'hanzala.ahmed.a2z@gmail.com', NULL, NULL, '$2y$12$i6qZ3aDg3JDZZPPjuS3GDOoJ/nEObnfKmvAH9ATyp1VLUS8mPaV0y', NULL, NULL, NULL, '2025-11-03 18:08:38', '2025-12-01 15:04:37'),
+(7, 'demo', 'hanzala.ahmed.a2z@gmail.com_2026-03-23 07:38:34', 'hanzala.ahmed.a2z@gmail.com', NULL, '$2y$12$i6qZ3aDg3JDZZPPjuS3GDOoJ/nEObnfKmvAH9ATyp1VLUS8mPaV0y', NULL, '2026-03-23 02:38:34', NULL, '2025-11-03 18:08:38', '2026-03-23 02:38:34'),
 (8, 'test user', 'test23@gmail.com_2025-11-05 14:31:06', 'test23@gmail.com', NULL, '$2y$12$oGy6wZOdAWUetXej0GItlO9g7Ko3zpk.aSoFub3Pb/QmsrSvJP7/S', NULL, '2025-11-05 14:31:06', NULL, '2025-11-05 14:16:00', '2025-11-05 14:31:06'),
-(9, 'Test User', 'test123@gmail.com', NULL, NULL, '$2y$12$duHTM9U8hWToOM88kmseQOu8f8L6I3W0qh5RspL81jNk/TEE2kMuC', NULL, NULL, NULL, '2025-11-05 17:15:01', '2025-11-05 17:15:01');
+(9, 'Test User', 'test123@gmail.com_2026-03-23 07:38:47', 'test123@gmail.com', NULL, '$2y$12$duHTM9U8hWToOM88kmseQOu8f8L6I3W0qh5RspL81jNk/TEE2kMuC', NULL, '2026-03-23 02:38:47', NULL, '2025-11-05 17:15:01', '2026-03-23 02:38:47');
 
 --
 -- Indexes for dumped tables
@@ -972,13 +1016,13 @@ ALTER TABLE `banks`
 -- AUTO_INCREMENT for table `bill`
 --
 ALTER TABLE `bill`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `bill_products`
 --
 ALTER TABLE `bill_products`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `brand`
@@ -990,25 +1034,25 @@ ALTER TABLE `brand`
 -- AUTO_INCREMENT for table `cash_records`
 --
 ALTER TABLE `cash_records`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `customer_payments`
 --
 ALTER TABLE `customer_payments`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `expenses`
 --
 ALTER TABLE `expenses`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1038,7 +1082,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `ledger`
 --
 ALTER TABLE `ledger`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -1062,13 +1106,13 @@ ALTER TABLE `permissions`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `product_cost`
 --
 ALTER TABLE `product_cost`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `roles`

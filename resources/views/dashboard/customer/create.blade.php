@@ -61,7 +61,7 @@
                         <form action="{{ route('customer.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
-                                <label for="name" class="form-label">Customer Name</label>
+                                <label for="name" class="form-label">Name</label>
                                 <input type="text" name="name" id="name" value="{{ old('name') }}" class="form-control" placeholder="Enter name" required>
                                 @error('name')
                                     <span class="text-danger small">{{ $message }}</span>
@@ -75,6 +75,18 @@
                                     <span class="text-danger small">{{ $message }}</span>
                                 @enderror
                             </div>
+                            <div class="mb-3">
+                                <label  class="form-label">Staus</label>
+                                <select name="status" class="form-control" id="status">
+                                    <option value="">Select Option</option>
+                                    <option value="customer">Customer</option>
+                                    <option value="Supplier">Supplier</option>
+                                </select>
+                                @error('status')
+                                    <span class="text-danger small">{{ $message }}</span>
+                                @enderror
+                            </div>
+
                             <div class="text-end">
                                 <button type="submit" class="btn btn-dark">
                                     <i class="bi bi-save me-1"></i> Save Customer

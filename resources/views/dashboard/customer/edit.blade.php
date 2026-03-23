@@ -95,6 +95,19 @@
                                     <span class="text-danger small">{{ $message }}</span>
                                 @enderror
                             </div>
+
+
+                            <div class="mb-3">
+                                <label  class="form-label">Staus</label>
+                                <select name="status" class="form-control" id="status">
+                                    <option value="">Select Option</option>
+                                    <option value="customer"  {{$customer->status=='customer' ? 'selected' : ''}} >Customer</option>
+                                    <option value="Supplier"  {{$customer->status=='Supplier' ? 'selected' : ''}}>Supplier</option>
+                                </select>
+                                @error('status')
+                                    <span class="text-danger small">{{ $message }}</span>
+                                @enderror
+                            </div> 
                         <!-- Submit Button -->
                         <div class="text-end mt-4">
                             <button type="submit" class="btn btn-dark">
