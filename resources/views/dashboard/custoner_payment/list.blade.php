@@ -1,4 +1,11 @@
 <div class="row">
+    <div class="row">
+        <div class="col-12" style="text-align:end;">
+            <a href="{{ route('payment.create') }}" class="btn btn-danger btn-sm">
+                <i class="bi bi-plus-circle"></i> Add New Payment
+            </a>
+        </div>
+    </div>
     <div class="col-md-12 my-3 text-end">
         <h4>Total Amount: {{$total_sell_amount}} Rs</h4>
         {{-- <form  method="POST" action="{{route('exportInvoice')}}">
@@ -9,6 +16,9 @@
         --}}
 
     </div>
+
+
+
     <div class="col-md-12">
         <div class="table-responsive">
             <table class="table table-striped table-bordered">
@@ -40,8 +50,8 @@
                         <td>{{$item->bank->name ?? '--'}}</td>
                         <td>{{$item->cheque_no ?? '--'}}</td>
                         <td>{{number_format($item->amount)}}</td>
-                         <td>{{ $item->created_at->format('d-m-Y') }}</td>
-                       
+                        <td>{{ $item->created_at->format('d-m-Y') }}</td>
+
                         @if(Auth::user()->can('payment-edit') || Auth::user()->can('payment-delete'))
                         <td class="text-center action-btns">
                             @can('payment-edit')

@@ -18,6 +18,7 @@ use App\Http\Controllers\BankController;
 use App\Http\Controllers\LedgerController;
 use App\Http\Controllers\CashRecordsController;
 use App\Http\Controllers\ProductCostController;
+use App\Http\Controllers\SupplierController;
 
 // Default redirect
 Route::get('/', function () {
@@ -69,6 +70,13 @@ Route::prefix('customer')->controller(CustomerController::class)->group(function
     Route::get('/laser/{id}', 'filter')->name('customer.laser');
     Route::get('/edit/{id}', 'edit')->name('customer.edit');
     Route::put('/update/{id}', 'update')->name('customer.update');
+});
+Route::prefix('supplier')->controller(SupplierController::class)->group(function () {
+    Route::get('/index', 'index')->name('supplier.list');
+    Route::get('/create', 'create')->name('supplier.create');
+    Route::post('/store', 'store')->name('supplier.store');
+    Route::get('/filter/{id}', 'filter')->name('supplier.filter');
+    Route::post('/list', 'list')->name('supplier.list.item');
 });
 Route::prefix('bill')->controller(BillManagementController::class)->group(function () {
     Route::get('/index', 'index')->name('bill.list');

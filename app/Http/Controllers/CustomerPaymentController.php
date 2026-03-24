@@ -17,7 +17,7 @@ class CustomerPaymentController extends Controller
 
     public function create()
     {
-        $customers = Customer::where('user_id', Auth::user()->id)->get();
+        $customers = Customer::where('user_id', Auth::user()->id)->where('status','customer')->get();
         $banks = Bank::where('user_id', Auth::user()->id)->get();
         return view('dashboard.payment.create', compact('customers', 'banks'));
     }

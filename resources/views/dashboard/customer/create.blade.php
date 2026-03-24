@@ -80,7 +80,7 @@
                                 <select name="status" class="form-control" id="status">
                                     <option value="">Select Option</option>
                                     <option value="customer">Customer</option>
-                                    <option value="Supplier">Supplier</option>
+                                    <option value="supplier">Supplier</option>
                                 </select>
                                 @error('status')
                                     <span class="text-danger small">{{ $message }}</span>

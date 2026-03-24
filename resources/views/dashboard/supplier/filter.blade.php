@@ -26,7 +26,6 @@
 </style>
 
 
-
 <div class="content">
     <!-- Navbar Start -->
     @include('dashboard.layout.navbar')
@@ -35,7 +34,7 @@
     <div class="container-fluid pt-4 px-4 form_width">
         <div class="bg-light text-center rounded p-4">
             <div class="d-flex align-items-center justify-content-between mb-4">
-                <h6 class="mb-0">Bill List</h6>
+                <h6 class="mb-0">Supplier Ledger</h6>
             </div>
 
             <div class="row">
@@ -45,47 +44,45 @@
                         <div class="toolbar">
                             <div class="filters-toolbar-wrapper">
                                 <div class="row">
-                                    <div class="filters-toolbar__item mb-3 col-md-4">
+                                  {{--   <div class="filters-toolbar__item mb-3 col-md-4">
                                         <label for="first_name">Search By Bill No</label>
                                         <input type="text" id="bill_no" class="form-control" placeholder="Bill No">
                                     </div>
-                                    <div class="filters-toolbar__item mb-3 col-md-4">
-                                        <label for="first_name">Search By Customer Name</label>
-                                        <input type="text" id="first_name" class="form-control" placeholder="Customer Name">
+                                   <div class="filters-toolbar__item mb-3 col-md-4">
+                                        <label for="first_name">Search By Supplier Name</label>
+                                        <input type="text" id="first_name" class="form-control" placeholder="Supplier Name">
                                     </div>
 
-                                    {{-- <div class="filters-toolbar__item mb-3 col-md-4">
+                                    <div class="filters-toolbar__item mb-3 col-md-4">
                                         <label for="last_name">Search By Product Name</label>
                                         <input type="text" id="product_name" class="form-control" placeholder="Product Name">
                                     </div>
-                                    --}}
-
+--}}
 
                                     <div class="filters-toolbar__item mb-3 col-md-4">
                                         <label for="sorting">Sort By</label>
                                         <select name="sorting" id="sorting" class="form-control">
                                             <option value="id">ID</option>
-                                            <option value="b_reference_number">Reference Number</option>
-                                            <option value="beneficiary_name">Beneficiary Name</option>
                                         </select>
                                     </div>
 
                                     <div class="filters-toolbar__item mb-3 col-md-4">
                                         <label for="direction">Direction</label>
                                         <select name="direction" id="direction" class="form-control">
-                                            <option value="asc">ASC</option>
-                                            <option value="desc" selected>DESC</option>
+                                            <option value="asc" selected>ASC</option>
+                                            <option value="desc"  >DESC</option>
                                         </select>
                                     </div>
 
                                     <div class="filters-toolbar__item mb-3 col-md-4">
                                         <label for="qty">Quantity</label>
                                         <select name="qty" id="qty" class="form-control">
-                                            <option value="10" selected>10</option>
+                                            <option value="5" >5</option>
                                             <option value="25">25</option>
                                             <option value="50">50</option>
                                             <option value="100">100</option>
-                                            <option value="500">500</option>
+                                            <option value="500" selected>500</option>
+                                            <option value="5000">5000</option>
                                         </select>
                                     </div>
                                     {{-- <div class="filters-toolbar__item mb-3 col-md-4">
@@ -107,6 +104,7 @@
                                         <label for="end_date">End Date</label>
                                         <input type="date" name="end_date" id="end_date" class="form-control">
                                     </div>
+                                    <input type="hidden" name="customer_id" id="customer_id" value="{{$id}}">
 
                                 </div>
                             </div>
@@ -211,6 +209,7 @@
             var direction = $("#direction").val();
             var status = $("#status").val();
             var qty = $("#qty").val();
+            var customer_id = $("#customer_id").val();
 
 
 
@@ -239,6 +238,7 @@
                     action: action,
                     district: district,
                     tehsil_id: tehsil_id,
+                    customer_id: customer_id,
                     uc_id: uc_id,
                     trench: trench,
                     bank_id: bank_id,
@@ -257,7 +257,7 @@
                     ayis_page: ayis_page,
                     _token: '{{csrf_token()}}'
                 },
-                url: "{{ route('bill.index') }}",
+                url: "{{ route('supplier.list.item') }}",
                 beforeSend: function() {
                     $('.filter_data').html(`
                         <div class="loader-wrapper">

@@ -8,6 +8,7 @@ use Auth;
 use App\Models\Customer;
 use App\Models\Product;
 use App\Models\CashRecords;
+use App\Models\SupplierData;
 use DB;
 
 class ExpensesManagementController extends Controller
@@ -22,10 +23,8 @@ class ExpensesManagementController extends Controller
     public function create()
     {
         checkAuthentication();
-        $customer = Customer::where('user_id', Auth::user()->id)->get();
-        $product = Product::where('user_id', Auth::user()->id)->get();
-        $expenses = Expenses::where('user_id', Auth::user()->id)->get();
-        return view('dashboard.expenses.create', ['expenses' => $expenses, 'customer' => $customer, 'product' => $product]);
+        $supplier = Customer::where('user_id', Auth::user()->id)->where('status', 'supplier')->get();
+        return view('dashboard.expenses.create', ['supplier' => $supplier]);
     }
     // public function store(Request $request)
     // {
@@ -62,14 +61,29 @@ class ExpensesManagementController extends Controller
         ]);
 
         // Add user_id safely
-        $validated['user_id'] = Auth::id();
+        $data = $request->all();
+        $data['user_id'] = Auth::id();
+
 
         // Use transaction because inserting in 2 tables
         DB::beginTransaction();
 
         try {
             // Create Expense
+            $validated['user_id'] = Auth::user()->id;
             $expenses = Expenses::create($validated);
+
+            if (isset($request->supplier_id) && $request->supplier_id != '') {
+                $data = $request->all();
+                $data['user_id'] = Auth::user()->id;
+                $data['expenses_id'] = $expenses->id;
+                $data['status'] = 'Payment';
+                SupplierData::create($data);
+            }
+
+
+
+
 
             // Create Cash Record
             CashRecords::create([

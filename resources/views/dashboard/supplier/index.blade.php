@@ -74,11 +74,21 @@
     <div class="container py-4">
         <div class="card shadow-lg border-0">
             <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
-                <h4 class="mb-0"><i class="bi bi-list-ul me-2"></i> Customer List</h4>
-                <a href="{{ route('customer.create') }}" class="btn btn-outline-light btn-sm">
-                    <i class="bi bi-plus-circle"></i> Add New Customer
+                <h4 class="mb-0"><i class="bi bi-list-ul me-2"></i> Supplier List</h4>
+                <a href="{{ route('supplier.create') }}" class="btn btn-outline-light btn-sm">
+                    <i class="bi bi-plus-circle"></i> Add New Supplier Data
                 </a>
             </div>
+
+
+            <div class="row">
+                <div class="col-12 my-4" style="text-align:end;">
+                    <a href="{{ route('customer.create') }}" class="btn btn-danger btn-sm">
+                        <i class="bi bi-plus-circle"></i> Add New Supplier
+                    </a>
+                </div>
+            </div>
+
 
             <div class="card-body bg-light">
                 <div class="table-container">
@@ -102,8 +112,8 @@
 
                                 @if(Auth::user()->can('customer-edit') || Auth::user()->can('customer-delete'))
                                 <td class="text-center action-btns">
-                                    @can('customer-laser')
-                                    <a href="{{ route('ledger.filter', $b->id) }}" class="btn btn-info btn-sm">
+                                    @can('supplier-ledger')
+                                    <a href="{{ route('supplier.filter', $b->id) }}" class="btn btn-info btn-sm">
                                         <i class="bi bi-pen"></i>Show Laser
                                     </a>
                                     @endcan

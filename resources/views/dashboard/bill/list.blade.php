@@ -7,6 +7,7 @@
         <button type="submit" name="export" class="btn btn-danger">Export Invoice Data</button>
         </form>
         --}}
+        <a href="{{route('bill.create')}}" class="btn btn-danger btn-sm">Create Bill</a>
 
     </div>
     <div class="col-md-12">

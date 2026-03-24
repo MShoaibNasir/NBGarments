@@ -75,6 +75,9 @@
                         @can('customer-list')
                         <a href="{{route('customer.list')}}" class="dropdown-item">Customer List</a>
                         @endcan
+                        @can('supplier-list')
+                        <a href="{{route('supplier.list')}}" class="dropdown-item">Supplier List</a>
+                        @endcan
                     </div>
                 </div>
                 @endcanany

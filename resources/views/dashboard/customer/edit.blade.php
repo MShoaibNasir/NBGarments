@@ -63,7 +63,7 @@
         <div class="card shadow-lg border-0">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h4 class="mb-0">
-                    <i class="bi bi-pencil-square me-2"></i> Edit Customer
+                    <i class="bi bi-pencil-square me-2"></i> Edit Profile
                 </h4>
                 <a href="{{ route('customer.list') }}" class="btn btn-outline-light btn-sm">
                     <i class="bi bi-arrow-left"></i> Back
@@ -102,7 +102,7 @@
                                 <select name="status" class="form-control" id="status">
                                     <option value="">Select Option</option>
                                     <option value="customer"  {{$customer->status=='customer' ? 'selected' : ''}} >Customer</option>
-                                    <option value="Supplier"  {{$customer->status=='Supplier' ? 'selected' : ''}}>Supplier</option>
+                                    <option value="supplier"  {{$customer->status=='supplier' ? 'selected' : ''}}>Supplier</option>
                                 </select>
                                 @error('status')
                                     <span class="text-danger small">{{ $message }}</span>
@@ -111,7 +111,7 @@
                         <!-- Submit Button -->
                         <div class="text-end mt-4">
                             <button type="submit" class="btn btn-dark">
-                                <i class="bi bi-check-circle me-2"></i> Update Customer
+                                <i class="bi bi-check-circle me-2"></i> Update Profile
                             </button>
                         </div>
                     </form>

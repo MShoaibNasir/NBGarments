@@ -63,42 +63,40 @@
         <div class="container py-4">
             <div class="card shadow-lg border-0">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h4 class="mb-0"><i class="bi bi-plus-circle me-2"></i> Add New Expenses</h4>
-                    <a href="{{ route('expenses.filter') }}" class="btn btn-outline-light btn-sm">
+                    <h4 class="mb-0"><i class="bi bi-plus-circle me-2"></i> Add New Supply Data</h4>
+                    <a href="{{ route('supplier.list') }}" class="btn btn-outline-light btn-sm">
                         <i class="bi bi-arrow-left"></i> Back
                     </a>
                 </div>
 
                 <div class="card-body bg-light">
                     <div class="form-container mx-auto" style="max-width: 600px;">
-                        <form action="{{ route('expenses.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('supplier.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
-                                <label for="name" class="form-label">Amount</label>
-                                <input type="number" name="amount" id="name" value="{{ old('amount') }}" class="form-control" placeholder="Enter Amount" required>
-                                @error('amount')
+                                <label for="name" class="form-label">Bill No</label>
+                                <input type="text" name="bill_no" id="bill_no" value="{{ old('bill_no') }}" class="form-control" placeholder="Enter Bill No" required>
+                                @error('bill_no')
                                 <span class="text-danger small">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="mb-3">
-                                <label for="name" class="form-label">Refrence</label>
-                                <input type="text" name="refrence" id="name" value="{{ old('refrence') }}" class="form-control" placeholder="Enter Refrence" required>
-                                @error('amount')
-                                <span class="text-danger small">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Supplier Name</label>
-                                <select name="supplier_id"  class="form-control">
+                                <label for="name" class="form-label">Supplier</label>
+                                <select name="supplier_id" class="form-control">
                                     <option value="">Select Supplier</option>
                                     @foreach ($supplier as $data)
                                     <option value="{{ $data->id }}">{{ $data->name }}</option>
                                     @endforeach
                                 </select>
-
-
-
-                                @error('amount')
+                                @error('supplier_id')
+                                <span class="text-danger small">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <input type="hidden" name="status" value="Purchasing">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Amount</label>
+                                <input type="number" name="amount" id="amount" class="form-control">
+                                @error('supplier_id')
                                 <span class="text-danger small">{{ $message }}</span>
                                 @enderror
                             </div>

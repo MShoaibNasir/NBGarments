@@ -1,13 +1,9 @@
 <div class="row">
     <div class="col-md-12 my-3 text-end">
-        <h4>Total Sell Amount: {{$total_sell_amount}} Rs</h4>
-        {{-- <form  method="POST" action="{{route('exportInvoice')}}">
-        @csrf
-        <input type="hidden" name="json_data" value='{{ $jsondata }}'>
-        <button type="submit" name="export" class="btn btn-danger">Export Invoice Data</button>
-        </form>
-        --}}
-
+           <a href="{{route('expenses.create')}}" class="btn btn-danger btn-sm">Create Expenses Data</a>
+    </div>
+    <div class="col-md-12 my-3 text-end">
+        <h4>Total Amount: {{$total_sell_amount}} Rs</h4>
     </div>
     <div class="col-md-12">
         <div class="table-responsive">
