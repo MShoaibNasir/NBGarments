@@ -56,6 +56,35 @@
         color: #888;
         font-style: italic;
     }
+
+    /* Mobile responsive fixes */
+    @media (max-width: 768px) {
+        table.table thead {
+            font-size: 12px;
+        }
+
+        table.table td,
+        table.table th {
+            padding: 8px;
+            font-size: 12px;
+        }
+
+        .card-header h4 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .action-btns .btn {
+            font-size: 11px;
+            padding: 5px 6px;
+        }
+    }
+     @media (max-width: 1025px) {
+.action-btns .btn {
+            font-size: 6px;
+            padding: 5px 6px;
+        }
+     }
 </style>
 
 <div class="content">
@@ -63,7 +92,7 @@
 
     <div class="container py-4">
         <div class="card shadow-lg border-0">
-            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center table-container table-responsive">
                 <h4 class="mb-0"><i class="bi bi-shield-lock me-2"></i> Role Management</h4>
                 @can('role-create')
                 <a href="{{ route('roles.create') }}" class="btn btn-outline-light btn-sm">
@@ -87,7 +116,7 @@
                             <tr>
                                 <td>{{ $index + 1 }}</td>
                                 <td>{{ ucfirst($role->name) }}</td>
-                                <td class="text-center action-btns">
+                                <td class="text-center action-btns d-flex flex-wrap justify-content-center gap-1">
                                     <a href="{{ route('roles.show', $role->id) }}" class="btn btn-info btn-sm">
                                         <i class="bi bi-eye"></i> Show
                                     </a>
