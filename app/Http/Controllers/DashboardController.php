@@ -10,16 +10,12 @@ use App\Models\Invoice;
 
 class DashboardController extends Controller
 {
-
-
-
     public function index()
     {
-    
         if (!Auth::check()) {
             redirect()->route('show.login')->send();
         }
-        $users_count=User::count();
-        return view('dashboard.main',['users_count'=>$users_count]);
+        $users_count = User::count();
+        return view('dashboard.main', ['users_count' => $users_count]);
     }
 }
