@@ -79,12 +79,18 @@
             padding: 5px 6px;
         }
     }
-     @media (max-width: 1025px) {
-.action-btns .btn {
+
+    @media (max-width: 1025px) {
+        .action-btns .btn {
             font-size: 6px;
             padding: 5px 6px;
         }
-     }
+    }
+
+    .action-btns .btn {
+        font-size: 11px;
+        padding: 5px 6px;
+    }
 </style>
 
 <div class="content">

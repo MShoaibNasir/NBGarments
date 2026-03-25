@@ -27,7 +27,6 @@
 
                         <th scope="col">S No</th>
                         <th scope="col">Customer Name</th>
-                        <th scope="col">Refrence</th>
                         <th scope="col">Bank Name</th>
                         <th scope="col">Cheque No</th>
                         <th scope="col">Amount</th>
@@ -46,7 +45,6 @@
                     <tr>
                         <td>{{$loop->index+1}}</td>
                         <td>{{$item->customer->name}}</td>
-                        <td>{{$item->reference?? '--'}}</td>
                         <td>{{$item->bank->name ?? '--'}}</td>
                         <td>{{$item->cheque_no ?? '--'}}</td>
                         <td>{{number_format($item->amount)}}</td>

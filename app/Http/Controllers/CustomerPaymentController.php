@@ -29,7 +29,7 @@ class CustomerPaymentController extends Controller
         $validated = $request->validate([
             'customer_id' => 'required|exists:customers,id',
             'amount'      => 'required|numeric|min:1',
-            'reference'   => 'nullable|string|max:255',
+           // 'reference'   => 'nullable|string|max:255',
             'description' => 'nullable|string',
 
             // If cheque checked then required
@@ -118,7 +118,7 @@ class CustomerPaymentController extends Controller
         $validated = $request->validate([
             'customer_id' => 'required|exists:customers,id',
             'amount'      => 'required|numeric|min:1',
-            'reference'   => 'nullable|string|max:255',
+           // 'reference'   => 'nullable|string|max:255',
 
             // If cheque checked then required
             'bank_id'   => 'required_if:is_cheque,1|nullable|exists:banks,id',

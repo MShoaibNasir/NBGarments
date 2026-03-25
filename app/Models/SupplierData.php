@@ -15,9 +15,9 @@ class SupplierData extends Model
    *	
    * @var array
    */
-  public function customer()
+  public function Supplier()
   {
-    return $this->belongsTo(Customer::class, 'supplier_id', 'id');
+    return $this->hasOne(Customer::class, 'id', 'supplier_id');
   }
   public function user()
   {

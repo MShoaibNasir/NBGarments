@@ -105,7 +105,20 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Description</label>
-                            <textarea name="description" class="form-control" >{{ $expenses->description }}</textarea>
+                            <textarea name="description" class="form-control">{{ $expenses->description }}</textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Supplier Name</label>
+                            <select name="supplier_id" class="form-control">
+                                <option value="">Select Supplier</option>
+                                @foreach ($supplier as $data)
+                                <option value="{{ $data->id }}" {{$data->id==$expenses->SupplierData->supplier_id ? 'selected' : ''}}>{{ $data->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('supplier_id')
+                            <span class="text-danger small">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <!-- Submit Button -->

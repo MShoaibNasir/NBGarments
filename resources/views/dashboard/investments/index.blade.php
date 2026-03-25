@@ -74,10 +74,12 @@
     <div class="container py-4">
         <div class="card shadow-lg border-0">
             <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
-                <h4 class="mb-0"><i class="bi bi-list-ul me-2"></i> Customer List</h4>
-                <a href="{{ route('customer.create') }}" class="btn btn-outline-light btn-sm">
-                    <i class="bi bi-plus-circle"></i> Add New Customer
+                <h4 class="mb-0"><i class="bi bi-list-ul me-2"></i> Investments List</h4>
+                @can('investment-create')
+                <a href="{{ route('investment.create') }}" class="btn btn-outline-light btn-sm">
+                    <i class="bi bi-plus-circle"></i> Add New Investment
                 </a>
+                @endcan
             </div>
 
             <div class="card-body bg-light">
@@ -87,36 +89,32 @@
                             <tr>
                                 <th>#</th>
                                 <th>Name</th>
-                                <th>Status</th>
-                                <th>Address</th>
-                                @if(Auth::user()->can('customer-edit') || Auth::user()->can('customer-delete'))
+                                <th>Amount</th>
+                                <th>Description</th>
+                                @if(Auth::user()->can('investment-edit') || Auth::user()->can('investment-delete'))
                                 <th class="text-center">Actions</th>
                                 @endif
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($customer as $index => $b)
+                            @forelse ($data as $index => $b)
                             <tr>
                                 <td>{{ $index + 1 }}</td>
                                 <td>{{ $b->name }}</td>
-                                <td>{{ $b->status }}</td>
-                                <td>{{ $b->address }}</td>
+                                <td>{{ $b->amount }}</td>
+                                <td>{{ $b->description }}</td>
 
-                                @if(Auth::user()->can('customer-edit') || Auth::user()->can('customer-delete'))
+                                @if(Auth::user()->can('investment-edit') || Auth::user()->can('investment-delete'))
                                 <td class="text-center action-btns">
-                                    @can('customer-laser')
-                                    <a href="{{ route('ledger.filter', $b->id) }}" class="btn btn-info btn-sm">
-                                        <i class="bi bi-pen"></i>Show Laser
-                                    </a>
-                                    @endcan
-                                    @can('customer-edit')
-                                    <a href="{{ route('customer.edit', $b->id) }}" class="btn btn-success btn-sm">
+
+                                    @can('investment-edit')
+                                    <a href="{{ route('investment.edit', $b->id) }}" class="btn btn-success btn-sm">
                                         <i class="bi bi-pen"></i> Edit
                                     </a>
                                     @endcan
-                                    @can('customer-delete')
-                                    <a href="{{ route('customer.delete', $b->id) }}" class="btn btn-danger btn-sm"
-                                        onclick="return confirm('Are you sure you want to delete this customer?')">
+                                    @can('investment-delete')
+                                    <a href="{{ route('investment.delete', $b->id) }}" class="btn btn-danger btn-sm"
+                                        onclick="return confirm('Are you sure you want to delete this investment?')">
                                         <i class="bi bi-trash"></i> Delete
                                     </a>
                                     @endcan

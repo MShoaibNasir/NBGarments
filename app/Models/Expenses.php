@@ -11,4 +11,7 @@ class Expenses extends Model
     use SoftDeletes;
     protected $table='expenses';
     protected $guarded=['id'];
+    public function SupplierData(){
+        return $this->hasOne(SupplierData::class,'expenses_id','id');
+    }
 }

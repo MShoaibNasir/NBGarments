@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 24, 2026 at 11:50 AM
+-- Generation Time: Mar 25, 2026 at 10:46 AM
 -- Server version: 9.3.0
 -- PHP Version: 7.4.33
 
@@ -74,8 +74,7 @@ CREATE TABLE `bill` (
 --
 
 INSERT INTO `bill` (`id`, `bill_no`, `customer_id`, `product_id`, `user_id`, `qty`, `total_amount`, `status`, `is_cash`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'C-9000', 6, NULL, 6, 176, 420800, 0, 1, '2026-03-24 06:05:07', '2026-03-24 06:05:07', NULL),
-(2, 'K-7654', 5, NULL, 6, 340, 687600, 0, 0, '2026-03-24 06:05:49', '2026-03-24 06:05:49', NULL);
+(1, 'L-9000', 2, NULL, 6, 144, 244800, 0, 1, '2026-03-25 05:27:10', '2026-03-25 05:27:10', NULL);
 
 -- --------------------------------------------------------
 
@@ -118,31 +117,8 @@ INSERT INTO `bill_products` (`id`, `bill_id`, `product_id`, `qty`, `price`, `amo
 (20, 1, 4, 80, '1900', '152000', '-900', 'Loss', '2026-03-24 06:05:07', '2026-03-24 06:05:07', NULL),
 (21, 1, 6, 96, '2800', '268800', '1200', 'Profit', '2026-03-24 06:05:07', '2026-03-24 06:05:07', NULL),
 (22, 2, 4, 196, '2700', '529200', '-100', 'Loss', '2026-03-24 06:05:49', '2026-03-24 06:05:49', NULL),
-(23, 2, 7, 144, '1100', '158400', '-200', 'Loss', '2026-03-24 06:05:49', '2026-03-24 06:05:49', NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `brand`
---
-
-CREATE TABLE `brand` (
-  `id` int NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `link` varchar(255) DEFAULT NULL,
-  `logo` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `brand`
---
-
-INSERT INTO `brand` (`id`, `name`, `link`, `logo`, `created_at`, `updated_at`) VALUES
-(1, 'Barnes Noble Publish', 'https://www.barnesnoblepublish.com/', '1762454289_logo.webp', '2025-10-26 02:58:31', '2025-11-06 18:38:09'),
-(4, 'Key Stone Digital Press', 'https://keystonedigital.press/', '1762618012_keystoone.webp', '2025-10-29 17:24:21', '2025-11-08 16:06:52'),
-(5, 'Book Publishers Den', 'https://bookpublishersden.com/', '1762454380_r22-e1705500455978.webp', '2025-11-06 16:56:23', '2025-11-06 18:39:40');
+(23, 2, 7, 144, '1100', '158400', '-200', 'Loss', '2026-03-24 06:05:49', '2026-03-24 06:05:49', NULL),
+(24, 1, 4, 144, '1700', '244800', '-1100', 'Loss', '2026-03-25 05:27:11', '2026-03-25 05:27:11', NULL);
 
 -- --------------------------------------------------------
 
@@ -161,7 +137,7 @@ CREATE TABLE `cache` (
 --
 
 INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
-('laravel-cache-spatie.permission.cache', 'a:3:{s:5:\"alias\";a:4:{s:1:\"a\";s:2:\"id\";s:1:\"b\";s:4:\"name\";s:1:\"c\";s:10:\"guard_name\";s:1:\"r\";s:5:\"roles\";}s:11:\"permissions\";a:37:{i:0;a:4:{s:1:\"a\";i:1;s:1:\"b\";s:9:\"role-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:1;a:4:{s:1:\"a\";i:2;s:1:\"b\";s:11:\"role-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:2;a:4:{s:1:\"a\";i:3;s:1:\"b\";s:9:\"role-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:3;a:4:{s:1:\"a\";i:4;s:1:\"b\";s:11:\"role-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:4;a:4:{s:1:\"a\";i:5;s:1:\"b\";s:12:\"product-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:5;a:4:{s:1:\"a\";i:6;s:1:\"b\";s:14:\"product-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:6;a:4:{s:1:\"a\";i:7;s:1:\"b\";s:12:\"product-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:7;a:4:{s:1:\"a\";i:8;s:1:\"b\";s:14:\"product-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:8;a:4:{s:1:\"a\";i:9;s:1:\"b\";s:9:\"user-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:9;a:4:{s:1:\"a\";i:10;s:1:\"b\";s:11:\"user-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:10;a:4:{s:1:\"a\";i:11;s:1:\"b\";s:11:\"user-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:11;a:4:{s:1:\"a\";i:12;s:1:\"b\";s:9:\"user-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:12;a:4:{s:1:\"a\";i:13;s:1:\"b\";s:11:\"bill-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:13;a:4:{s:1:\"a\";i:14;s:1:\"b\";s:9:\"bill-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:14;a:4:{s:1:\"a\";i:15;s:1:\"b\";s:13:\"customer-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:15;a:4:{s:1:\"a\";i:16;s:1:\"b\";s:15:\"customer-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:16;a:4:{s:1:\"a\";i:17;s:1:\"b\";s:15:\"customer-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:17;a:4:{s:1:\"a\";i:18;s:1:\"b\";s:13:\"customer-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:18;a:4:{s:1:\"a\";i:19;s:1:\"b\";s:9:\"bill-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:19;a:4:{s:1:\"a\";i:20;s:1:\"b\";s:11:\"bill-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:20;a:4:{s:1:\"a\";i:21;s:1:\"b\";s:14:\"customer-laser\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:21;a:4:{s:1:\"a\";i:22;s:1:\"b\";s:15:\"expenses-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:22;a:4:{s:1:\"a\";i:23;s:1:\"b\";s:13:\"expenses-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:23;a:4:{s:1:\"a\";i:24;s:1:\"b\";s:13:\"expenses-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:24;a:4:{s:1:\"a\";i:25;s:1:\"b\";s:15:\"expenses-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:25;a:4:{s:1:\"a\";i:26;s:1:\"b\";s:11:\"bank-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:26;a:4:{s:1:\"a\";i:27;s:1:\"b\";s:9:\"bank-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:27;a:4:{s:1:\"a\";i:28;s:1:\"b\";s:11:\"bank-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:28;a:4:{s:1:\"a\";i:29;s:1:\"b\";s:9:\"bank-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:29;a:4:{s:1:\"a\";i:30;s:1:\"b\";s:14:\"payment-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:30;a:4:{s:1:\"a\";i:31;s:1:\"b\";s:12:\"payment-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:31;a:4:{s:1:\"a\";i:32;s:1:\"b\";s:12:\"payment-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:32;a:4:{s:1:\"a\";i:33;s:1:\"b\";s:14:\"payment-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:33;a:4:{s:1:\"a\";i:34;s:1:\"b\";s:9:\"roznamcha\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:34;a:4:{s:1:\"a\";i:35;s:1:\"b\";s:9:\"bill-show\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:35;a:4:{s:1:\"a\";i:36;s:1:\"b\";s:13:\"supplier-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:36;a:4:{s:1:\"a\";i:37;s:1:\"b\";s:15:\"supplier-ledger\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}}s:5:\"roles\";a:2:{i:0;a:3:{s:1:\"a\";i:1;s:1:\"b\";s:5:\"Admin\";s:1:\"c\";s:3:\"web\";}i:1;a:3:{s:1:\"a\";i:2;s:1:\"b\";s:8:\"Employee\";s:1:\"c\";s:3:\"web\";}}}', 1774430065);
+('laravel-cache-spatie.permission.cache', 'a:3:{s:5:\"alias\";a:4:{s:1:\"a\";s:2:\"id\";s:1:\"b\";s:4:\"name\";s:1:\"c\";s:10:\"guard_name\";s:1:\"r\";s:5:\"roles\";}s:11:\"permissions\";a:41:{i:0;a:4:{s:1:\"a\";i:1;s:1:\"b\";s:9:\"role-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:1;a:4:{s:1:\"a\";i:2;s:1:\"b\";s:11:\"role-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:2;a:4:{s:1:\"a\";i:3;s:1:\"b\";s:9:\"role-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:3;a:4:{s:1:\"a\";i:4;s:1:\"b\";s:11:\"role-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:4;a:4:{s:1:\"a\";i:5;s:1:\"b\";s:12:\"product-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:5;a:4:{s:1:\"a\";i:6;s:1:\"b\";s:14:\"product-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:6;a:4:{s:1:\"a\";i:7;s:1:\"b\";s:12:\"product-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:7;a:4:{s:1:\"a\";i:8;s:1:\"b\";s:14:\"product-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:8;a:4:{s:1:\"a\";i:9;s:1:\"b\";s:9:\"user-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:9;a:4:{s:1:\"a\";i:10;s:1:\"b\";s:11:\"user-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:10;a:4:{s:1:\"a\";i:11;s:1:\"b\";s:11:\"user-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:11;a:4:{s:1:\"a\";i:12;s:1:\"b\";s:9:\"user-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:12;a:4:{s:1:\"a\";i:13;s:1:\"b\";s:11:\"bill-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:13;a:4:{s:1:\"a\";i:14;s:1:\"b\";s:9:\"bill-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:14;a:4:{s:1:\"a\";i:15;s:1:\"b\";s:13:\"customer-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:15;a:4:{s:1:\"a\";i:16;s:1:\"b\";s:15:\"customer-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:16;a:4:{s:1:\"a\";i:17;s:1:\"b\";s:15:\"customer-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:17;a:4:{s:1:\"a\";i:18;s:1:\"b\";s:13:\"customer-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:18;a:4:{s:1:\"a\";i:19;s:1:\"b\";s:9:\"bill-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:19;a:4:{s:1:\"a\";i:20;s:1:\"b\";s:11:\"bill-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:20;a:4:{s:1:\"a\";i:21;s:1:\"b\";s:14:\"customer-laser\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:21;a:4:{s:1:\"a\";i:22;s:1:\"b\";s:15:\"expenses-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:22;a:4:{s:1:\"a\";i:23;s:1:\"b\";s:13:\"expenses-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:23;a:4:{s:1:\"a\";i:24;s:1:\"b\";s:13:\"expenses-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:24;a:4:{s:1:\"a\";i:25;s:1:\"b\";s:15:\"expenses-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:25;a:4:{s:1:\"a\";i:26;s:1:\"b\";s:11:\"bank-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:26;a:4:{s:1:\"a\";i:27;s:1:\"b\";s:9:\"bank-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:27;a:4:{s:1:\"a\";i:28;s:1:\"b\";s:11:\"bank-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:28;a:4:{s:1:\"a\";i:29;s:1:\"b\";s:9:\"bank-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:29;a:4:{s:1:\"a\";i:30;s:1:\"b\";s:14:\"payment-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:30;a:4:{s:1:\"a\";i:31;s:1:\"b\";s:12:\"payment-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:31;a:4:{s:1:\"a\";i:32;s:1:\"b\";s:12:\"payment-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:32;a:4:{s:1:\"a\";i:33;s:1:\"b\";s:14:\"payment-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:33;a:4:{s:1:\"a\";i:34;s:1:\"b\";s:9:\"roznamcha\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:34;a:4:{s:1:\"a\";i:35;s:1:\"b\";s:9:\"bill-show\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:35;a:4:{s:1:\"a\";i:36;s:1:\"b\";s:13:\"supplier-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:36;a:4:{s:1:\"a\";i:37;s:1:\"b\";s:15:\"supplier-ledger\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:37;a:4:{s:1:\"a\";i:38;s:1:\"b\";s:15:\"investment-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:38;a:4:{s:1:\"a\";i:39;s:1:\"b\";s:17:\"investment-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:39;a:4:{s:1:\"a\";i:40;s:1:\"b\";s:17:\"investment-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:40;a:4:{s:1:\"a\";i:41;s:1:\"b\";s:15:\"investment-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}}s:5:\"roles\";a:2:{i:0;a:3:{s:1:\"a\";i:1;s:1:\"b\";s:5:\"Admin\";s:1:\"c\";s:3:\"web\";}i:1;a:3:{s:1:\"a\";i:2;s:1:\"b\";s:12:\"Business Man\";s:1:\"c\";s:3:\"web\";}}}', 1774521924);
 
 -- --------------------------------------------------------
 
@@ -188,17 +164,19 @@ CREATE TABLE `cash_records` (
   `user_id` int DEFAULT NULL,
   `customer_id` int DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `cash_records`
 --
 
-INSERT INTO `cash_records` (`id`, `table_name`, `primary_id`, `user_id`, `customer_id`, `created_at`, `updated_at`) VALUES
-(2, 'Payment', 2, 6, 5, '2026-03-24 06:08:35', '2026-03-24 06:08:35'),
-(3, 'expenses', 1, 6, NULL, '2026-03-24 06:12:11', '2026-03-24 06:12:11'),
-(4, 'expenses', 2, 6, NULL, '2026-03-24 06:12:51', '2026-03-24 06:12:51');
+INSERT INTO `cash_records` (`id`, `table_name`, `primary_id`, `user_id`, `customer_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'invesments', 1, 6, NULL, '2026-03-25 04:54:32', '2026-03-25 04:54:32', NULL),
+(2, 'expenses', 1, 6, NULL, '2026-03-25 04:55:20', '2026-03-25 04:55:20', NULL),
+(3, 'expenses', 2, 6, NULL, '2026-03-25 04:58:43', '2026-03-25 04:58:43', NULL),
+(4, 'Payment', 1, 6, 2, '2026-03-25 05:27:11', '2026-03-25 05:27:11', NULL);
 
 -- --------------------------------------------------------
 
@@ -222,12 +200,8 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`id`, `name`, `address`, `user_id`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(4, 'Vickey', 'Careem Center', 6, 'customer', '2026-02-04 04:21:20', '2026-02-04 05:28:16', NULL),
-(5, 'Imran Bhai(Mana)', 'Careem Center', 6, 'customer', '2026-02-07 08:05:58', '2026-03-24 05:31:42', NULL),
-(6, 'ubaid', 'makah center', 6, 'customer', '2026-02-20 12:33:17', '2026-02-20 12:33:17', NULL),
-(7, 'cash', NULL, 6, 'customer', '2026-02-20 12:36:15', '2026-02-22 00:58:14', '2026-02-22 00:58:14'),
-(8, 'shoaib', 'address', 6, 'customer', '2026-03-23 11:28:18', '2026-03-23 11:28:18', NULL),
-(9, 'Sami Bhai', 'jama cloth', 6, 'supplier', '2026-03-23 11:35:41', '2026-03-24 05:31:11', NULL);
+(1, 'Sami bhai', 'Jama cloth', 6, 'supplier', '2026-03-25 04:52:44', '2026-03-25 04:52:44', NULL),
+(2, 'Imran bhai-HB', 'careem center', 6, 'customer', '2026-03-25 05:26:41', '2026-03-25 05:26:41', NULL);
 
 -- --------------------------------------------------------
 
@@ -255,7 +229,7 @@ CREATE TABLE `customer_payments` (
 --
 
 INSERT INTO `customer_payments` (`id`, `user_id`, `customer_id`, `amount`, `reference`, `is_cheque`, `bank_id`, `cheque_no`, `description`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(2, 6, 5, 300000, '100000 online + 200000 cash', 0, NULL, NULL, '100000 online + 200000 cash', '2026-03-24 06:08:35', '2026-03-24 06:08:35', NULL);
+(1, 6, 2, 244800, NULL, 0, NULL, NULL, NULL, '2026-03-25 05:27:11', '2026-03-25 05:27:11', NULL);
 
 -- --------------------------------------------------------
 
@@ -279,8 +253,8 @@ CREATE TABLE `expenses` (
 --
 
 INSERT INTO `expenses` (`id`, `user_id`, `amount`, `description`, `refrence`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 6, 150000, 'master ko diye hai CMT', 'master ko diye hai CMT', '2026-03-24 06:12:11', '2026-03-24 06:12:11', NULL),
-(2, 6, 100000, 'sami ko diye hai cash', 'sami ko diye hai cash', '2026-03-24 06:12:51', '2026-03-24 06:12:51', NULL);
+(1, 6, 200000, 'cash  jaabar ne diye', 'cash', '2026-03-25 04:55:20', '2026-03-25 04:55:20', NULL),
+(2, 6, 43200, 'ambrioty  300 k hsab se 144 piece ki', 'ambrioty  300 k hsab se 144 piece ki', '2026-03-25 04:58:43', '2026-03-25 04:58:43', NULL);
 
 -- --------------------------------------------------------
 
@@ -301,88 +275,26 @@ CREATE TABLE `failed_jobs` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `invoices`
+-- Table structure for table `invesments`
 --
 
-CREATE TABLE `invoices` (
+CREATE TABLE `invesments` (
   `id` int NOT NULL,
-  `first_name` varchar(255) DEFAULT NULL,
-  `last_name` varchar(255) DEFAULT NULL,
-  `email_address` varchar(255) DEFAULT NULL,
-  `phone_number` varchar(255) DEFAULT NULL,
-  `zip_code` varchar(255) DEFAULT NULL,
-  `address` varchar(255) DEFAULT NULL,
   `user_id` int DEFAULT NULL,
-  `url` varchar(255) DEFAULT NULL,
-  `brand_id` int DEFAULT NULL,
-  `secrete_id` varchar(255) DEFAULT NULL,
-  `status` enum('Pending','Completed','Failed','') DEFAULT 'Pending',
+  `amount` int DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `description` text,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `invoices`
+-- Dumping data for table `invesments`
 --
 
-INSERT INTO `invoices` (`id`, `first_name`, `last_name`, `email_address`, `phone_number`, `zip_code`, `address`, `user_id`, `url`, `brand_id`, `secrete_id`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(17, 'Kyle', 'Ashley', 'depo@mailinator.com', '+1 (712) 657-4342', '82424', 'Placeat dolores dis', 1, 'https://invoice-system.vastreachtechnologies.com/paypal/pay/Key_Stone_Digital/I-939936', 4, 'I-939936', 'Pending', '2025-11-03 17:38:12', '2025-11-04 18:52:47', '2025-11-04 18:03:42'),
-(18, 'hanzala', 'ahmed', 'hanzala.ahmed.a2z@gmail.com', '03456985741', '75500', '64 C, 2nd floor 21st Commercial Street, 2 Ext, Phase Defence Housing Authority, Karachi,', 6, 'https://invoice-system.vastreachtechnologies.com/paypal/pay/Barnes_Noble_Publish/I-828527', 1, 'I-828527', 'Completed', '2025-11-03 18:14:31', '2025-11-05 17:02:15', NULL),
-(19, 'Libby', 'Foreman', 'abc@gmil.com', '03216905568', '100', 'Lorem non enim disti', 1, 'https://invoice-system.vastreachtechnologies.com/paypal/pay/Key_Stone_Digital/I-848124', 4, 'I-848124', 'Completed', '2025-11-03 19:04:45', '2025-11-04 19:14:57', NULL),
-(20, 'test', 'invoice', 'test23@gmail.com', '324234234234', '23423', '343 Noah Dr, US', 6, 'https://invoice-system.vastreachtechnologies.com/paypal/pay/Barnes_Noble_Publish/I-320377', 1, 'I-320377', 'Completed', '2025-11-05 13:59:23', '2025-11-05 16:57:50', NULL),
-(21, 'test', 'Invoice', 'test23@gmail.com', '23423423432', '12312', '343 Noah Dr, US', 6, 'https://invoice-system.vastreachtechnologies.com/paypal/pay/Key_Stone_Digital/I-396444', 4, 'I-396444', 'Pending', '2025-11-05 14:05:47', '2025-11-05 14:05:47', NULL),
-(22, 'Test', 'Invoie', 'test123@gmail.com', '234234234234', '12312', 'test123@gmail.com', 8, 'https://invoice-system.vastreachtechnologies.com/paypal/pay/Key_Stone_Digital/I-430111', 4, 'I-430111', 'Pending', '2025-11-05 14:20:10', '2025-11-05 14:20:10', NULL),
-(23, 'Test Invoice', 'Invoice', 'test123@gmail.com', '23423423', '23422', 'noah dr', 9, 'https://invoice-system.vastreachtechnologies.com/paypal/pay/Barnes_Noble_Publish/I-524805', 1, 'I-524805', 'Pending', '2025-11-05 17:17:59', '2025-11-05 17:17:59', NULL),
-(24, 'test', 'invoice', 'test23@gmail.com', '24223423423', '24323', '343 Noah Dr, US', 6, 'https://invoice-system.vastreachtechnologies.com/paypal/pay/Book_Publishers_Den/I-684332', 5, 'I-684332', 'Pending', '2025-11-07 14:11:38', '2025-11-07 14:11:38', NULL),
-(25, 'Test', 'Invocie', 'test123@gmail.com', '2243242', '24324', '343 Noah Dr, US', 6, 'https://invoice-system.vastreachtechnologies.com/paypal/pay/Barnes_Noble_Publish/I-585107', 1, 'I-585107', 'Pending', '2025-11-07 14:15:38', '2025-11-07 14:15:38', NULL),
-(26, 'hanzala Test', 'Ahmed', 'hanzala.ahmed.promos@gmail.com', '03456985741', '75500', '64 C, 2nd floor 21st Commercial Street, 2 Ext, Phase Defence Housing Authority, Karachi,', 1, 'https://invoice-system.vastreachtechnologies.com/paypal/pay/Key_Stone_Digital_Press/I-906661', 4, 'I-906661', 'Pending', '2025-11-08 16:08:03', '2025-11-08 16:08:03', NULL),
-(27, 'test', 'Invoice', 'test23@gmail.com', '42344234234', '23412', '343 Noah Dr, US', 6, 'https://invoice-system.vastreachtechnologies.com/paypal/pay/Book_Publishers_Den/I-705366', 5, 'I-705366', 'Pending', '2025-11-12 21:25:10', '2025-11-12 21:25:10', NULL),
-(28, 'test', 'invpoice', 'test23@gmail.com', '2342342342424', '23412', '343 Noah Dr, US', 6, 'https://invoice-system.vastreachtechnologies.com/paypal/pay/Barnes_Noble_Publish/I-123749', 1, 'I-123749', 'Pending', '2025-12-03 15:32:02', '2025-12-03 15:32:02', NULL),
-(33, 'Yardley', 'Buckner', 'digig@mailinator.com', '+1 (359) 724-1237', '71117', 'Dolor minus sint duc', 1, '/https://www.barnesnoblepublish.com//I-189595', 1, 'I-189595', 'Pending', '2026-01-27 17:02:12', '2026-01-27 17:02:12', NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `invoice_amount`
---
-
-CREATE TABLE `invoice_amount` (
-  `id` int NOT NULL,
-  `currency` varchar(255) DEFAULT NULL,
-  `balance_amount` decimal(10,2) DEFAULT NULL,
-  `discount` decimal(10,2) DEFAULT NULL,
-  `tax` decimal(10,2) DEFAULT NULL,
-  `total_amount` decimal(10,2) DEFAULT NULL,
-  `invoice_id` int DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `invoice_amount`
---
-
-INSERT INTO `invoice_amount` (`id`, `currency`, `balance_amount`, `discount`, `tax`, `total_amount`, `invoice_id`, `created_at`, `updated_at`) VALUES
-(11, 'USD', 0.00, 0.00, 0.00, 56.00, 11, '2025-11-02 12:02:31', '2025-11-02 12:02:31'),
-(12, 'USD', 0.00, NULL, NULL, 100.00, 12, '2025-11-03 14:54:21', '2025-11-03 14:54:21'),
-(13, 'USD', 0.00, NULL, NULL, 100.00, 13, '2025-11-03 15:13:09', '2025-11-03 15:13:09'),
-(14, 'USD', 56.00, 0.00, 42.00, 33.46, 14, '2025-11-03 17:22:22', '2025-11-03 17:22:22'),
-(15, 'CAD', 6.00, 0.00, 0.00, 69.00, 15, '2025-11-03 17:31:30', '2025-11-03 17:31:30'),
-(16, 'AUD', 44.00, 46.00, 3.00, 3.38, 16, '2025-11-03 17:34:12', '2025-11-03 17:34:12'),
-(17, 'AUD', 0.00, NULL, 88.00, 47.00, 17, '2025-11-03 17:38:12', '2025-11-03 17:38:12'),
-(18, 'USD', 10.00, 10.00, 10.00, 89.00, 18, '2025-11-03 18:14:31', '2025-11-04 17:19:22'),
-(19, 'Select Currency', 0.00, 0.00, 0.00, 165.00, 19, '2025-11-03 19:04:45', '2025-11-04 18:38:42'),
-(20, 'USD', 0.00, 0.00, 0.00, 234.00, 20, '2025-11-05 13:59:23', '2025-11-05 13:59:23'),
-(21, 'USD', 0.00, 0.00, 0.00, 234.00, 21, '2025-11-05 14:05:47', '2025-11-05 14:05:47'),
-(22, 'USD', 0.00, 0.00, 0.00, 234.00, 22, '2025-11-05 14:20:10', '2025-11-05 14:20:10'),
-(23, 'USD', 0.00, 0.00, 0.00, 234.00, 23, '2025-11-05 17:17:59', '2025-11-05 17:17:59'),
-(24, 'USD', 0.00, 0.00, 0.00, 2342.00, 24, '2025-11-07 14:11:38', '2025-11-07 14:11:38'),
-(25, 'USD', 0.00, 0.00, 0.00, 250.00, 25, '2025-11-07 14:15:38', '2025-11-07 14:15:38'),
-(26, 'USD', 10.00, 10.00, 10.00, 89.00, 26, '2025-11-08 16:08:03', '2025-11-08 16:08:03'),
-(27, 'USD', 0.00, 0.00, 0.00, 299.00, 27, '2025-11-12 21:25:10', '2025-11-12 21:25:10'),
-(28, 'USD', 0.00, 0.00, 4.00, 518.96, 28, '2025-12-03 15:32:02', '2025-12-03 15:32:02'),
-(33, 'Select Currency', 95.00, 8.00, 89.00, 267.88, 33, '2026-01-27 17:02:12', '2026-01-27 17:02:12');
+INSERT INTO `invesments` (`id`, `user_id`, `amount`, `name`, `description`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 6, 800000, 'Rokar', 'old rokar', '2026-03-25 04:54:32', '2026-03-25 04:54:32', NULL);
 
 -- --------------------------------------------------------
 
@@ -441,14 +353,7 @@ CREATE TABLE `ledger` (
 --
 
 INSERT INTO `ledger` (`id`, `table_name`, `primary_id`, `user_id`, `customer_id`, `remnaing_amount`, `created_at`, `updated_at`) VALUES
-(1, 'Bill', 1, 6, 5, '570000', '2026-03-22 14:16:33', '2026-03-22 14:44:16'),
-(2, 'Payment', 1, 6, 5, '190000', '2026-03-22 14:24:49', '2026-03-22 14:38:50'),
-(3, 'Payment', 2, 6, 5, '500000', '2026-03-22 14:47:29', '2026-03-22 14:47:29'),
-(4, 'Payment', 3, 6, 5, '520000', '2026-03-22 14:47:50', '2026-03-22 14:47:50'),
-(5, 'Payment', 4, 6, 5, '370000', '2026-03-24 05:59:07', '2026-03-24 05:59:07'),
-(6, 'Bill', 1, 6, 6, NULL, '2026-03-24 06:05:07', '2026-03-24 06:05:07'),
-(7, 'Bill', 2, 6, 5, NULL, '2026-03-24 06:05:49', '2026-03-24 06:05:49'),
-(8, 'Payment', 2, 6, 5, '270000', '2026-03-24 06:08:35', '2026-03-24 06:08:35');
+(1, 'Bill', 1, 6, 2, NULL, '2026-03-25 05:27:10', '2026-03-25 05:27:10');
 
 -- --------------------------------------------------------
 
@@ -511,47 +416,6 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (2, 'App\\Models\\User', 7),
 (2, 'App\\Models\\User', 8),
 (2, 'App\\Models\\User', 9);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `package`
---
-
-CREATE TABLE `package` (
-  `id` int NOT NULL,
-  `description` text,
-  `amount` decimal(11,2) DEFAULT NULL,
-  `invoice_id` int DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `package`
---
-
-INSERT INTO `package` (`id`, `description`, `amount`, `invoice_id`, `created_at`, `updated_at`) VALUES
-(12, 'Laborum quae consequ', 56.00, 11, '2025-11-02 12:02:31', '2025-11-02 12:02:31'),
-(13, 'Test Service', 100.00, 12, '2025-11-03 14:54:21', '2025-11-03 14:54:21'),
-(14, 'Test Invoice', 100.00, 13, '2025-11-03 15:13:09', '2025-11-03 15:13:09'),
-(15, 'Enim in dolores corp', 63.00, 14, '2025-11-03 17:22:22', '2025-11-03 17:22:22'),
-(16, 'Odio eu ea laboriosa', 75.00, 15, '2025-11-03 17:31:30', '2025-11-03 17:31:30'),
-(17, 'Lorem quasi numquam', 92.00, 16, '2025-11-03 17:34:12', '2025-11-03 17:34:12'),
-(18, 'Quos aut minus conse', 25.00, 17, '2025-11-03 17:38:12', '2025-11-03 17:38:12'),
-(19, 'Test', 100.00, 18, '2025-11-03 18:14:31', '2025-11-03 18:14:31'),
-(25, 'Adipisicing laboris', 65.00, 19, '2025-11-04 18:38:42', '2025-11-04 18:38:42'),
-(26, 'test', 100.00, 19, '2025-11-04 18:38:42', '2025-11-04 18:38:42'),
-(27, 'Test Invoice', 234.00, 20, '2025-11-05 13:59:23', '2025-11-05 13:59:23'),
-(28, 'test', 234.00, 21, '2025-11-05 14:05:47', '2025-11-05 14:05:47'),
-(29, 'Test', 234.00, 22, '2025-11-05 14:20:10', '2025-11-05 14:20:10'),
-(30, 'test', 234.00, 23, '2025-11-05 17:17:59', '2025-11-05 17:17:59'),
-(31, 'test invoice', 2342.00, 24, '2025-11-07 14:11:38', '2025-11-07 14:11:38'),
-(32, 'test product', 250.00, 25, '2025-11-07 14:15:38', '2025-11-07 14:15:38'),
-(33, 'Test', 100.00, 26, '2025-11-08 16:08:03', '2025-11-08 16:08:03'),
-(34, 'Test Package', 299.00, 27, '2025-11-12 21:25:10', '2025-11-12 21:25:10'),
-(35, 'test', 499.00, 28, '2025-12-03 15:32:02', '2025-12-03 15:32:02'),
-(40, 'Aliquip sint modi e', 200.00, 33, '2026-01-27 17:02:12', '2026-01-27 17:02:12');
 
 -- --------------------------------------------------------
 
@@ -620,7 +484,11 @@ INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at
 (34, 'roznamcha', 'web', '2025-10-24 16:23:39', '2025-10-24 16:23:39'),
 (35, 'bill-show', 'web', '2025-10-24 16:23:39', '2025-10-24 16:23:39'),
 (36, 'supplier-list', 'web', '2025-10-24 16:23:39', '2025-10-24 16:23:39'),
-(37, 'supplier-ledger', 'web', '2025-10-24 16:23:39', '2025-10-24 16:23:39');
+(37, 'supplier-ledger', 'web', '2025-10-24 16:23:39', '2025-10-24 16:23:39'),
+(38, 'investment-edit', 'web', '2025-10-24 16:23:39', '2025-10-24 16:23:39'),
+(39, 'investment-delete', 'web', '2025-10-24 16:23:39', '2025-10-24 16:23:39'),
+(40, 'investment-create', 'web', '2025-10-24 16:23:39', '2025-10-24 16:23:39'),
+(41, 'investment-list', 'web', '2025-10-24 16:23:39', '2025-10-24 16:23:39');
 
 -- --------------------------------------------------------
 
@@ -685,7 +553,7 @@ CREATE TABLE `roles` (
 
 INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
 (1, 'Admin', 'web', '2025-10-24 16:24:42', '2025-10-24 16:24:42'),
-(2, 'Employee', 'web', '2025-10-24 16:32:21', '2025-10-25 04:51:52');
+(2, 'Business Man', 'web', '2025-10-24 16:32:21', '2026-03-25 05:45:24');
 
 -- --------------------------------------------------------
 
@@ -740,9 +608,43 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (35, 1),
 (36, 1),
 (37, 1),
+(38, 1),
+(39, 1),
+(40, 1),
+(41, 1),
+(5, 2),
+(6, 2),
+(7, 2),
+(8, 2),
 (13, 2),
 (14, 2),
-(19, 2);
+(15, 2),
+(16, 2),
+(17, 2),
+(18, 2),
+(19, 2),
+(20, 2),
+(21, 2),
+(22, 2),
+(23, 2),
+(24, 2),
+(25, 2),
+(26, 2),
+(27, 2),
+(28, 2),
+(29, 2),
+(30, 2),
+(31, 2),
+(32, 2),
+(33, 2),
+(34, 2),
+(35, 2),
+(36, 2),
+(37, 2),
+(38, 2),
+(39, 2),
+(40, 2),
+(41, 2);
 
 -- --------------------------------------------------------
 
@@ -764,7 +666,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('afvN4hbAB3CEy95GKKKBVbhuWRqdkwJHpMP1KGYm', 6, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiRzB1ZXEzZ3hpYjFVS3FIUENaWm9uZGVlQ1g0eGd1UHdoWjlXNU1lVyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzU6Imh0dHA6Ly9wcmFjdGljZS50ZXN0L3Nob3cvZGFzaGJvYXJkIjtzOjU6InJvdXRlIjtzOjE0OiJzaG93LmRhc2hib2FyZCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjY7fQ==', 1774350899);
+('z8lv4QsRJmAUGNpjO7N6UhgGGnNBydN8who3iJLq', 6, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiS3NpWmw2eFBXUUE0aDEybUZqdFR2UFU1cUx3TzRzTzdwNHFnNEN0WCI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjY6Imh0dHA6Ly9wcmFjdGljZS50ZXN0L3VzZXJzIjtzOjU6InJvdXRlIjtzOjExOiJ1c2Vycy5pbmRleCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjY7fQ==', 1774435559);
 
 -- --------------------------------------------------------
 
@@ -814,8 +716,8 @@ CREATE TABLE `supplier_data` (
 --
 
 INSERT INTO `supplier_data` (`id`, `bill_no`, `supplier_id`, `amount`, `description`, `user_id`, `expenses_id`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'L-98000', 9, '800000', 'crincal uthai sami se 6 colour ki or har colur me 100 gaz', 6, NULL, 'Purchasing', '2026-03-24 06:10:56', '2026-03-24 06:10:56'),
-(2, NULL, 9, '100000', 'sami ko diye hai cash', 6, 2, 'Payment', '2026-03-24 06:12:51', '2026-03-24 06:12:51');
+(1, 'C-1900', 1, '475000', '800 gaz 6 colour ki crincal 593 rupees per gaz k hisab se', 6, NULL, 'Purchasing', '2026-03-25 04:53:56', '2026-03-25 04:53:56'),
+(2, NULL, 1, '200000', 'cash  jaabar ne diye', 6, 1, 'Payment', '2026-03-25 04:55:20', '2026-03-25 04:55:20');
 
 -- --------------------------------------------------------
 
@@ -878,19 +780,15 @@ ALTER TABLE `banks`
 -- Indexes for table `bill`
 --
 ALTER TABLE `bill`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id` (`id`,`bill_no`,`customer_id`,`product_id`,`user_id`,`is_cash`);
 
 --
 -- Indexes for table `bill_products`
 --
 ALTER TABLE `bill_products`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `brand`
---
-ALTER TABLE `brand`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id` (`id`,`bill_id`,`product_id`);
 
 --
 -- Indexes for table `cache`
@@ -908,25 +806,29 @@ ALTER TABLE `cache_locks`
 -- Indexes for table `cash_records`
 --
 ALTER TABLE `cash_records`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id` (`id`,`primary_id`,`user_id`,`customer_id`);
 
 --
 -- Indexes for table `customers`
 --
 ALTER TABLE `customers`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id` (`id`,`user_id`);
 
 --
 -- Indexes for table `customer_payments`
 --
 ALTER TABLE `customer_payments`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id` (`id`,`user_id`,`customer_id`,`is_cheque`,`bank_id`);
 
 --
 -- Indexes for table `expenses`
 --
 ALTER TABLE `expenses`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id` (`id`,`user_id`);
 
 --
 -- Indexes for table `failed_jobs`
@@ -936,16 +838,12 @@ ALTER TABLE `failed_jobs`
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
 
 --
--- Indexes for table `invoices`
+-- Indexes for table `invesments`
 --
-ALTER TABLE `invoices`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `invoice_amount`
---
-ALTER TABLE `invoice_amount`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `invesments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id` (`id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `jobs`
@@ -985,12 +883,6 @@ ALTER TABLE `model_has_permissions`
 ALTER TABLE `model_has_roles`
   ADD PRIMARY KEY (`role_id`,`model_id`,`model_type`),
   ADD KEY `model_has_roles_model_id_model_type_index` (`model_id`,`model_type`);
-
---
--- Indexes for table `package`
---
-ALTER TABLE `package`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `password_reset_tokens`
@@ -1080,19 +972,13 @@ ALTER TABLE `banks`
 -- AUTO_INCREMENT for table `bill`
 --
 ALTER TABLE `bill`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `bill_products`
 --
 ALTER TABLE `bill_products`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
-
---
--- AUTO_INCREMENT for table `brand`
---
-ALTER TABLE `brand`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `cash_records`
@@ -1104,13 +990,13 @@ ALTER TABLE `cash_records`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `customer_payments`
 --
 ALTER TABLE `customer_payments`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `expenses`
@@ -1125,16 +1011,10 @@ ALTER TABLE `failed_jobs`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `invoices`
+-- AUTO_INCREMENT for table `invesments`
 --
-ALTER TABLE `invoices`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
-
---
--- AUTO_INCREMENT for table `invoice_amount`
---
-ALTER TABLE `invoice_amount`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+ALTER TABLE `invesments`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `jobs`
@@ -1146,7 +1026,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `ledger`
 --
 ALTER TABLE `ledger`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -1155,16 +1035,10 @@ ALTER TABLE `migrations`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `package`
---
-ALTER TABLE `package`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
-
---
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `products`

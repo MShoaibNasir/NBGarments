@@ -9,10 +9,10 @@
                         <th>S No</th>
                         <th>Date</th>
                         <th>Purpose</th>
-                        <th>Customer Name</th>
+                        <th>Name</th>
                         <th>Amount</th>
                         <th>Total Amount</th>
-                        <th>References</th>
+                        {{-- <th>References</th>--}}
                         <th>Description</th>
                         <th>Bank Name</th>
                         <th>Cheque No</th>
@@ -22,14 +22,17 @@
                 <tbody>
 
                     {{-- 🔥 Running total variable --}}
-                   @php $runningTotal = $openingBalance; @endphp
+                    @php $runningTotal = $openingBalance; @endphp
                     @foreach($data as $item)
                     @php
+
                     if ($item->table_name == 'Payment') {
                     $amount = $item->paymnent->amount ?? null;
                     }
-                    else{
+                    elseif($item->table_name == 'expenses'){
                     $amount = $item->expenses->amount;
+                    }else{
+                    $amount = $item->investment->amount;
                     }
 
 
@@ -38,8 +41,10 @@
                     $runningTotal += $amount;
                     }
                     // Bill = Outgoing (Minus)
-                    else {
+                    elseif($item->table_name == 'expenses') {
                     $runningTotal -= $amount;
+                    }else{
+                    $runningTotal += $amount;
                     }
 
                     // Row color
@@ -51,25 +56,38 @@
                         {{-- Date --}}
                         <td>{{ $item->created_at->format('d-m-Y') }}</td>
                         <td>{{ $item->table_name }}</td>
-                        <td>{{ $item->table_name == 'Payment' ?  $item->paymnent->customer->name : '---' }}</td>
+
+                        <td>
+                            {{
+        $item->table_name == 'Payment' ? $item->payment?->customer?->name 
+        : ($item->table_name == 'expenses' ? $item->expenses?->SupplierData?->Supplier?->name 
+        : $item->investment?->name ?? '---')
+    }}
+                        </td>
+
                         <td>{{ number_format($amount) }} Rs</td>
 
                         {{-- 🔥 Running Total --}}
                         <td><strong>{{ number_format($runningTotal) }} Rs</strong></td>
 
-                        {{-- Reference --}}
+                        {{-- Reference
                         <td>
                             @if($item->table_name == 'Payment')
                             {{ $item->paymnent->reference ?? '----' }}
-                            @else
-                            {{ $item->expenses->refrence ?? '----' }}
-                            @endif
+                        @elseif($item->table_name == 'expenses')
+                        {{ $item->expenses->refrence ?? '----' }}
+                        @else
+                        ----
+                        @endif
                         </td>
+                        --}}
                         <td>
                             @if($item->table_name == 'Payment')
                             {{ $item->paymnent->description ?? '----' }}
-                            @else
+                            @elseif ($item->table_name == 'expenses')
                             {{ $item->expenses->description ?? '----' }}
+                            @else
+                            {{ $item->investment->description ?? '----' }}
                             @endif
                         </td>
 

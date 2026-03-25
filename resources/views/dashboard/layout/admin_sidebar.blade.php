@@ -7,9 +7,13 @@
     <!-- Sidebar Header with Logo -->
     <div class="sidebar-header">
         <div class="logo-section">
-            <img src="{{asset('dashboard\img\logo.png')}}" alt="HRU Logo" style="background: white;">
+            <a href="{{route('show.dashboard')}}">
+                <img src="{{asset('dashboard\img\logo.png')}}" alt="HRU Logo" style="background: white;">
+            </a>
             <div>
-                <h1 class="logo-text" style="color: white;">Invoice Portal</h1>
+                <a href="{{route('show.dashboard')}}">
+                    <h1 class="logo-text" style="color: white;">Smart Business System</h1>
+                </a>
                 <small style="opacity: 0.8; color: white;"></small>
             </div>
         </div>
@@ -98,23 +102,23 @@
                     </div>
                 </div>
                 @endcanany
-                    @canany(['payment-create', 'payment-list'])
+                @canany(['payment-create', 'payment-list'])
 
-                    <div class="nav-item dropdown custom-dropdown">
-                        <a href="#" class="nav-link d-flex justify-content-between align-items-center" id="userDropdownToggle">
-                            <span><i class="fas fa-file-invoice-dollar me-2"></i>Payment Management</span>
-                            <i class="fas fa-chevron-down ms-2"></i>
-                        </a>
-                        <div class="dropdown-menu-custom">
-                            @can('payment-create')
-                            <a href="{{route('payment.create')}}" class="dropdown-item">Create Payment</a>
-                            @endcan
-                            @can('payment-list')
-                            <a href="{{route('payment.filter')}}" class="dropdown-item">Payment List</a>
-                            @endcan
-                        </div>
+                <div class="nav-item dropdown custom-dropdown">
+                    <a href="#" class="nav-link d-flex justify-content-between align-items-center" id="userDropdownToggle">
+                        <span><i class="fas fa-file-invoice-dollar me-2"></i>Payment Management</span>
+                        <i class="fas fa-chevron-down ms-2"></i>
+                    </a>
+                    <div class="dropdown-menu-custom">
+                        @can('payment-create')
+                        <a href="{{route('payment.create')}}" class="dropdown-item">Create Payment</a>
+                        @endcan
+                        @can('payment-list')
+                        <a href="{{route('payment.filter')}}" class="dropdown-item">Payment List</a>
+                        @endcan
                     </div>
-                    @endcanany
+                </div>
+                @endcanany
                 @canany(['expenses-create', 'expenses-list'])
 
                 <div class="nav-item dropdown custom-dropdown">
@@ -144,12 +148,31 @@
                         @can('roznamcha')
                         <a href="{{route('cashRecords.filter')}}" class="dropdown-item">Roznamcha</a>
                         @endcan
-                 
+
 
                     </div>
                 </div>
                 @endcanany
-                
+
+                @canany(['investment-create', 'investment-list'])
+
+                <div class="nav-item dropdown custom-dropdown">
+                    <a href="#" class="nav-link d-flex justify-content-between align-items-center" id="userDropdownToggle">
+                        <span><i class="fas fa-file-invoice-dollar me-2"></i>Investment Management</span>
+                        <i class="fas fa-chevron-down ms-2"></i>
+                    </a>
+                    <div class="dropdown-menu-custom">
+                        @can('investment-create')
+                        <a href="{{route('investment.create')}}" class="dropdown-item">Create Investments</a>
+                        @endcan
+                        @can('investment-list')
+                        <a href="{{route('investment.list')}}" class="dropdown-item">Investments</a>
+                        @endcan
+
+                    </div>
+                </div>
+                @endcanany
+
                 @canany(['product-create', 'product-list'])
 
                 <div class="nav-item dropdown custom-dropdown">
@@ -186,6 +209,7 @@
                     </div>
                 </div>
                 @endcanany
+
 
             </div>
         </div>

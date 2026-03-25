@@ -37,6 +37,14 @@
         font-weight: 600;
         font-size: 0.9rem;
     }
+
+    a {
+        color: white;
+    }
+
+    a:hover {
+        color: white;
+    }
 </style>
 
 <div class="content">
@@ -53,87 +61,94 @@
 
             <div class="card-body">
                 <div class="row g-4">
-                    @if(auth()->user()->hasRole('Admin'))
+
                     <!-- Total Users -->
                     <div class="col-lg-4 col-md-6 col-12">
                         <div class="p-4 rounded-4 text-center stat-card-box"
                             style="background: linear-gradient(135deg, #FFE28A, #FED966); color: #333;">
-                            <div class="stat-icon mb-2"><i class="fa fa-users"></i></div>
-                            <div class="stat-number">{{ $users_count }}</div>
-                            <div class="stat-label">Total Users</div>
+                            <a href="{{route('investment.list')}}">
+                                <div class="stat-icon mb-2"><i class="fa fa-users"></i></div>
+                                <div class="stat-label">Investment Management</div>
+                            </a>
                         </div>
                     </div>
-                    @endif
+
                     <!-- Total Invoices -->
-                    {{-- <div class="col-lg-4 col-md-6 col-12">
+                    @can('supplier-list')
+                    <div class="col-lg-4 col-md-6 col-12">
                         <div class="p-4 rounded-4 text-center stat-card-box"
-                            style="background: linear-gradient(135deg, #B3D1D8, #9BBCC3); color: #333;">
-                            <div class="stat-icon mb-2"><i class="fa fa-file-invoice"></i></div>
-                            <div class="stat-number">{{$invoices_count}}
+                            style="background: linear-gradient(135deg, #83d6e9, #8de9fc); color: #070707;">
+                            <a href="{{route('supplier.list')}}">
+                                <div class="stat-icon mb-2"><i class="fa fa-file-invoice"></i></div>
+                                <div class="stat-label">Supplier Management</div>
+                            </a>
+                        </div>
+                    </div>
+                    @endcan
+                    @can('customer-list')
+                    <div class="col-lg-4 col-md-6 col-12">
+                        <div class="p-4 rounded-4 text-center stat-card-box"
+                            style="background: linear-gradient(135deg, #e983db, #b88dfc); color: #070707;">
+                            <a href="{{route('customer.list')}}">
+                                <div class="stat-icon mb-2"><i class="fa fa-file-invoice"></i></div>
+                                <div class="stat-label">Profile Management</div>
+                            </a>
+                        </div>
+                    </div>
+                    @endcan
+                    @can('roznamcha')
+                    <div class="col-lg-4 col-md-6 col-12">
+                        <div class="p-4 rounded-4 text-center stat-card-box"
+                            style="background: linear-gradient(135deg, #0c1e22, #04090a); color: #f1e8e8;">
+                            <a href="{{route('cashRecords.filter')}}">
+                                <div class="stat-icon mb-2"><i class="fa fa-file-invoice"></i></div>
+                                <div class="stat-label">Roznamcha</div>
+                            </a>
+                        </div>
+                    </div>
+                    @endcan
+
+
+                    <!-- Total Employees -->
+                    @can('bill-list')
+                    <div class="col-lg-4 col-md-6 col-12">
+                        <div class="p-4 rounded-4 text-center stat-card-box"
+                            style="background: linear-gradient(135deg, #FF3333, #C00000); color: #fff;">
+                            <a href="{{route('bill.filter')}}">
+                                <div class="stat-icon mb-2"><i class="fa fa-user-tie"></i></div>
+                                <div class="stat-label">Bill Management</div>
+                            </a>
+                        </div>
+                    </div>
+                    @endcan
+                    @can('payment-list')
+                    <div class="col-lg-4 col-md-6 col-12">
+                        <div class="p-4 rounded-4 text-center stat-card-box"
+                            style="background: linear-gradient(135deg, #ffb833, #ffe033); color: #fff;">
+                            <a href="{{route('payment.filter')}}">
+                                <div class="stat-icon mb-2"><i class="fa fa-user-tie"></i></div>
+                                <div class="stat-label">Payment Management</div>
+                            </a>
+                        </div>
+                    </div>
+                    @endcan
+                    @can('expenses-list')
+                    <div class="col-lg-4 col-md-6 col-12">
+                        <div class="p-4 rounded-4 text-center stat-card-box"
+                            style="background: linear-gradient(135deg, #ff3333, #ff3333); color: #fff;">
+                            <a href="{{route('expenses.filter')}}">
+                                <div class="stat-icon mb-2"><i class="fa fa-user-tie"></i></div>
+                                <div class="stat-label">Expenses Management</div>
+                            </a>
+                        </div>
+                    </div>
+
+                    @endcan
+
                 </div>
-                <div class="stat-label">Total Invoices</div>
             </div>
         </div>
-        --}}
-
-        <!-- Total Employees -->
-        @if(auth()->user()->hasRole('Admin'))
-        <div class="col-lg-4 col-md-6 col-12">
-            <div class="p-4 rounded-4 text-center stat-card-box"
-                style="background: linear-gradient(135deg, #FF3333, #C00000); color: #fff;">
-                <div class="stat-icon mb-2"><i class="fa fa-user-tie"></i></div>
-                <div class="stat-number">{{ $employees_count }}</div>
-                <div class="stat-label">Total Employees</div>
-            </div>
-        </div>
-        @endif
-        <!-- Total Payment -->
-        {{--@if(auth()->user()->hasRole('Admin'))
-<div class="col-lg-12 col-md-12 col-12">
-    <div class="p-4 rounded-4 stat-card-box shadow"
-        style="background: linear-gradient(135deg, #17a2b8, #138496); color: #fff;">
-
-<h5 class="mb-3 fw-bold">
-    <span class="badge bg-info text-dark p-2">Invoice Summary</span>
-</h5>
-
-        <div class="table-responsive">
-            <table class="table table-borderless text-white mb-0">
-                <thead>
-                    <tr class="text-uppercase">
-                        <th>S No</th>
-                        <th>Brand Name</th>
-                        <th>Total Invoice</th>
-                        <th>Total Money</th>
-                        <th>Money Received</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    @foreach($brand as $data)
-
-                    <tr>
-                        <td>{{$loop->index+1}}</td>
-        <td>{{$data->name}}</td>
-        <td>{{number_format(countInvoices($data->id))}}</td>
-        <td>{{number_format(totalInvoiceAmount($data->id))}}</td>
-        <td>{{number_format(totalInvoiceAmountRecieved($data->id))}}</td>
-        </tr>
-        @endforeach
-
-        </tbody>
-        </table>
     </div>
-</div>
-</div>
-@endif
---}}
-
-
-</div>
-</div>
-</div>
-</div>
 </div>
 
 <script>

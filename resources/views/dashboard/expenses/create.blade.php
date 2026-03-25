@@ -98,7 +98,7 @@
 
 
 
-                                @error('amount')
+                                @error('supplier_id')
                                 <span class="text-danger small">{{ $message }}</span>
                                 @enderror
                             </div>

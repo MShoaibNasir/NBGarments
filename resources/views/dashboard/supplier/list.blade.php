@@ -46,7 +46,7 @@
                         <td>{{ $item->created_at->format('d-m-Y') }}</td>
                         <td><strong>{{ number_format($item->amount) }} Rs</strong></td>
                         <td><strong>{{ number_format($runningBalance) }} Rs</strong></td>
-                        <td><strong>{{ $item->description }} Rs</strong></td>
+                        <td><strong>{{ $item->description }} </strong></td>
                     </tr>
 
                     @endforeach

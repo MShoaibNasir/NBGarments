@@ -110,12 +110,14 @@ class ExpensesManagementController extends Controller
     public function edit($id)
     {
         checkAuthentication();
-        $expenses = expenses::findOrFail($id);
-        return view('dashboard.expenses.edit', compact('expenses'));
+        $expenses = Expenses::with('SupplierData')->findOrFail($id);
+        $supplier = Customer::where('user_id', Auth::user()->id)->where('status', 'supplier')->get();
+        return view('dashboard.expenses.edit', compact('expenses', 'supplier'));
     }
     public function delete($id)
     {
         $customers = Expenses::findOrFail($id);
+
         $customers->delete();
         return redirect()->back()->with('success', 'expenses deleted successfully!');
     }
@@ -123,15 +125,19 @@ class ExpensesManagementController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'expenses_no' => 'required|string|max:255',
-            'customer_id' => 'required',
-            'qty' => 'required',
-            'price' => 'required',
-            'total_amount' => 'required'
+            'description' => 'required|string|max:255',
+            'amount'      => 'required|numeric|min:1',
+            'refrence'   => 'required|string|max:255',
 
         ]);
         $brand = Expenses::findOrFail($id);
         $brand->update($validated);
+
+        SupplierData::where('expenses_id', $id)->update([
+            'amount' => $request->amount,
+            'description' => $request->description,
+            'supplier_id' => $request->supplier_id
+        ]);
         return redirect()->route('expenses.filter')->with('success', 'expenses updated successfully!');
     }
 

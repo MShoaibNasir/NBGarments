@@ -25,7 +25,7 @@ class BillManagementController extends Controller
     public function create()
     {
         checkAuthentication();
-        $customer = Customer::where('user_id', Auth::user()->id)->get();
+        $customer = Customer::where('user_id', Auth::user()->id)->where('status','customer')->get();
         $product = Product::where('user_id', Auth::user()->id)->get();
         $bill = Bill::where('user_id', Auth::user()->id)->get();
         return view('dashboard.bill.create', ['bill' => $bill, 'customer' => $customer, 'product' => $product]);
@@ -153,7 +153,7 @@ class BillManagementController extends Controller
         $bill = Bill::findOrFail($id);
         $billProducts = BillProducts::where('bill_id', $id)->get();
 
-        $customer = Customer::all();
+        $customer = Customer::where('status','customer')->get();
         $product = Product::all();
 
         return view('dashboard.bill.edit', compact(

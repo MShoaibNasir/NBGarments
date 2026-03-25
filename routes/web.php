@@ -19,6 +19,7 @@ use App\Http\Controllers\LedgerController;
 use App\Http\Controllers\CashRecordsController;
 use App\Http\Controllers\ProductCostController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\InvestmentController;
 
 // Default redirect
 Route::get('/', function () {
@@ -108,6 +109,14 @@ Route::prefix('bank')->controller(BankController::class)->group(function () {
     Route::delete('/delete/{bank}', 'delete')->name('bank.delete');
     Route::get('/edit/{bank}', 'edit')->name('bank.edit');
     Route::put('/update/{bank}', 'update')->name('bank.update');
+});
+Route::prefix('investment')->controller(InvestmentController::class)->group(function () {
+    Route::get('/index', 'index')->name('investment.list');
+    Route::get('/create', 'create')->name('investment.create');
+    Route::post('/store', 'store')->name('investment.store');
+    Route::get('/delete/{id}', 'delete')->name('investment.delete');
+    Route::get('/edit/{id}', 'edit')->name('investment.edit');
+    Route::post('/update/{id}', 'update')->name('investment.update');
 });
 
 
