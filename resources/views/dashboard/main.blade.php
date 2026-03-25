@@ -63,6 +63,7 @@
                 <div class="row g-4">
 
                     <!-- Total Users -->
+                    @can('investment-list')
                     <div class="col-lg-4 col-md-6 col-12">
                         <div class="p-4 rounded-4 text-center stat-card-box"
                             style="background: linear-gradient(135deg, #FFE28A, #FED966); color: #333;">
@@ -72,6 +73,7 @@
                             </a>
                         </div>
                     </div>
+                    @endcan
 
                     <!-- Total Invoices -->
                     @can('supplier-list')
