@@ -43,7 +43,7 @@
                     <tr style="background-color: {{ $rowColor }}; color:white;">
                         <td>{{ $loop->index + 1 }}</td>
                         <td>{{ $item->status }}</td>
-                        <td>{{ $item->created_at->format('d-m-Y') }}</td>
+                        <td>{{     \Carbon\Carbon::parse($item->supplier_date)->format('d-m-Y')  }}</td>
                         <td><strong>{{ number_format($item->amount) }} Rs</strong></td>
                         <td><strong>{{ number_format($runningBalance) }} Rs</strong></td>
                         <td><strong>{{ $item->description }} </strong></td>

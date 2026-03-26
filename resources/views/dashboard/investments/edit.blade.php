@@ -39,10 +39,11 @@
             background-color: #1edae8;
             color: #fff;
         }
+
         h4.mb-0 {
             color: white;
         }
-            </style>
+    </style>
 
     <div class="content">
         @include('dashboard.layout.navbar')
@@ -62,7 +63,16 @@
                             @csrf
                             <div class="mb-3">
                                 <label for="name" class="form-label">Invester Name</label>
-                                <input type="text" name="name" id="name" value="{{$data->name}}" class="form-control"  placeholder="Enter Invester name" required>
+                                <input type="text" name="name" id="name" value="{{$data->name}}" class="form-control" placeholder="Enter Invester name" required>
+                                @error('name')
+                                <span class="text-danger small">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+
+                             <div class="mb-3">
+                                <label for="name" class="form-label">Date</label>
+                                <input type="date" name="investment_date" id="investment_date" value="{{ \Carbon\Carbon::parse($data->investment_date)->format('Y-m-d') }}" class="form-control"  required>
                                 @error('name')
                                     <span class="text-danger small">{{ $message }}</span>
                                 @enderror
@@ -70,9 +80,9 @@
 
                             <div class="mb-3">
                                 <label for="link" class="form-label">Amount</label>
-                                <input type="number" name="amount" id="amount" value="{{$data->amount}}"  class="form-control"  required>
+                                <input type="number" name="amount" id="amount" value="{{$data->amount}}" class="form-control" required>
                                 @error('amount')
-                                    <span class="text-danger small">{{ $message }}</span>
+                                <span class="text-danger small">{{ $message }}</span>
                                 @enderror
                             </div>
 
@@ -80,7 +90,7 @@
                                 <label for="link" class="form-label">Description</label>
                                 <textarea name="description" id="" class="form-control">{{$data->description}}</textarea>
                                 @error('description')
-                                    <span class="text-danger small">{{ $message }}</span>
+                                <span class="text-danger small">{{ $message }}</span>
                                 @enderror
                             </div>
 

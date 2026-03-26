@@ -25,7 +25,7 @@ class BillManagementController extends Controller
     public function create()
     {
         checkAuthentication();
-        $customer = Customer::where('user_id', Auth::user()->id)->where('status','customer')->get();
+        $customer = Customer::where('user_id', Auth::user()->id)->where('status', 'customer')->get();
         $product = Product::where('user_id', Auth::user()->id)->get();
         $bill = Bill::where('user_id', Auth::user()->id)->get();
         return view('dashboard.bill.create', ['bill' => $bill, 'customer' => $customer, 'product' => $product]);
@@ -49,13 +49,14 @@ class BillManagementController extends Controller
             'price.*'      => 'required|numeric|min:0',
 
             'amount'       => 'required|array',
+            'bill_date'       => 'required',
             'amount.*'     => 'required|numeric|min:0',
         ]);
 
         DB::beginTransaction();
 
         try {
-         
+
             // ⭐ Calculate totals from arrays
             $totalQty = array_sum($request->qty);
             $totalAmount = array_sum($request->amount);
@@ -67,12 +68,13 @@ class BillManagementController extends Controller
                 'qty'          => $totalQty,
                 'total_amount' => $totalAmount,
                 'user_id'      => Auth::id(),
+                'bill_date'      => $request->bill_date,
                 'is_cash' => $request->cash ? 1 : 0
             ]);
 
             // ✅ Ledger Entry
 
-            
+
 
             Ledger::create([
                 'table_name'  => 'Bill',
@@ -86,10 +88,10 @@ class BillManagementController extends Controller
 
 
                 $product_amount = Product::where('id', $product_id)->select('amount')->first();
-                
+
                 $difference = $request->price[$key] - $product_amount->amount;
-              
-             
+
+
                 $status = null;
                 if ($difference > 0) {
                     $status = "Profit";
@@ -120,8 +122,10 @@ class BillManagementController extends Controller
                     'description' => null,
                     'user_id'     => Auth::id(),
                     'is_cheque'   => 0,
+                    'payment_date'   => $request->bill_date,
                     'bank_id'     => null,
                     'cheque_no'   => null,
+                    'bill_id' => $bill->id
                 ];
 
 
@@ -153,7 +157,7 @@ class BillManagementController extends Controller
         $bill = Bill::findOrFail($id);
         $billProducts = BillProducts::where('bill_id', $id)->get();
 
-        $customer = Customer::where('status','customer')->get();
+        $customer = Customer::where('status', 'customer')->get();
         $product = Product::all();
 
         return view('dashboard.bill.edit', compact(
@@ -185,6 +189,7 @@ class BillManagementController extends Controller
 
     public function update(Request $request, $id)
     {
+
         // ✅ Validation (same as store)
         $validated = $request->validate([
             'bill_no'      => 'required|string|max:255',
@@ -220,6 +225,7 @@ class BillManagementController extends Controller
                 'customer_id'  => $request->customer_id,
                 'qty'          => $totalQty,
                 'total_amount' => $totalAmount,
+                'bill_date' => $request->bill_date
             ]);
 
             $ledger->update([
@@ -238,6 +244,20 @@ class BillManagementController extends Controller
                     'price'      => $request->price[$key],
                     'amount'     => $request->amount[$key],
                 ]);
+            }
+
+            if (isset($request->cash)) {
+                Payment::where('bill_id', $id)->update([
+                    'customer_id' => $request->customer_id,
+                    'amount'      => $totalAmount,
+                    'user_id'     => Auth::id(),
+                    'payment_date'   => $request->bill_date,
+                ]);
+                CashRecords::where('table_name', 'Payment')->where('primary_id', $id)
+                    ->update(['customer_id' => $request->customer_id]);
+            } else {
+                Payment::where('bill_id', $id)->delete();
+                CashRecords::where('table_name', 'Payment')->where('primary_id', $id)->delete();
             }
 
             DB::commit();
@@ -328,7 +348,7 @@ class BillManagementController extends Controller
         // ✅ Pagination
         $data = $invoice->paginate($qty, ['*'], 'page', $page)
             ->setPath($custom_pagination_path);
-        
+
         $total_sell_amount = Bill::where('user_id', Auth::id())
             ->whereNotNull('total_amount')
             ->sum('total_amount');
@@ -345,4 +365,3 @@ class BillManagementController extends Controller
         return view('dashboard.bill.filter');
     }
 }
-    

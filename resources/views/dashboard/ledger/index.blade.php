@@ -12,10 +12,10 @@
                         <th>QTY</th>
                         <th>Amount</th>
                         <th>Total Amount</th>
-                        <th>References</th>
+                        {{--<th>References</th>--}}
                         <th>Bank Name</th>
                         <th>Cheque No</th>
-                      
+
                     </tr>
                 </thead>
 
@@ -33,7 +33,7 @@
                     else{
                     $amount = $item->bill->total_amount;
                     }
-               
+
 
                     // Payment = Incoming (Plus)
                     if ($item->table_name == 'Payment') {
@@ -52,19 +52,20 @@
                         <td>{{ $loop->index + 1 }}</td>
                         <td>{{ $item->table_name }}</td>
                         <td>{{ $item->created_at->format('d-m-Y') }}</td>
-                        <td>{{  $item->table_name == 'Bill' ? $item->bill->qty : '-----' }}</td>
+                        <td>{{ $item->table_name == 'Bill' ? $item->bill->qty : '-----' }}</td>
                         <td>{{ number_format($amount) }}</td>
                         <td><strong>{{ number_format($runningTotal) }} Rs</strong></td>
 
 
-                        {{-- Reference --}}
+                        {{-- Reference 
                         <td>
                             @if($item->table_name == 'Payment')
                             {{ $item->paymnent->reference ?? '----' }}
-                            @else
-                            ----
-                            @endif
+                        @else
+                        ----
+                        @endif
                         </td>
+                        --}}
 
                         {{-- Bank --}}
                         <td>
@@ -85,7 +86,7 @@
                         </td>
 
                         {{-- Date --}}
-                       
+
 
                         {{-- 🔥 Running Total --}}
                     </tr>

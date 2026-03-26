@@ -86,12 +86,18 @@
                                 <label class="form-label">Amount</label>
                                 <input type="number" name="amount" class="form-control" placeholder="Enter Amount" required>
                             </div>
+                            {{-- Date --}}
+                            <div class="mb-3">
+                                <label class="form-label">Date</label>
+                                <input type="date" name="payment_date" class="form-control"  required>
+                            </div>
 
-                            {{-- Reference --}}
+                            {{-- Reference 
                             <div class="mb-3">
                                 <label class="form-label">Reference</label>
                                 <input type="text" name="reference" class="form-control" placeholder="Optional">
                             </div>
+                            --}}
                             {{-- description --}}
                             <div class="mb-3">
                                 <label class="form-label">Description</label><br>

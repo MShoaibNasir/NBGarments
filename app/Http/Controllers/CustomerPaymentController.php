@@ -31,6 +31,7 @@ class CustomerPaymentController extends Controller
             'amount'      => 'required|numeric|min:1',
            // 'reference'   => 'nullable|string|max:255',
             'description' => 'nullable|string',
+            'payment_date' => 'nullable',
 
             // If cheque checked then required
             'bank_id'   => 'required_if:is_cheque,1|nullable|exists:banks,id',
@@ -45,12 +46,13 @@ class CustomerPaymentController extends Controller
             $data = [
                 'customer_id' => $request->customer_id,
                 'amount'      => $request->amount,
-                'reference'   => $request->reference,
+                'reference'   => $request->reference ?? null,
                 'description' => $request->description,
                 'user_id'     => Auth::id(),
                 'is_cheque'   => $request->has('is_cheque') ? 1 : 0,
                 'bank_id'     => $request->bank_id,
                 'cheque_no'   => $request->cheque_no,
+                'payment_date'   => $request->payment_date,
             ];
 
             // If not cheque → remove cheque data
@@ -94,9 +96,7 @@ class CustomerPaymentController extends Controller
                 ->route('payment.filter')
                 ->with('success', 'Payment added successfully');
         } catch (\Exception $e) {
-
             DB::rollBack();
-
             return back()->with('error', 'Something went wrong!');
         }
     }

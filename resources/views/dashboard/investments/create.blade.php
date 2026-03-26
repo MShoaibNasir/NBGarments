@@ -67,6 +67,13 @@
                                     <span class="text-danger small">{{ $message }}</span>
                                 @enderror
                             </div>
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Date</label>
+                                <input type="date" name="investment_date" id="investment_date" value="{{ old('investment_date') }}" class="form-control"  required>
+                                @error('name')
+                                    <span class="text-danger small">{{ $message }}</span>
+                                @enderror
+                            </div>
 
                             <div class="mb-3">
                                 <label for="link" class="form-label">Amount</label>

@@ -61,7 +61,6 @@
 
             <div class="card-body">
                 <div class="row g-4">
-
                     <!-- Total Users -->
                     @can('investment-list')
                     <div class="col-lg-4 col-md-6 col-12">
@@ -74,7 +73,6 @@
                         </div>
                     </div>
                     @endcan
-
                     <!-- Total Invoices -->
                     @can('supplier-list')
                     <div class="col-lg-4 col-md-6 col-12">
@@ -109,8 +107,6 @@
                         </div>
                     </div>
                     @endcan
-
-
                     <!-- Total Employees -->
                     @can('bill-list')
                     <div class="col-lg-4 col-md-6 col-12">
@@ -144,7 +140,6 @@
                             </a>
                         </div>
                     </div>
-
                     @endcan
 
                 </div>

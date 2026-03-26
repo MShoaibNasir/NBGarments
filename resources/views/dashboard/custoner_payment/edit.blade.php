@@ -9,7 +9,10 @@
         padding: 30px;
     }
 
-    .form-label { font-weight: 600; color: #000; }
+    .form-label {
+        font-weight: 600;
+        color: #000;
+    }
 
     .form-control {
         border: 1px solid #000;
@@ -18,9 +21,15 @@
         color: #000;
     }
 
-    .btn-dark { background-color: #1edae8; border: none; }
+    .btn-dark {
+        background-color: #1edae8;
+        border: none;
+    }
 
-    .card-header { background-color: #1edae8; color: #fff; }
+    .card-header {
+        background-color: #1edae8;
+        color: #fff;
+    }
 
     input[type=number]::-webkit-inner-spin-button,
     input[type=number]::-webkit-outer-spin-button {
@@ -28,7 +37,9 @@
         margin: 0;
     }
 
-    input[type=number] { -moz-appearance: textfield; }
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
 </style>
 
 <div class="content">
@@ -63,19 +74,26 @@
                             </select>
                         </div>
 
+                        {{-- Date --}}
+                        <div class="mb-3">
+                            <label class="form-label">Date</label>
+                            <input type="date" name="payment_date" class="form-control" value="{{ \Carbon\Carbon::parse($data->payment_date)->format('Y-m-d') }}" required>
+                        </div>
+
                         {{-- Amount --}}
                         <div class="mb-3">
                             <label class="form-label">Amount</label>
                             <input type="number" name="amount" class="form-control"
-                                   value="{{ $payment->amount }}" required>
+                                value="{{ $payment->amount }}" required>
                         </div>
 
-                        {{-- Reference --}}
+                        {{-- Reference
                         <div class="mb-3">
                             <label class="form-label">Reference</label>
                             <input type="text" name="reference" class="form-control"
-                                   value="{{ $payment->reference }}">
+                                value="{{ $payment->reference }}">
                         </div>
+                         --}}
 
                         {{-- Description --}}
                         <div class="mb-3">
@@ -92,7 +110,7 @@
 
                         {{-- Cheque Fields --}}
                         <div id="chequeFields"
-                             style="display: {{ $payment->is_cheque ? 'block' : 'none' }};">
+                            style="display: {{ $payment->is_cheque ? 'block' : 'none' }};">
 
                             <div class="mb-3">
                                 <label class="form-label">Bank Name</label>
@@ -110,8 +128,8 @@
                             <div class="mb-3">
                                 <label class="form-label">Cheque No</label>
                                 <input type="text" name="cheque_no" id="cheque_no"
-                                       class="form-control"
-                                       value="{{ $payment->cheque_no }}">
+                                    class="form-control"
+                                    value="{{ $payment->cheque_no }}">
                             </div>
 
                         </div>
@@ -134,7 +152,7 @@
     const bankField = document.getElementById('bank_id');
     const chequeNoField = document.getElementById('cheque_no');
 
-    checkbox.addEventListener('change', function () {
+    checkbox.addEventListener('change', function() {
         if (this.checked) {
             chequeFields.style.display = 'block';
             bankField.required = true;

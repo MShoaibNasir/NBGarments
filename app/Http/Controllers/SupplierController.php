@@ -27,7 +27,8 @@ class SupplierController extends Controller
             'bill_no' => 'required',
             'supplier_id' => 'required',
             'amount' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'supplier_date' => 'required'
 
         ]);
         $data = $request->all();
@@ -82,14 +83,14 @@ class SupplierController extends Controller
         }
 
         if ($start_date && $end_date) {
-            $baseQuery->whereBetween('created_at', [
+            $baseQuery->whereBetween('supplier_date', [
                 $start_date . ' 00:00:00',
                 $end_date . ' 23:59:59'
             ]);
         } elseif ($start_date) {
-            $baseQuery->where('created_at', '>=', $start_date . ' 00:00:00');
+            $baseQuery->where('supplier_date', '>=', $start_date . ' 00:00:00');
         } elseif ($end_date) {
-            $baseQuery->where('created_at', '<=', $end_date . ' 23:59:59');
+            $baseQuery->where('supplier_date', '<=', $end_date . ' 23:59:59');
         }
 
         if ($bill_no) {

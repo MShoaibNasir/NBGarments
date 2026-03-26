@@ -33,7 +33,12 @@
 
                     <div class="mb-3">
                         <label class="form-label">Is Cash Bill</label>
-                        <input type="checkbox" {{ $bill->is_cash==1 ? 'checked': '' }} />
+                        <input type="checkbox" name="is_cash" {{ $bill->is_cash==1 ? 'checked': '' }} />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Bill Date</label>
+                        <input type="date" name="bill_date" value="{{ \Carbon\Carbon::parse($bill->bill_date)->format('Y-m-d') }}" class="form-control" required>
                     </div>
 
 

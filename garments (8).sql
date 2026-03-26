@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 25, 2026 at 10:46 AM
+-- Generation Time: Mar 26, 2026 at 09:45 AM
 -- Server version: 9.3.0
 -- PHP Version: 7.4.33
 
@@ -64,6 +64,7 @@ CREATE TABLE `bill` (
   `total_amount` bigint DEFAULT NULL,
   `status` int DEFAULT '0',
   `is_cash` int DEFAULT '0',
+  `bill_date` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -73,8 +74,8 @@ CREATE TABLE `bill` (
 -- Dumping data for table `bill`
 --
 
-INSERT INTO `bill` (`id`, `bill_no`, `customer_id`, `product_id`, `user_id`, `qty`, `total_amount`, `status`, `is_cash`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'L-9000', 2, NULL, 6, 144, 244800, 0, 1, '2026-03-25 05:27:10', '2026-03-25 05:27:10', NULL);
+INSERT INTO `bill` (`id`, `bill_no`, `customer_id`, `product_id`, `user_id`, `qty`, `total_amount`, `status`, `is_cash`, `bill_date`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'D-9876', 2, NULL, 6, 144, 266400, 0, 1, '2026-03-16 19:00:00', '2026-03-26 04:33:16', '2026-03-26 04:33:16', NULL);
 
 -- --------------------------------------------------------
 
@@ -101,24 +102,7 @@ CREATE TABLE `bill_products` (
 --
 
 INSERT INTO `bill_products` (`id`, `bill_id`, `product_id`, `qty`, `price`, `amount`, `msn`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 8, 4, 100, '1900', '190000', NULL, NULL, '2026-02-22 01:19:56', '2026-02-22 01:39:35', '2026-02-22 01:39:35'),
-(2, 8, 4, 180, '3400', '612000', NULL, NULL, '2026-02-22 01:19:56', '2026-02-22 01:39:35', '2026-02-22 01:39:35'),
-(3, 8, 4, 100, '1900', '190000', NULL, NULL, '2026-02-22 01:39:35', '2026-02-22 01:48:52', '2026-02-22 01:48:52'),
-(4, 8, 4, 180, '3400', '612000', NULL, NULL, '2026-02-22 01:39:35', '2026-02-22 01:48:52', '2026-02-22 01:48:52'),
-(5, 8, 4, 100, '1900', '190000', NULL, NULL, '2026-02-22 01:48:52', '2026-02-22 01:56:26', '2026-02-22 01:56:26'),
-(6, 8, 4, 180, '3400', '612000', NULL, NULL, '2026-02-22 01:48:52', '2026-02-22 01:56:26', '2026-02-22 01:56:26'),
-(7, 8, 4, 100, '1900', '190000', NULL, NULL, '2026-02-22 01:56:26', '2026-02-22 01:57:09', '2026-02-22 01:57:09'),
-(8, 8, 4, 120, '3400', '408000', NULL, NULL, '2026-02-22 01:56:26', '2026-02-22 01:57:09', '2026-02-22 01:57:09'),
-(15, 4, 4, 96, '1800', '172800', '170000', 'Profit', '2026-03-20 10:24:56', '2026-03-20 10:24:56', NULL),
-(16, 10, 4, 96, '3000', '288000', '200', 'Profit', '2026-03-20 10:30:38', '2026-03-20 10:30:38', NULL),
-(17, 11, 6, 40, '40000', '1600000', '38400', 'Profit', '2026-03-20 10:32:17', '2026-03-20 10:32:17', NULL),
-(18, 1, 4, 100, '2900', '290000', '100', 'Profit', '2026-03-22 14:16:33', '2026-03-22 14:44:16', '2026-03-22 14:44:16'),
-(19, 1, 4, 100, '2800', '280000', NULL, NULL, '2026-03-22 14:44:16', '2026-03-22 14:44:16', NULL),
-(20, 1, 4, 80, '1900', '152000', '-900', 'Loss', '2026-03-24 06:05:07', '2026-03-24 06:05:07', NULL),
-(21, 1, 6, 96, '2800', '268800', '1200', 'Profit', '2026-03-24 06:05:07', '2026-03-24 06:05:07', NULL),
-(22, 2, 4, 196, '2700', '529200', '-100', 'Loss', '2026-03-24 06:05:49', '2026-03-24 06:05:49', NULL),
-(23, 2, 7, 144, '1100', '158400', '-200', 'Loss', '2026-03-24 06:05:49', '2026-03-24 06:05:49', NULL),
-(24, 1, 4, 144, '1700', '244800', '-1100', 'Loss', '2026-03-25 05:27:11', '2026-03-25 05:27:11', NULL);
+(1, 1, 4, 144, '1850', '266400', '-950', 'Loss', '2026-03-26 04:33:16', '2026-03-26 04:33:16', NULL);
 
 -- --------------------------------------------------------
 
@@ -173,10 +157,9 @@ CREATE TABLE `cash_records` (
 --
 
 INSERT INTO `cash_records` (`id`, `table_name`, `primary_id`, `user_id`, `customer_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'invesments', 1, 6, NULL, '2026-03-25 04:54:32', '2026-03-25 04:54:32', NULL),
-(2, 'expenses', 1, 6, NULL, '2026-03-25 04:55:20', '2026-03-25 04:55:20', NULL),
-(3, 'expenses', 2, 6, NULL, '2026-03-25 04:58:43', '2026-03-25 04:58:43', NULL),
-(4, 'Payment', 1, 6, 2, '2026-03-25 05:27:11', '2026-03-25 05:27:11', NULL);
+(1, 'invesments', 1, 6, NULL, '2026-03-26 02:18:16', '2026-03-26 02:18:16', NULL),
+(2, 'Payment', 1, 6, 2, '2026-03-26 04:33:16', '2026-03-26 04:33:16', NULL),
+(3, 'Payment', 2, 6, 2, '2026-03-26 04:34:48', '2026-03-26 04:34:48', NULL);
 
 -- --------------------------------------------------------
 
@@ -200,8 +183,8 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`id`, `name`, `address`, `user_id`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Sami bhai', 'Jama cloth', 6, 'supplier', '2026-03-25 04:52:44', '2026-03-25 04:52:44', NULL),
-(2, 'Imran bhai-HB', 'careem center', 6, 'customer', '2026-03-25 05:26:41', '2026-03-25 05:26:41', NULL);
+(1, 'Sami Bhai', 'Jama Cloth', 6, 'supplier', '2026-03-26 02:22:16', '2026-03-26 02:22:16', NULL),
+(2, 'Imran Mana- HB', 'careem center', 6, 'customer', '2026-03-26 04:31:50', '2026-03-26 04:31:50', NULL);
 
 -- --------------------------------------------------------
 
@@ -213,12 +196,14 @@ CREATE TABLE `customer_payments` (
   `id` int NOT NULL,
   `user_id` int DEFAULT NULL,
   `customer_id` int DEFAULT NULL,
+  `bill_id` int DEFAULT NULL,
   `amount` bigint DEFAULT NULL,
   `reference` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `is_cheque` int NOT NULL DEFAULT '0',
   `bank_id` int DEFAULT NULL,
   `cheque_no` varchar(255) DEFAULT NULL,
   `description` text,
+  `payment_date` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -228,8 +213,9 @@ CREATE TABLE `customer_payments` (
 -- Dumping data for table `customer_payments`
 --
 
-INSERT INTO `customer_payments` (`id`, `user_id`, `customer_id`, `amount`, `reference`, `is_cheque`, `bank_id`, `cheque_no`, `description`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 6, 2, 244800, NULL, 0, NULL, NULL, NULL, '2026-03-25 05:27:11', '2026-03-25 05:27:11', NULL);
+INSERT INTO `customer_payments` (`id`, `user_id`, `customer_id`, `bill_id`, `amount`, `reference`, `is_cheque`, `bank_id`, `cheque_no`, `description`, `payment_date`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 6, 2, 1, 266400, NULL, 0, NULL, NULL, NULL, '2026-03-16 19:00:00', '2026-03-26 04:33:16', '2026-03-26 04:33:16', NULL),
+(2, 6, 2, NULL, 40000, NULL, 1, 4, 'K-0909987', 'cheque', '2026-03-24 19:00:00', '2026-03-26 04:34:48', '2026-03-26 04:34:48', NULL);
 
 -- --------------------------------------------------------
 
@@ -247,14 +233,6 @@ CREATE TABLE `expenses` (
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `expenses`
---
-
-INSERT INTO `expenses` (`id`, `user_id`, `amount`, `description`, `refrence`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 6, 200000, 'cash  jaabar ne diye', 'cash', '2026-03-25 04:55:20', '2026-03-25 04:55:20', NULL),
-(2, 6, 43200, 'ambrioty  300 k hsab se 144 piece ki', 'ambrioty  300 k hsab se 144 piece ki', '2026-03-25 04:58:43', '2026-03-25 04:58:43', NULL);
 
 -- --------------------------------------------------------
 
@@ -284,6 +262,7 @@ CREATE TABLE `invesments` (
   `amount` int DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `description` text,
+  `investment_date` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -293,8 +272,8 @@ CREATE TABLE `invesments` (
 -- Dumping data for table `invesments`
 --
 
-INSERT INTO `invesments` (`id`, `user_id`, `amount`, `name`, `description`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 6, 800000, 'Rokar', 'old rokar', '2026-03-25 04:54:32', '2026-03-25 04:54:32', NULL);
+INSERT INTO `invesments` (`id`, `user_id`, `amount`, `name`, `description`, `investment_date`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 6, 4000, 'test', 'test', '2026-03-11 19:00:00', '2026-03-26 02:18:16', '2026-03-26 02:20:41', NULL);
 
 -- --------------------------------------------------------
 
@@ -353,7 +332,8 @@ CREATE TABLE `ledger` (
 --
 
 INSERT INTO `ledger` (`id`, `table_name`, `primary_id`, `user_id`, `customer_id`, `remnaing_amount`, `created_at`, `updated_at`) VALUES
-(1, 'Bill', 1, 6, 2, NULL, '2026-03-25 05:27:10', '2026-03-25 05:27:10');
+(1, 'Bill', 1, 6, 2, NULL, '2026-03-26 04:33:16', '2026-03-26 04:33:16'),
+(2, 'Payment', 2, 6, 2, '-40000', '2026-03-26 04:34:48', '2026-03-26 04:34:48');
 
 -- --------------------------------------------------------
 
@@ -666,7 +646,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('z8lv4QsRJmAUGNpjO7N6UhgGGnNBydN8who3iJLq', 6, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiS3NpWmw2eFBXUUE0aDEybUZqdFR2UFU1cUx3TzRzTzdwNHFnNEN0WCI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjY6Imh0dHA6Ly9wcmFjdGljZS50ZXN0L3VzZXJzIjtzOjU6InJvdXRlIjtzOjExOiJ1c2Vycy5pbmRleCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjY7fQ==', 1774435559);
+('ZrYUATK2hQJsc0wdLTWGZSdHa1jWIOUGhQytTZXv', 6, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiUURNUjJtaHF4YUlZSUFMQVRPek9VMDEwbVphTk9nVUhHbGdMZm9NQSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzY6Imh0dHA6Ly9wcmFjdGljZS50ZXN0L2xlZGdlci9maWx0ZXIvMiI7czo1OiJyb3V0ZSI7czoxMzoibGVkZ2VyLmZpbHRlciI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjY7fQ==', 1774518228);
 
 -- --------------------------------------------------------
 
@@ -707,6 +687,7 @@ CREATE TABLE `supplier_data` (
   `user_id` int DEFAULT NULL,
   `expenses_id` int DEFAULT NULL,
   `status` enum('Purchasing','Payment') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `supplier_date` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -715,9 +696,8 @@ CREATE TABLE `supplier_data` (
 -- Dumping data for table `supplier_data`
 --
 
-INSERT INTO `supplier_data` (`id`, `bill_no`, `supplier_id`, `amount`, `description`, `user_id`, `expenses_id`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'C-1900', 1, '475000', '800 gaz 6 colour ki crincal 593 rupees per gaz k hisab se', 6, NULL, 'Purchasing', '2026-03-25 04:53:56', '2026-03-25 04:53:56'),
-(2, NULL, 1, '200000', 'cash  jaabar ne diye', 6, 1, 'Payment', '2026-03-25 04:55:20', '2026-03-25 04:55:20');
+INSERT INTO `supplier_data` (`id`, `bill_no`, `supplier_id`, `amount`, `description`, `user_id`, `expenses_id`, `status`, `supplier_date`, `created_at`, `updated_at`) VALUES
+(1, 'L-09876', 1, '500000', 'malai 3000 gaz', 6, NULL, 'Purchasing', '2026-03-08 19:00:00', '2026-03-26 04:16:51', '2026-03-26 04:16:51');
 
 -- --------------------------------------------------------
 
@@ -978,13 +958,13 @@ ALTER TABLE `bill`
 -- AUTO_INCREMENT for table `bill_products`
 --
 ALTER TABLE `bill_products`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `cash_records`
 --
 ALTER TABLE `cash_records`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `customers`
@@ -996,13 +976,13 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `customer_payments`
 --
 ALTER TABLE `customer_payments`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `expenses`
 --
 ALTER TABLE `expenses`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1026,7 +1006,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `ledger`
 --
 ALTER TABLE `ledger`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -1068,7 +1048,7 @@ ALTER TABLE `size`
 -- AUTO_INCREMENT for table `supplier_data`
 --
 ALTER TABLE `supplier_data`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `supplier_payment`

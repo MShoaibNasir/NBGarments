@@ -91,6 +91,7 @@
                                 <th>Name</th>
                                 <th>Amount</th>
                                 <th>Description</th>
+                                <th>Date</th>
                                 @if(Auth::user()->can('investment-edit') || Auth::user()->can('investment-delete'))
                                 <th class="text-center">Actions</th>
                                 @endif
@@ -103,6 +104,7 @@
                                 <td>{{ $b->name }}</td>
                                 <td>{{ $b->amount }}</td>
                                 <td>{{ $b->description }}</td>
+                                <td>{{ \Carbon\Carbon::parse($b->investment_date)->format('d-m-Y') }} </td>
 
                                 @if(Auth::user()->can('investment-edit') || Auth::user()->can('investment-delete'))
                                 <td class="text-center action-btns">

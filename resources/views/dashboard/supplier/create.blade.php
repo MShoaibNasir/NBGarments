@@ -81,6 +81,13 @@
                                 @enderror
                             </div>
                             <div class="mb-3">
+                                <label for="name" class="form-label">Date</label>
+                                <input type="date" name="supplier_date" id="supplier_date"  class="form-control"  required>
+                                @error('supplier_date')
+                                <span class="text-danger small">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="mb-3">
                                 <label for="name" class="form-label">Supplier</label>
                                 <select name="supplier_id" class="form-control">
                                     <option value="">Select Supplier</option>

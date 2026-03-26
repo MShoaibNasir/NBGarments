@@ -28,7 +28,8 @@ class InvestmentController extends Controller
         request()->validate([
             'name' => 'required',
             'amount' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'investment_date' => 'required'
         ]);
         $data = $request->all();
         $data['user_id'] = Auth::user()->id;
@@ -57,7 +58,8 @@ class InvestmentController extends Controller
         request()->validate([
             'name' => 'required',
             'amount' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'investment_date' => 'required'
         ]);
         $data = $request->except('_token');
         $invesments = Invesment::where('id', $id)->update($data);
@@ -68,6 +70,6 @@ class InvestmentController extends Controller
     {
         $data = Invesment::where('id', $id)->delete();
         CashRecords::where('table_name', 'invesments')->where('primary_id', $id)->delete();
-        return Redirect()->back()->with('success','Data Delete Successfully!');
+        return Redirect()->back()->with('success', 'Data Delete Successfully!');
     }
 }

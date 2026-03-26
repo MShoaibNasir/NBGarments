@@ -43,6 +43,11 @@
                         <input type="text" name="bill_no" class="form-control" required>
                     </div>
 
+                    <div class="mb-3">
+                        <label class="form-label">Bill Date</label>
+                        <input type="date" name="bill_date" class="form-control" required>
+                    </div>
+
                     <!-- Customer -->
                     <div class="mb-3">
                         <label class="form-label">Customer</label>
