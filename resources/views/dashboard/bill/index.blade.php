@@ -130,7 +130,7 @@
                             @empty
                             <tr>
                                 <td colspan="{{ Auth::user()->can('customer-edit') || Auth::user()->can('customer-delete') ? 4 : 3 }}" class="text-center text-muted py-4">
-                                    No Customer Data Found
+                                    No Data Found
                                 </td>
                             </tr>
                             @endforelse
