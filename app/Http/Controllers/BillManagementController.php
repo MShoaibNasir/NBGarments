@@ -134,6 +134,7 @@ class BillManagementController extends Controller
 
                 CashRecords::create([
                     'table_name'  => 'Payment',
+                    'date'  => $request->bill_date,
                     'primary_id'  => $payment->id,
                     'user_id'     => Auth::id(),
                     'customer_id' => $request->customer_id,

@@ -54,14 +54,14 @@ class CashRecordsController extends Controller
         }
 
         if ($start_date && $end_date) {
-            $baseQuery->whereBetween('created_at', [
+            $baseQuery->whereBetween('date', [
                 $start_date . ' 00:00:00',
                 $end_date . ' 23:59:59'
             ]);
         } elseif ($start_date) {
-            $baseQuery->where('created_at', '>=', $start_date . ' 00:00:00');
+            $baseQuery->where('date', '>=', $start_date . ' 00:00:00');
         } elseif ($end_date) {
-            $baseQuery->where('created_at', '<=', $end_date . ' 23:59:59');
+            $baseQuery->where('date', '<=', $end_date . ' 23:59:59');
         }
 
         if ($bill_no) {
@@ -77,7 +77,7 @@ class CashRecordsController extends Controller
             $invoice->orderBy($sorting, $order);
             $previousRecordsQuery->orderBy($sorting, $order);
         } else {
-            $invoice->orderBy('created_at', 'asc');
+            $invoice->orderBy('date', 'asc');
             $previousRecordsQuery->orderBy('created_at', 'asc');
         }
 

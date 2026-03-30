@@ -58,6 +58,7 @@ class ExpensesManagementController extends Controller
             'description' => 'required|string|max:255',
             'amount'      => 'required|numeric|min:1',
             'refrence'   => 'required|string|max:255',
+            'date'=>'required'
         ]);
 
         // Add user_id safely
@@ -78,6 +79,7 @@ class ExpensesManagementController extends Controller
                 $data['user_id'] = Auth::user()->id;
                 $data['expenses_id'] = $expenses->id;
                 $data['status'] = 'Payment';
+                $data['supplier_date'] = $request->date;
                 SupplierData::create($data);
             }
 
@@ -91,6 +93,7 @@ class ExpensesManagementController extends Controller
                 'primary_id'  => $expenses->id,
                 'user_id'     => Auth::id(),
                 'customer_id' => null,
+                'date'=>$request->date
             ]);
 
             DB::commit();
@@ -128,15 +131,18 @@ class ExpensesManagementController extends Controller
             'description' => 'required|string|max:255',
             'amount'      => 'required|numeric|min:1',
             'refrence'   => 'required|string|max:255',
+            'date'=>'required'
 
         ]);
         $brand = Expenses::findOrFail($id);
         $brand->update($validated);
+        
 
         SupplierData::where('expenses_id', $id)->update([
             'amount' => $request->amount,
             'description' => $request->description,
-            'supplier_id' => $request->supplier_id
+            'supplier_id' => $request->supplier_id,
+            'supplier_date'=>$request->date
         ]);
         return redirect()->route('expenses.filter')->with('success', 'expenses updated successfully!');
     }
@@ -174,14 +180,14 @@ class ExpensesManagementController extends Controller
 
 
         if ($start_date && $end_date) {
-            $invoice->whereBetween('created_at', [
+            $invoice->whereBetween('date', [
                 $start_date . ' 00:00:00',
                 $end_date . ' 23:59:59'
             ]);
         } elseif ($start_date) {
-            $invoice->where('created_at', '>=', $start_date . ' 00:00:00');
+            $invoice->where('date', '>=', $start_date . ' 00:00:00');
         } elseif ($end_date) {
-            $invoice->where('created_at', '<=', $end_date . ' 23:59:59');
+            $invoice->where('date', '<=', $end_date . ' 23:59:59');
         }
 
         // if ($bill_no) {

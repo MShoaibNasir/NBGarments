@@ -81,6 +81,13 @@
                                 @enderror
                             </div>
                             <div class="mb-3">
+                                <label for="name" class="form-label">Date</label>
+                                <input type="date" name="date" id="date" value="{{ old('date') }}" class="form-control"  required>
+                                @error('date')
+                                <span class="text-danger small">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="mb-3">
                                 <label for="name" class="form-label">Refrence</label>
                                 <input type="text" name="refrence" id="name" value="{{ old('refrence') }}" class="form-control" placeholder="Enter Refrence" required>
                                 @error('amount')

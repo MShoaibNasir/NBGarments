@@ -86,6 +86,7 @@ class CustomerPaymentController extends Controller
 
             CashRecords::create([
                 'table_name'  => 'Payment',
+                'date'=>$request->payment_date,
                 'primary_id'  => $payment->id,
                 'user_id'     => Auth::id(),
                 'customer_id' => $request->customer_id,
@@ -198,14 +199,14 @@ class CustomerPaymentController extends Controller
 
 
         if ($start_date && $end_date) {
-            $invoice->whereBetween('created_at', [
+            $invoice->whereBetween('payment_date', [
                 $start_date . ' 00:00:00',
                 $end_date . ' 23:59:59'
             ]);
         } elseif ($start_date) {
-            $invoice->where('created_at', '>=', $start_date . ' 00:00:00');
+            $invoice->where('payment_date', '>=', $start_date . ' 00:00:00');
         } elseif ($end_date) {
-            $invoice->where('created_at', '<=', $end_date . ' 23:59:59');
+            $invoice->where('payment_date', '<=', $end_date . ' 23:59:59');
         }
 
         if ($bill_no) {

@@ -108,6 +108,15 @@
                             <textarea name="description" class="form-control">{{ $expenses->description }}</textarea>
                         </div>
 
+
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Date</label>
+                            <input type="date" name="date" id="date" value="{{ \Carbon\Carbon::parse($expenses->date)->format('Y-m-d') }}" class="form-control" required>
+                            @error('date')
+                            <span class="text-danger small">{{ $message }}</span>
+                            @enderror
+                        </div>
+
                         <div class="mb-3">
                             <label for="name" class="form-label">Supplier Name</label>
                             <select name="supplier_id" class="form-control">

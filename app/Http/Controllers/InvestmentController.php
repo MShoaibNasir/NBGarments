@@ -37,7 +37,8 @@ class InvestmentController extends Controller
         CashRecords::create([
             'table_name'  => 'invesments',
             'primary_id'  => $invesments->id,
-            'user_id'     => Auth::id()
+            'user_id'     => Auth::id(),
+            'date'=>$request->investment_date
         ]);
 
         return redirect()->route('investment.list')->with('success', 'Investment Data created successfully.');
