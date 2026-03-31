@@ -85,6 +85,7 @@ Route::prefix('bill')->controller(BillManagementController::class)->group(functi
     Route::post('/list', 'list')->name('bill.index');
     Route::get('/create', 'create')->name('bill.create');
     Route::post('/store', 'store')->name('bill.store');
+    Route::post('/creadit_amount', 'creadit_amount')->name('bill.creadit_amount');
     Route::get('/delete/{id}', 'delete')->name('bill.delete');
     Route::get('/laser/{id}', 'filter')->name('bill.laser');
     Route::get('/edit/{id}', 'edit')->name('bill.edit');

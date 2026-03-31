@@ -92,57 +92,57 @@
                             <label class="form-label">Reference</label>
                             <input type="text" name="reference" class="form-control"
                                 value="{{ $payment->reference }}">
-                        </div>
-                         --}}
-
-                        {{-- Description --}}
-                        <div class="mb-3">
-                            <label class="form-label">Description</label>
-                            <textarea name="description" class="form-control">{{ $payment->description }}</textarea>
-                        </div>
-
-                        {{-- Is Cheque --}}
-                        <div class="mb-3">
-                            <label class="form-label">Is Cheque</label><br>
-                            <input type="checkbox" id="is_cheque" name="is_cheque" value="1"
-                                {{ $payment->is_cheque ? 'checked' : '' }}>
-                        </div>
-
-                        {{-- Cheque Fields --}}
-                        <div id="chequeFields"
-                            style="display: {{ $payment->is_cheque ? 'block' : 'none' }};">
-
-                            <div class="mb-3">
-                                <label class="form-label">Bank Name</label>
-                                <select name="bank_id" id="bank_id" class="form-control">
-                                    <option value="">Select Bank</option>
-                                    @foreach($banks as $item)
-                                    <option value="{{$item->id}}"
-                                        {{ $payment->bank_id == $item->id ? 'selected' : '' }}>
-                                        {{$item->name}}
-                                    </option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Cheque No</label>
-                                <input type="text" name="cheque_no" id="cheque_no"
-                                    class="form-control"
-                                    value="{{ $payment->cheque_no }}">
-                            </div>
-
-                        </div>
-
-                        <div class="text-end">
-                            <button type="submit" class="btn btn-dark">Update Payment</button>
-                        </div>
-
-                    </form>
                 </div>
+                --}}
+
+                {{-- Description --}}
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea name="description" class="form-control">{{ $payment->description }}</textarea>
+                </div>
+
+                {{-- Is Cheque --}}
+                <div class="mb-3">
+                    <label class="form-label">Is Cheque</label><br>
+                    <input type="checkbox" id="is_cheque" name="is_cheque" value="1"
+                        {{ $payment->is_cheque ? 'checked' : '' }}>
+                </div>
+
+                {{-- Cheque Fields --}}
+                <div id="chequeFields"
+                    style="display: {{ $payment->is_cheque ? 'block' : 'none' }};">
+
+                    <div class="mb-3">
+                        <label class="form-label">Bank Name</label>
+                        <select name="bank_id" id="bank_id" class="form-control">
+                            <option value="">Select Bank</option>
+                            @foreach($banks as $item)
+                            <option value="{{$item->id}}"
+                                {{ $payment->bank_id == $item->id ? 'selected' : '' }}>
+                                {{$item->name}}
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Cheque No</label>
+                        <input type="text" name="cheque_no" id="cheque_no"
+                            class="form-control"
+                            value="{{ $payment->cheque_no }}">
+                    </div>
+
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-dark">Update Payment</button>
+                </div>
+
+                </form>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 {{-- Script --}}

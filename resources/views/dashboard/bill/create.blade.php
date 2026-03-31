@@ -19,12 +19,10 @@
 
     <div class="container py-4">
         <div class="card shadow-lg border-0">
-
             <div class="card-header bg-info text-white d-flex justify-content-between">
                 <h4>Add New Bill</h4>
                 <a href="{{ route('bill.filter') }}" class="btn btn-light btn-sm">Back</a>
             </div>
-
             <div class="card-body bg-light">
 
                 <form action="{{ route('bill.store') }}" method="POST">
@@ -34,7 +32,7 @@
 
                     <div class="mb-3">
                         <label class="form-label">Is Cash Bill</label>
-                        <input type="checkbox" name="cash" >
+                        <input type="checkbox" name="cash">
                     </div>
 
 
@@ -57,6 +55,10 @@
                             <option value="{{$item->id}}">{{ $item->name }}</option>
                             @endforeach
                         </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea name="description" id="description" class="form-control"></textarea>
                     </div>
 
                     <!-- Products Table -->
@@ -132,7 +134,52 @@
 
             </div>
         </div>
+        <hr>
+        <hr>
+        <h5>Credit Amount</h5>
+        <div class="card shadow-lg border-0">
+
+            <div class="card-body bg-light">
+                <form action="{{ route('bill.creadit_amount') }}" method="POST">
+                    @csrf
+                    <!-- Bill No -->
+                    <div class="mb-3">
+                        <label class="form-label">Amount</label>
+                        <input type="number" name="amount" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Date</label>
+                        <input type="date" name="bill_date" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea name="description" id="description" class="form-control"></textarea>
+                    </div>
+
+                    <!-- Customer -->
+                    <div class="mb-3">
+                        <label class="form-label">Customer</label>
+                        <select name="customer_id" class="form-control" required>
+                            <option>Select Customer</option>
+                            @foreach ($customer as $item)
+                            <option value="{{$item->id}}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-success">
+                            Save
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
     </div>
+
+
 </div>
 
 <!-- JAVASCRIPT -->

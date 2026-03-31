@@ -21,6 +21,80 @@ class BillManagementController extends Controller
         $bill = Bill::where('user_id', Auth::user()->id)->get();
         return view('dashboard.bill.index', compact('bill'));
     }
+    public function creadit_amount(Request $request)
+    {
+        $validated = $request->validate([
+            'customer_id'  => 'required|exists:customers,id',
+            'description'          => 'required',
+            'amount'       => 'required',
+            'bill_date'       => 'required',
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+
+
+
+            // ✅ Create Main Bill
+            $bill = Bill::create([
+                'customer_id'  => $request->customer_id,
+                'total_amount' => $request->amount,
+                'user_id'      => Auth::id(),
+                'bill_date'      => $request->bill_date,
+                'description'      => $request->description ?? null
+            ]);
+
+
+
+
+
+            Ledger::create([
+                'table_name'  => 'Amount Credit',
+                'primary_id'  => $bill->id,
+                'user_id'     => Auth::id(),
+                'customer_id' => $request->customer_id,
+                'date' => $request->bill_date
+            ]);
+
+
+
+
+
+            // $data = [
+            //     'customer_id' => $request->customer_id,
+            //     'amount'      => $request->amount,
+            //     'description' => $request->description,
+            //     'user_id'     => Auth::id(),
+            //     'payment_date'   => $request->bill_date,
+            //     'bill_id' => $bill->id
+            // ];
+
+
+
+            // $payment = Payment::create($data);
+
+            // CashRecords::create([
+            //     'table_name'  => 'Payment',
+            //     'date'  => $request->bill_date,
+            //     'primary_id'  => $payment->id,
+            //     'user_id'     => Auth::id(),
+            //     'customer_id' => $request->customer_id,
+            // ]);
+
+
+            DB::commit();
+
+            return redirect()
+                ->route('bill.filter')
+                ->with('success', 'Amount Added In Client Roznamcha Successfully!');
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return back()->with('error', 'Something went wrong!');
+        }
+    }
 
     public function create()
     {
@@ -38,16 +112,12 @@ class BillManagementController extends Controller
         $validated = $request->validate([
             'bill_no'      => 'required|string|max:255',
             'customer_id'  => 'required|exists:customers,id',
-
             'product_id'   => 'required|array',
             'product_id.*' => 'required|exists:products,id',
-
             'qty'          => 'required|array',
             'qty.*'        => 'required|numeric|min:1',
-
             'price'        => 'required|array',
             'price.*'      => 'required|numeric|min:0',
-
             'amount'       => 'required|array',
             'bill_date'       => 'required',
             'amount.*'     => 'required|numeric|min:0',
@@ -69,6 +139,7 @@ class BillManagementController extends Controller
                 'total_amount' => $totalAmount,
                 'user_id'      => Auth::id(),
                 'bill_date'      => $request->bill_date,
+                'description'      => $request->description ?? null,
                 'is_cash' => $request->cash ? 1 : 0
             ]);
 
@@ -81,6 +152,7 @@ class BillManagementController extends Controller
                 'primary_id'  => $bill->id,
                 'user_id'     => Auth::id(),
                 'customer_id' => $request->customer_id,
+                'date' => $request->bill_date
             ]);
 
             // ✅ Save Bill Products
@@ -231,6 +303,7 @@ class BillManagementController extends Controller
 
             $ledger->update([
                 'customer_id' => $request->customer_id,
+                'date' => $request->bill_date
             ]);
 
 

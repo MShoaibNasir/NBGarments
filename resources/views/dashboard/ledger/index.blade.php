@@ -15,6 +15,7 @@
                         {{--<th>References</th>--}}
                         <th>Bank Name</th>
                         <th>Cheque No</th>
+                        <th>Description</th>
 
                     </tr>
                 </thead>
@@ -45,27 +46,17 @@
                     }
 
                     // Row color
-                    $rowColor = $item->table_name == 'Bill' ? '#ff4d4d' : '#28a745';
+                    $rowColor = $item->table_name == 'Bill' ? '#ff4d4d' : ( $item->table_name == 'Amount Credit' ? '#a5a728' : '#28a745');
                     @endphp
 
                     <tr style="background-color: {{ $rowColor }}; color:white;">
                         <td>{{ $loop->index + 1 }}</td>
                         <td>{{ $item->table_name }}</td>
-                        <td>{{ $item->created_at->format('d-m-Y') }}</td>
+                        <td>{{ $item->date?->format('d-m-Y') }}</td>
                         <td>{{ $item->table_name == 'Bill' ? $item->bill->qty : '-----' }}</td>
                         <td>{{ number_format($amount) }}</td>
                         <td><strong>{{ number_format($runningTotal) }} Rs</strong></td>
 
-
-                        {{-- Reference 
-                        <td>
-                            @if($item->table_name == 'Payment')
-                            {{ $item->paymnent->reference ?? '----' }}
-                        @else
-                        ----
-                        @endif
-                        </td>
-                        --}}
 
                         {{-- Bank --}}
                         <td>
@@ -84,11 +75,7 @@
                             ----
                             @endif
                         </td>
-
-                        {{-- Date --}}
-
-
-                        {{-- 🔥 Running Total --}}
+                        <td>{{ $item->table_name == 'Bill' ? $item->bill->description : '-----' }}</td>
                     </tr>
 
                     @endforeach
