@@ -96,13 +96,7 @@
                             <span class="text-danger small">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Refrence</label>
-                            <input type="text" name="refrence" id="name" value="{{ $expenses->refrence }}" class="form-control" placeholder="Enter Refrence" required>
-                            @error('amount')
-                            <span class="text-danger small">{{ $message }}</span>
-                            @enderror
-                        </div>
+                    
                         <div class="mb-3">
                             <label class="form-label">Description</label>
                             <textarea name="description" class="form-control">{{ $expenses->description }}</textarea>

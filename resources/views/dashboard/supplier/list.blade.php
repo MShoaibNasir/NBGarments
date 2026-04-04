@@ -33,7 +33,11 @@
 
                     if ($item->status == 'Purchasing') {
                     $runningBalance += $item->amount;
-                    } else {
+                    } 
+                    elseif ($item->status == 'Discount') {
+                    $runningBalance -= $item->amount;
+                    }
+                    else {
                     $runningBalance -= $item->amount;
                     }
                     $rowColor = $item->status == 'Purchasing' ? '#ff4d4d' : '#28a745';

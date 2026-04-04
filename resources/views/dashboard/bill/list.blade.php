@@ -18,11 +18,13 @@
 
                         <th scope="col">S No</th>
                         <th scope="col">Bill No</th>
+                        <th scope="col">Bill Type</th>
                         <th scope="col">Customer Name</th>
                         <th scope="col">QTY</th>
-
                         <th scope="col">Totoal Amount</th>
                         <th scope="col">Date</th>
+                        <th scope="col">Description</th>
+
                         @if(Auth::user()->can('bill-edit') || Auth::user()->can('bill-delete'))
                         <th class="text-center">Actions</th>
                         @endif
@@ -33,13 +35,24 @@
 
 
                     @foreach($data as $item)
-                    <tr>
+                    <tr
+                        @if($item->bill_type == 'credit')
+                        style="background-color: green; color:#fff;"
+                        @elseif($item->bill_type == 'return')
+                        style="background-color: red; color:#fff;"
+                        @endif
+                        >
                         <td>{{$loop->index+1}}</td>
                         <td>{{$item->bill_no}}</td>
+                        <td>{{$item->bill_type}}</td>
                         <td>{{$item->customer->name}}</td>
                         <td>{{$item->qty}}</td>
                         <td>{{ number_format($item->total_amount) }}</td>
-                        <td>{{ $item->created_at->format('d-m-Y') }}</td>
+
+                        <td>{{ \Carbon\Carbon::parse($item->bill_date)->format('d-m-Y') }}</td>
+
+                        <td>{{$item->description ?? '----'}}</td>
+
                         @if(Auth::user()->can('bill-edit') || Auth::user()->can('bill-delete') || Auth::user()->can('bill-show'))
                         <td class="text-center action-btns">
                             @can('bill-edit')

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Models\Payment;
 use App\Models\Ledger;
+use App\Models\Discount;
 use App\Models\CashRecords;
 use Auth;
 use DB;
@@ -17,7 +18,7 @@ class CustomerPaymentController extends Controller
 
     public function create()
     {
-        $customers = Customer::where('user_id', Auth::user()->id)->where('status','customer')->get();
+        $customers = Customer::where('user_id', Auth::user()->id)->where('status', 'customer')->get();
         $banks = Bank::where('user_id', Auth::user()->id)->get();
         return view('dashboard.payment.create', compact('customers', 'banks'));
     }
@@ -29,7 +30,7 @@ class CustomerPaymentController extends Controller
         $validated = $request->validate([
             'customer_id' => 'required|exists:customers,id',
             'amount'      => 'required|numeric|min:1',
-           // 'reference'   => 'nullable|string|max:255',
+            // 'reference'   => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'payment_date' => 'nullable',
 
@@ -43,56 +44,73 @@ class CustomerPaymentController extends Controller
         try {
 
             // Prepare data safely
-            $data = [
-                'customer_id' => $request->customer_id,
-                'amount'      => $request->amount,
-                'reference'   => $request->reference ?? null,
-                'description' => $request->description,
-                'user_id'     => Auth::id(),
-                'is_cheque'   => $request->has('is_cheque') ? 1 : 0,
-                'bank_id'     => $request->bank_id,
-                'cheque_no'   => $request->cheque_no,
-                'payment_date'   => $request->payment_date,
-            ];
-
-            // If not cheque → remove cheque data
-            if ($data['is_cheque'] == 0) {
-                $data['bank_id'] = null;
-                $data['cheque_no'] = null;
-            }
-
-            // Create Payment
-            $payment = Payment::create($data);
+            if ($request->payment_type == 'Payment') {
 
 
-            $ledger_update = Ledger::where('customer_id', $request->customer_id)->first();
-            $ledger_previous_amount = 0;
-            if ($ledger_update) {
-                $ledger_previous_amount = $ledger_update->remnaing_amount - $request->amount;
+                $data = [
+                    'customer_id' => $request->customer_id,
+                    'amount'      => $request->amount,
+                    'reference'   => $request->reference ?? null,
+                    'description' => $request->description,
+                    'user_id'     => Auth::id(),
+                    'is_cheque'   => $request->has('is_cheque') ? 1 : 0,
+                    'bank_id'     => $request->bank_id,
+                    'cheque_no'   => $request->cheque_no,
+                    'payment_date'   => $request->payment_date,
+                    'payment_type'   => $request->payment_type,
+                ];
+
+                // If not cheque → remove cheque data
+                if ($data['is_cheque'] == 0) {
+                    $data['bank_id'] = null;
+                    $data['cheque_no'] = null;
+                }
+
+                // Create Payment
+                $payment = Payment::create($data);
+
+
+
+
+                Ledger::create([
+                    'table_name'  => 'Payment',
+                    'primary_id'  => $payment->id,
+                    'user_id'     => Auth::id(),
+                    'customer_id' => $request->customer_id,
+                    'ledger_date' => $request->payment_date
+                ]);
+
+                CashRecords::create([
+                    'table_name'  => 'Payment',
+                    'date' => $request->payment_date,
+                    'primary_id'  => $payment->id,
+                    'user_id'     => Auth::id(),
+                    'customer_id' => $request->customer_id,
+                ]);
             } else {
-                $ledger_previous_amount = $request->amount;
+
+                $discount = Discount::create([
+                    'customer_id' => $request->customer_id,
+                    'amount' => $request->amount,
+                    'description' => $request->description,
+                    'user_id' => Auth::id(),
+                    'payment_date' => $request->payment_date,
+                    'discount_type' => 'payment_discount'
+                ]);
+
+                Ledger::create([
+                    'table_name'  => 'discount',
+                    'primary_id'  => $discount->id, // ✅ correct
+                    'user_id'     => Auth::id(),
+                    'customer_id' => $request->customer_id,
+                    'ledger_date' => $request->payment_date
+                ]);
             }
 
 
 
 
-            Ledger::create([
-                'table_name'  => 'Payment',
-                'primary_id'  => $payment->id,
-                'user_id'     => Auth::id(),
-                'customer_id' => $request->customer_id,
-                'remnaing_amount' => $ledger_previous_amount
-            ]);
-
-            CashRecords::create([
-                'table_name'  => 'Payment',
-                'date'=>$request->payment_date,
-                'primary_id'  => $payment->id,
-                'user_id'     => Auth::id(),
-                'customer_id' => $request->customer_id,
-            ]);
             DB::commit();
-
             return redirect()
                 ->route('payment.filter')
                 ->with('success', 'Payment added successfully');
@@ -106,6 +124,7 @@ class CustomerPaymentController extends Controller
     {
         checkAuthentication();
         $payment = Payment::findOrFail($id);
+
         $customers = Customer::where('user_id', Auth::user()->id)->get();
         $banks = Bank::where('user_id', Auth::user()->id)->get();
         return view('dashboard.custoner_payment.edit', compact('payment', 'customers', 'banks'));
@@ -119,7 +138,7 @@ class CustomerPaymentController extends Controller
         $validated = $request->validate([
             'customer_id' => 'required|exists:customers,id',
             'amount'      => 'required|numeric|min:1',
-           // 'reference'   => 'nullable|string|max:255',
+            // 'reference'   => 'nullable|string|max:255',
 
             // If cheque checked then required
             'bank_id'   => 'required_if:is_cheque,1|nullable|exists:banks,id',
@@ -138,17 +157,6 @@ class CustomerPaymentController extends Controller
 
         // Update payment
         $payment->update($data);
-
-
-        if (isset($request->amount)) {
-
-            $previous_amount = Ledger::where('customer_id', $request->customer_id)
-                ->latest()
-                ->skip(1)
-                ->first();
-            $ledger_update = Ledger::where('primary_id', $request->id)->where('table_name', 'Payment')->update(['remnaing_amount' => $previous_amount->remnaing_amount - $request->amount]);
-        }
-
 
         return redirect()
             ->route('payment.filter')

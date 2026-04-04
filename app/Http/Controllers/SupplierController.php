@@ -120,10 +120,12 @@ class SupplierController extends Controller
 
         // ✅ Opening Balance Calculation
         $openingBalance = 0;
-   
+
         foreach ($previousRecords as $item) {
             if ($item->status == 'Purchasing') {
                 $openingBalance += $item->amount;
+            } elseif ($item->status == 'Discount') {
+                $openingBalance -= $item->amount;
             } else {
                 $openingBalance -= $item->amount;
             }

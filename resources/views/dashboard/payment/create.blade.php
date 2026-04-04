@@ -92,6 +92,16 @@
                                 <input type="date" name="payment_date" class="form-control"  required>
                             </div>
 
+
+                             <div class="mb-3">
+                                <label class="form-label">Payment Type</label>
+                                <select name="payment_type" class="form-control" required>
+                                    <option value="">Select Type</option>
+                                    <option value="Payment">Payment</option>
+                                    <option value="Discount">Discount</option>
+                                </select>
+                            </div>
+
                             {{-- Reference 
                             <div class="mb-3">
                                 <label class="form-label">Reference</label>

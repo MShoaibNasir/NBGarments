@@ -91,6 +91,8 @@ Route::prefix('bill')->controller(BillManagementController::class)->group(functi
     Route::get('/edit/{id}', 'edit')->name('bill.edit');
     Route::get('/show/{id}', 'show')->name('bill.show');
     Route::put('/update/{id}', 'update')->name('bill.update');
+    Route::get('/return', 'returnBill')->name('return.bill');
+    Route::post('/return/save', 'returnBillSave')->name('returnBill.save');
 });
 Route::prefix('expenses')->controller(ExpensesManagementController::class)->group(function () {
     Route::get('/index', 'index')->name('expenses.list');

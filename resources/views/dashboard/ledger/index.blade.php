@@ -12,7 +12,6 @@
                         <th>QTY</th>
                         <th>Amount</th>
                         <th>Total Amount</th>
-                        {{--<th>References</th>--}}
                         <th>Bank Name</th>
                         <th>Cheque No</th>
                         <th>Description</th>
@@ -27,9 +26,13 @@
 
                     @foreach($data as $item)
 
+
                     @php
                     if ($item->table_name == 'Payment') {
-                    $amount = $item->paymnent->amount;
+                    $amount = $item->paymnent->amount ?? 0;
+                    }
+                    elseif ($item->table_name == 'discount') {
+                    $amount = $item->discount->amount ?? 0;
                     }
                     else{
                     $amount = $item->bill->total_amount;
@@ -40,9 +43,18 @@
                     if ($item->table_name == 'Payment') {
                     $runningTotal -= $amount;
                     }
-                    // Bill = Outgoing (Minus)
+                    elseif($item->table_name == 'discount'){
+                    $runningTotal -= $amount;
+                    }
+
+
+
                     else {
+                    if($item->bill->bill_type=='return'){
+                    $runningTotal -= $amount;
+                    }else{
                     $runningTotal += $amount;
+                    }
                     }
 
                     // Row color
@@ -52,7 +64,7 @@
                     <tr style="background-color: {{ $rowColor }}; color:white;">
                         <td>{{ $loop->index + 1 }}</td>
                         <td>{{ $item->table_name }}</td>
-                        <td>{{ $item->date?->format('d-m-Y') }}</td>
+                        <td>{{ \Carbon\Carbon::parse($item->ledger_date)->format('d-m-Y') }}</td>
                         <td>{{ $item->table_name == 'Bill' ? $item->bill->qty : '-----' }}</td>
                         <td>{{ number_format($amount) }}</td>
                         <td><strong>{{ number_format($runningTotal) }} Rs</strong></td>
@@ -75,7 +87,7 @@
                             ----
                             @endif
                         </td>
-                        <td>{{ $item->table_name == 'Bill' ? $item->bill->description : '-----' }}</td>
+                        <td>{{ $item->table_name == 'Bill' ? $item->bill->description : ($item->paymnent->description) ?? '---' }}</td>
                     </tr>
 
                     @endforeach

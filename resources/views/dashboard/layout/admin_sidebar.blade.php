@@ -99,6 +99,9 @@
                         @can('bill-list')
                         <a href="{{route('bill.filter')}}" class="dropdown-item">Bill List</a>
                         @endcan
+                        @can('bill-return')
+                        <a href="{{route('return.bill')}}" class="dropdown-item">Create Return Bill</a>
+                        @endcan
                     </div>
                 </div>
                 @endcanany

@@ -26,75 +26,123 @@ class ExpensesManagementController extends Controller
         $supplier = Customer::where('user_id', Auth::user()->id)->where('status', 'supplier')->get();
         return view('dashboard.expenses.create', ['supplier' => $supplier]);
     }
+
+
+
     // public function store(Request $request)
     // {
+    //     // Validation
     //     $validated = $request->validate([
     //         'description' => 'required|string|max:255',
-    //         'amount' => 'required',
-    //         'refrence' => 'required',
-
-
+    //         'amount'      => 'required|numeric|min:1',
+    //         'date' => 'required',
+    //         'payment_type' => 'required',
     //     ]);
+
+    //     // Add user_id safely
     //     $data = $request->all();
-    //     $data['user_id'] = Auth::user()->id;
-    //     $expenses=Expenses::create($data);
+    //     $data['user_id'] = Auth::id();
 
 
-    //         CashRecords::create([
-    //             'table_name'  => 'expenses',
-    //             'primary_id'  => $expenses->id,
-    //             'user_id'     => Auth::id(),
-    //             'customer_id' => null,
-    //         ]);
+    //     // Use transaction because inserting in 2 tables
+    //     DB::beginTransaction();
 
-    //     return redirect()->route('expenses.filter')->with('success', 'expenses Create Successfully!');
+    //     try {
+
+    //         // Create Expense
+    //         $validated['user_id'] = Auth::user()->id;
+    //         if ($request->payment_type == 'Payment') {
+
+
+    //             $expenses = Expenses::create($validated);
+
+    //             if (isset($request->supplier_id) && $request->supplier_id != '') {
+    //                 $data = $request->all();
+    //                 $data['user_id'] = Auth::user()->id;
+    //                 $data['expenses_id'] = $expenses->id;
+    //                 $data['status'] = 'Payment';
+    //                 $data['supplier_date'] = $request->date;
+    //                 SupplierData::create($data);
+    //             }
+    //             // Create Cash Record
+    //             CashRecords::create([
+    //                 'table_name'  => 'expenses',
+    //                 'primary_id'  => $expenses->id,
+    //                 'user_id'     => Auth::id(),
+    //                 'customer_id' => null,
+    //                 'date' => $request->date
+    //             ]);
+    //         } else {
+
+
+    //             $expenses = Expenses::create($validated);
+
+    //             if (isset($request->supplier_id) && $request->supplier_id != '') {
+    //                 $data = $request->all();
+    //                 $data['user_id'] = Auth::user()->id;
+    //                 $data['expenses_id'] = $expenses->id;
+    //                 $data['status'] = 'Discount';
+    //                 $data['supplier_date'] = $request->date;
+    //                 SupplierData::create($data);
+    //             }
+    //         }
+
+    //         DB::commit();
+
+    //         return redirect()
+    //             ->route('expenses.filter')
+    //             ->with('success', 'Expense created successfully!');
+    //     } catch (\Exception $e) {
+    //         DB::rollBack();
+
+    //         return back()->with('error', 'Something went wrong!');
+    //     }
     // }
-
-
     public function store(Request $request)
     {
-        // Validation
+        // ✅ Validation
         $validated = $request->validate([
-            'description' => 'required|string|max:255',
-            'amount'      => 'required|numeric|min:1',
-            'refrence'   => 'required|string|max:255',
-            'date'=>'required'
+            'description'  => 'required|string|max:255',
+            'amount'       => 'required|numeric|min:1',
+            'date'         => 'required|date',
+            'payment_type' => 'required|in:Payment,Discount',
+            'supplier_id'  => 'required',
         ]);
 
-        // Add user_id safely
-        $data = $request->all();
-        $data['user_id'] = Auth::id();
+        // ✅ Add logged-in user
+        $validated['user_id'] = Auth::id();
 
-
-        // Use transaction because inserting in 2 tables
         DB::beginTransaction();
 
         try {
-            // Create Expense
-            $validated['user_id'] = Auth::user()->id;
-            $expenses = Expenses::create($validated);
 
-            if (isset($request->supplier_id) && $request->supplier_id != '') {
-                $data = $request->all();
-                $data['user_id'] = Auth::user()->id;
-                $data['expenses_id'] = $expenses->id;
-                $data['status'] = 'Payment';
-                $data['supplier_date'] = $request->date;
-                SupplierData::create($data);
+            // ✅ Create Expense
+            $expense = Expenses::create($validated);
+
+            // ✅ If supplier exists, insert SupplierData
+            if (!empty($validated['supplier_id'])) {
+                SupplierData::create([
+                    'supplier_id'   => $validated['supplier_id'],
+                    'expenses_id'   => $expense->id,
+                    'user_id'       => Auth::id(),
+                    'status'        => $validated['payment_type'],
+                    'supplier_date' => $validated['date'],
+                    'description'=>$validated['description'],
+                    'amount'=>$validated['amount']
+                    
+                ]);
             }
 
-
-
-
-
-            // Create Cash Record
-            CashRecords::create([
-                'table_name'  => 'expenses',
-                'primary_id'  => $expenses->id,
-                'user_id'     => Auth::id(),
-                'customer_id' => null,
-                'date'=>$request->date
-            ]);
+            // ✅ Only for Payment type → create Cash Record
+            if ($validated['payment_type'] === 'Payment') {
+                CashRecords::create([
+                    'table_name'  => 'expenses',
+                    'primary_id'  => $expense->id,
+                    'user_id'     => Auth::id(),
+                    'customer_id' => null,
+                    'date'        => $validated['date'],
+                ]);
+            }
 
             DB::commit();
 
@@ -102,9 +150,15 @@ class ExpensesManagementController extends Controller
                 ->route('expenses.filter')
                 ->with('success', 'Expense created successfully!');
         } catch (\Exception $e) {
+
             DB::rollBack();
 
-            return back()->with('error', 'Something went wrong!');
+            // ✅ Log error for debugging
+            \Log::error('Expense Store Error: ' . $e->getMessage());
+
+            return back()
+                ->withInput()
+                ->with('error', 'Something went wrong!');
         }
     }
 
@@ -130,19 +184,18 @@ class ExpensesManagementController extends Controller
         $validated = $request->validate([
             'description' => 'required|string|max:255',
             'amount'      => 'required|numeric|min:1',
-            'refrence'   => 'required|string|max:255',
-            'date'=>'required'
+            'date' => 'required'
 
         ]);
         $brand = Expenses::findOrFail($id);
         $brand->update($validated);
-        
+
 
         SupplierData::where('expenses_id', $id)->update([
             'amount' => $request->amount,
             'description' => $request->description,
             'supplier_id' => $request->supplier_id,
-            'supplier_date'=>$request->date
+            'supplier_date' => $request->date
         ]);
         return redirect()->route('expenses.filter')->with('success', 'expenses updated successfully!');
     }
@@ -162,7 +215,7 @@ class ExpensesManagementController extends Controller
         $sorting = $request->get('sorting');
         $order = $request->get('direction');
 
-        $invoice = Expenses::where('user_id', Auth::id());
+        $invoice = Expenses::where('user_id', Auth::id())->where('payment_type','Payment');
         $start_date = $request->get('start_date');
         $end_date = $request->get('end_date');
 
@@ -221,7 +274,7 @@ class ExpensesManagementController extends Controller
             ->setPath($custom_pagination_path);
 
 
-        $total_sell_amount = Expenses::where('user_id', Auth::id())
+        $total_sell_amount = Expenses::where('user_id', Auth::id())->where('payment_type','Payment')
             ->whereNotNull('amount')
             ->sum('amount');
         $total_sell_amount = number_format($total_sell_amount);

@@ -54,14 +54,14 @@ class LedgerController extends Controller
         }
 
         if ($start_date && $end_date) {
-            $baseQuery->whereBetween('created_at', [
+            $baseQuery->whereBetween('ledger_date', [
                 $start_date . ' 00:00:00',
                 $end_date . ' 23:59:59'
             ]);
         } elseif ($start_date) {
-            $baseQuery->where('created_at', '>=', $start_date . ' 00:00:00');
+            $baseQuery->where('ledger_date', '>=', $start_date . ' 00:00:00');
         } elseif ($end_date) {
-            $baseQuery->where('created_at', '<=', $end_date . ' 23:59:59');
+            $baseQuery->where('ledger_date', '<=', $end_date . ' 23:59:59');
         }
 
         if ($bill_no) {

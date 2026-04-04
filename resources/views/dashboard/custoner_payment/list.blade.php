@@ -31,6 +31,7 @@
                         <th scope="col">Cheque No</th>
                         <th scope="col">Amount</th>
                         <th scope="col">Date</th>
+                        <th scope="col">Discription</th>
                         @if(Auth::user()->can('payment-edit') || Auth::user()->can('payment-delete'))
                         <th class="text-center">Actions</th>
                         @endif
@@ -41,6 +42,7 @@
 
 
                     @foreach($data as $item)
+                
 
                     <tr>
                         <td>{{$loop->index+1}}</td>
@@ -48,8 +50,8 @@
                         <td>{{$item->bank->name ?? '--'}}</td>
                         <td>{{$item->cheque_no ?? '--'}}</td>
                         <td>{{number_format($item->amount)}}</td>
-                        <td>{{ $item->created_at->format('d-m-Y') }}</td>
-
+                        <td>{{ \Carbon\Carbon::parse($item->payment_date)->format('d-m-Y') }}</td>
+                        <td>{{ $item->description ?? '----' }}</td>
                         @if(Auth::user()->can('payment-edit') || Auth::user()->can('payment-delete'))
                         <td class="text-center action-btns">
                             @can('payment-edit')

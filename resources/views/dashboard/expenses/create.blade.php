@@ -82,21 +82,22 @@
                             </div>
                             <div class="mb-3">
                                 <label for="name" class="form-label">Date</label>
-                                <input type="date" name="date" id="date" value="{{ old('date') }}" class="form-control"  required>
+                                <input type="date" name="date" id="date" value="{{ old('date') }}" class="form-control" required>
                                 @error('date')
                                 <span class="text-danger small">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="mb-3">
-                                <label for="name" class="form-label">Refrence</label>
-                                <input type="text" name="refrence" id="name" value="{{ old('refrence') }}" class="form-control" placeholder="Enter Refrence" required>
-                                @error('amount')
-                                <span class="text-danger small">{{ $message }}</span>
-                                @enderror
+                                <label class="form-label">Payment Type</label>
+                                <select name="payment_type" class="form-control" required>
+                                    <option value="">Select Type</option>
+                                    <option value="Payment">Payment</option>
+                                    <option value="Discount">Discount</option>
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <label for="name" class="form-label">Supplier Name</label>
-                                <select name="supplier_id"  class="form-control">
+                                <select name="supplier_id" class="form-control">
                                     <option value="">Select Supplier</option>
                                     @foreach ($supplier as $data)
                                     <option value="{{ $data->id }}">{{ $data->name }}</option>

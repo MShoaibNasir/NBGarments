@@ -77,7 +77,7 @@
                         {{-- Date --}}
                         <div class="mb-3">
                             <label class="form-label">Date</label>
-                            <input type="date" name="payment_date" class="form-control" value="{{ \Carbon\Carbon::parse($data->payment_date)->format('Y-m-d') }}" required>
+                            <input type="date" name="payment_date" class="form-control" value="{{ \Carbon\Carbon::parse($payment->payment_date)->format('Y-m-d') }}" required>
                         </div>
 
                         {{-- Amount --}}

@@ -12,7 +12,6 @@
                         <th>Name</th>
                         <th>Amount</th>
                         <th>Total Amount</th>
-                        {{-- <th>References</th>--}}
                         <th>Description</th>
                         <th>Bank Name</th>
                         <th>Cheque No</th>
@@ -24,6 +23,7 @@
                     {{-- 🔥 Running total variable --}}
                     @php $runningTotal = $openingBalance; @endphp
                     @foreach($data as $item)
+                   
                     @php
 
                     if ($item->table_name == 'Payment') {
@@ -54,12 +54,13 @@
                     <tr style="background-color: {{ $rowColor }}; color:white;">
                         <td>{{ $loop->index + 1 }}</td>
                         {{-- Date --}}
-                        <td>{{ $item->created_at->format('d-m-Y') }}</td>
+
+                        <td>{{ \Carbon\Carbon::parse($item->date)->format('d-m-Y') }}</td>
                         <td>{{ $item->table_name }}</td>
 
                         <td>
                             {{
-        $item->table_name == 'Payment' ? $item->payment?->customer?->name 
+        $item->table_name == 'Payment' ? $item->paymnent?->customer?->name 
         : ($item->table_name == 'expenses' ? $item->expenses?->SupplierData?->Supplier?->name 
         : $item->investment?->name ?? '---')
     }}
@@ -70,17 +71,7 @@
                         {{-- 🔥 Running Total --}}
                         <td><strong>{{ number_format($runningTotal) }} Rs</strong></td>
 
-                        {{-- Reference
-                        <td>
-                            @if($item->table_name == 'Payment')
-                            {{ $item->paymnent->reference ?? '----' }}
-                        @elseif($item->table_name == 'expenses')
-                        {{ $item->expenses->refrence ?? '----' }}
-                        @else
-                        ----
-                        @endif
-                        </td>
-                        --}}
+                  
                         <td>
                             @if($item->table_name == 'Payment')
                             {{ $item->paymnent->description ?? '----' }}

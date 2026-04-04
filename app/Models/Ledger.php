@@ -17,5 +17,8 @@ class Ledger extends Model
     {
         return $this->belongsTo(Bill::class, 'primary_id', 'id');
     }
-  
+    public function discount()
+    {
+        return $this->belongsTo(Discount::class, 'primary_id', 'id')->where('discount_type', 'payment_discount');
+    }
 }

@@ -14,7 +14,6 @@
                         <th scope="col">S No</th>
                         <th scope="col">Detail</th>
                         <th scope="col">Amount</th>
-                        <th scope="col">Refrence</th>
                         <th scope="col">Date</th>
                         @if(Auth::user()->can('expenses-edit') || Auth::user()->can('expenses-delete'))
                         <th class="text-center">Actions</th>
@@ -30,9 +29,7 @@
                         <td>{{$loop->index+1}}</td>
                         <td>{{$item->description}}</td>
                         <td>{{$item->amount}}</td>
-                        <td>{{$item->refrence}}</td>
                         <td>{{ $item->created_at->format('d-m-Y') }}</td>
-
                         @if(Auth::user()->can('expenses-edit') || Auth::user()->can('expenses-delete'))
                         <td class="text-center action-btns">
                             @can('expenses-edit')

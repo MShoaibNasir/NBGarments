@@ -38,6 +38,7 @@ class BillManagementController extends Controller
 
             // ✅ Create Main Bill
             $bill = Bill::create([
+                'bill_type' => 'credit',
                 'customer_id'  => $request->customer_id,
                 'total_amount' => $request->amount,
                 'user_id'      => Auth::id(),
@@ -138,6 +139,7 @@ class BillManagementController extends Controller
                 'qty'          => $totalQty,
                 'total_amount' => $totalAmount,
                 'user_id'      => Auth::id(),
+                'bill_type' => 'bill',
                 'bill_date'      => $request->bill_date,
                 'description'      => $request->description ?? null,
                 'is_cash' => $request->cash ? 1 : 0
@@ -383,14 +385,14 @@ class BillManagementController extends Controller
 
 
         if ($start_date && $end_date) {
-            $invoice->whereBetween('created_at', [
+            $invoice->whereBetween('bill_date', [
                 $start_date . ' 00:00:00',
                 $end_date . ' 23:59:59'
             ]);
         } elseif ($start_date) {
-            $invoice->where('created_at', '>=', $start_date . ' 00:00:00');
+            $invoice->where('bill_date', '>=', $start_date . ' 00:00:00');
         } elseif ($end_date) {
-            $invoice->where('created_at', '<=', $end_date . ' 23:59:59');
+            $invoice->where('bill_date', '<=', $end_date . ' 23:59:59');
         }
 
         if ($bill_no) {
@@ -437,5 +439,36 @@ class BillManagementController extends Controller
 
         checkAuthentication();
         return view('dashboard.bill.filter');
+    }
+
+    public function returnBill()
+    {
+        $customer = Customer::where('user_id', Auth::user()->id)->where('status', 'customer')->get();
+        return view('dashboard.bill.returnBill')->with(['customer' => $customer]);
+    }
+
+    public function returnBillSave(Request $request)
+    {
+
+
+        $bill = Bill::create([
+            'customer_id'  => $request->customer_id,
+            'qty'          => $request->qty,
+            'total_amount' => $request->amount,
+            'user_id'      => Auth::id(),
+            'bill_date'      => $request->bill_date,
+            'bill_type' => 'return',
+            'description'      => $request->description ?? null,
+        ]);
+
+        Ledger::create([
+            'table_name'  => 'Bill',
+            'primary_id'  => $bill->id,
+            'user_id'     => Auth::id(),
+            'customer_id' => $request->customer_id,
+            'date' => $request->bill_date
+        ]);
+
+        return redirect()->back()->with(['success' => 'Return bill data add successfully!']);
     }
 }
