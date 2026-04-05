@@ -82,7 +82,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="name" class="form-label">Date</label>
-                                <input type="date" name="supplier_date" id="supplier_date"  class="form-control"  required>
+                                <input type="date" name="supplier_date" id="supplier_date" class="form-control" required>
                                 @error('supplier_date')
                                 <span class="text-danger small">{{ $message }}</span>
                                 @enderror
@@ -99,7 +99,18 @@
                                 <span class="text-danger small">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <input type="hidden" name="status" value="Purchasing">
+
+                         
+
+                           <div class="mb-3">
+                                <label class="form-label">Bill Type</label>
+                                <select name="status" class="form-control" required>
+                                    <option value="">Select Type</option>
+                                    <option value="Return">Return</option>
+                                    <option value="Purchasing">Purchasing</option>
+                                </select>
+                            </div>
+                            
                             <div class="mb-3">
                                 <label for="name" class="form-label">Amount</label>
                                 <input type="number" name="amount" id="amount" class="form-control">

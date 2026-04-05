@@ -28,7 +28,8 @@ class SupplierController extends Controller
             'supplier_id' => 'required',
             'amount' => 'required',
             'description' => 'required',
-            'supplier_date' => 'required'
+            'supplier_date' => 'required',
+            'status'=>'required'
 
         ]);
         $data = $request->all();

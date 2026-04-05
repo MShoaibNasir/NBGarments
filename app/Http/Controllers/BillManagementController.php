@@ -364,7 +364,7 @@ class BillManagementController extends Controller
         $sorting = $request->get('sorting');
         $order = $request->get('direction');
 
-        $invoice = Bill::where('user_id', Auth::id());
+        $invoice = Bill::where('user_id', Auth::id())->where('bill_type', 'bill');
 
 
 
@@ -427,6 +427,7 @@ class BillManagementController extends Controller
 
         $total_sell_amount = Bill::where('user_id', Auth::id())
             ->whereNotNull('total_amount')
+            ->where('bill_type', 'bill')
             ->sum('total_amount');
         $total_sell_amount = number_format($total_sell_amount);
         //  $jsondata = json_encode($selected_data);
