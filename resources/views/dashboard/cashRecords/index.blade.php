@@ -7,6 +7,7 @@
                 <thead>
                     <tr>
                         <th>S No</th>
+                        <th>Database Id</th>
                         <th>Date</th>
                         <th>Purpose</th>
                         <th>Name</th>
@@ -30,7 +31,7 @@
                     $amount = $item->paymnent->amount ?? null;
                     }
                     elseif($item->table_name == 'expenses'){
-                    $amount = $item->expenses->amount;
+                    $amount = $item->expenses->amount ?? 0;
                     }else{
                     $amount = $item->investment->amount;
                     }
@@ -53,6 +54,7 @@
 
                     <tr style="background-color: {{ $rowColor }}; color:white;">
                         <td>{{ $loop->index + 1 }}</td>
+                        <td>{{ $item->id }}</td>
                         {{-- Date --}}
 
                         <td>{{ \Carbon\Carbon::parse($item->date)->format('d-m-Y') }}</td>
@@ -66,10 +68,10 @@
     }}
                         </td>
 
-                        <td>{{ number_format($amount) }} Rs</td>
+                        <td>{{ number_format($amount) }}</td>
 
                         {{-- 🔥 Running Total --}}
-                        <td><strong>{{ number_format($runningTotal) }} Rs</strong></td>
+                        <td><strong>{{ number_format($runningTotal) }} </strong></td>
 
                   
                         <td>

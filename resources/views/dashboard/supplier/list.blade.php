@@ -13,7 +13,9 @@
                 <thead>
                     <tr>
                         <th>S No</th>
+                        <th>DataBase id</th>
                         <th>Purpose</th>
+                        <th>Bill No</th>
                         <th>Date</th>
                         <th>Amount</th>
                         <th>Total Amount</th>
@@ -46,10 +48,12 @@
 
                     <tr style="background-color: {{ $rowColor }}; color:white;">
                         <td>{{ $loop->index + 1 }}</td>
+                        <td>{{ $item->id }}</td>
                         <td>{{ $item->status }}</td>
+                        <td>{{ $item->bill_no }}</td>
                         <td>{{     \Carbon\Carbon::parse($item->supplier_date)->format('d-m-Y')  }}</td>
-                        <td><strong>{{ number_format($item->amount) }} Rs</strong></td>
-                        <td><strong>{{ number_format($runningBalance) }} Rs</strong></td>
+                        <td><strong>{{ number_format($item->amount) }}</strong></td>
+                        <td><strong>{{ number_format($runningBalance) }}</strong></td>
                         <td><strong>{{ $item->description }} </strong></td>
                     </tr>
 

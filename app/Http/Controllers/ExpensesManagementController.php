@@ -105,8 +105,7 @@ class ExpensesManagementController extends Controller
             'description'  => 'required|string|max:255',
             'amount'       => 'required|numeric|min:1',
             'date'         => 'required|date',
-            'payment_type' => 'required|in:Payment,Discount',
-            'supplier_id'  => 'required',
+            'payment_type' => 'required|in:Payment,Discount'
         ]);
 
         // ✅ Add logged-in user
@@ -120,9 +119,9 @@ class ExpensesManagementController extends Controller
             $expense = Expenses::create($validated);
 
             // ✅ If supplier exists, insert SupplierData
-            if (!empty($validated['supplier_id'])) {
+            if (!empty($request->supplier_id)) {
                 SupplierData::create([
-                    'supplier_id'   => $validated['supplier_id'],
+                    'supplier_id'   => $request->supplier_id,
                     'expenses_id'   => $expense->id,
                     'user_id'       => Auth::id(),
                     'status'        => $validated['payment_type'],

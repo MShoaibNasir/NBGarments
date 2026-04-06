@@ -74,11 +74,12 @@ class CashRecordsController extends Controller
 
         // ✅ Sorting (same for both)
         if ($sorting && $order) {
-            $invoice->orderBy($sorting, $order);
-            $previousRecordsQuery->orderBy($sorting, $order);
+            //$invoice->orderBy($sorting, $order);
+            $invoice->orderBy('date', 'asc');
+            $previousRecordsQuery->orderBy('date', 'asc');
         } else {
             $invoice->orderBy('date', 'asc');
-            $previousRecordsQuery->orderBy('created_at', 'asc');
+            $previousRecordsQuery->orderBy('date', 'asc');
         }
 
         // ✅ Offset
@@ -107,6 +108,7 @@ class CashRecordsController extends Controller
 
         $total_sell_amount = number_format($data->sum('amount'));
 
+      
         // ✅ Return view
         return view('dashboard.cashRecords.index', compact(
             'data',
