@@ -6,7 +6,7 @@
 
                 <thead>
                     <tr>
-                        <th>S No</th>
+
                         <th>Database Id</th>
                         <th>Date</th>
                         <th>Purpose</th>
@@ -24,7 +24,7 @@
                     {{-- 🔥 Running total variable --}}
                     @php $runningTotal = $openingBalance; @endphp
                     @foreach($data as $item)
-                   
+
                     @php
 
                     if ($item->table_name == 'Payment') {
@@ -53,13 +53,11 @@
                     @endphp
 
                     <tr style="background-color: {{ $rowColor }}; color:white;">
-                        <td>{{ $loop->index + 1 }}</td>
                         <td>{{ $item->id }}</td>
                         {{-- Date --}}
 
                         <td>{{ \Carbon\Carbon::parse($item->date)->format('d-m-Y') }}</td>
                         <td>{{ $item->table_name }}</td>
-
                         <td>
                             {{
         $item->table_name == 'Payment' ? $item->paymnent?->customer?->name 
@@ -73,7 +71,7 @@
                         {{-- 🔥 Running Total --}}
                         <td><strong>{{ number_format($runningTotal) }} </strong></td>
 
-                  
+
                         <td>
                             @if($item->table_name == 'Payment')
                             {{ $item->paymnent->description ?? '----' }}

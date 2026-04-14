@@ -154,7 +154,7 @@ class BillManagementController extends Controller
                 'primary_id'  => $bill->id,
                 'user_id'     => Auth::id(),
                 'customer_id' => $request->customer_id,
-                'date' => $request->bill_date
+                'ledger_date' => $request->bill_date
             ]);
 
             // ✅ Save Bill Products

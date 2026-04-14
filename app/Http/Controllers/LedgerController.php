@@ -74,11 +74,11 @@ class LedgerController extends Controller
 
         // ✅ Sorting (MUST be same)
         if ($sorting && $order) {
-            $invoice->orderBy($sorting, $order);
-            $previousRecordsQuery->orderBy($sorting, $order);
+            $invoice->orderBy('ledger_date', $order);
+            $previousRecordsQuery->orderBy('ledger_date', $order);
         } else {
-            $invoice->orderBy('created_at', 'asc');
-            $previousRecordsQuery->orderBy('created_at', 'asc');
+            $invoice->orderBy('ledger_date', 'asc');
+            $previousRecordsQuery->orderBy('ledger_date', 'asc');
         }
 
         // ✅ Calculate offset

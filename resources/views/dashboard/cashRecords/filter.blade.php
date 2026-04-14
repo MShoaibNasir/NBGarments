@@ -52,12 +52,13 @@
                                         <label for="first_name">Search By Customer Name</label>
                                         <input type="text" id="first_name" class="form-control" placeholder="Customer Name">
                                     </div>
+                                    --}}
 
                                     <div class="filters-toolbar__item mb-3 col-md-4">
-                                        <label for="last_name">Search By Product Name</label>
-                                        <input type="text" id="product_name" class="form-control" placeholder="Product Name">
+                                        <label for="last_name">Search By Amount</label>
+                                        <input type="text" id="amount" class="form-control" placeholder="Enter Amount">
                                     </div>
---}}
+
 
                                     <div class="filters-toolbar__item mb-3 col-md-4">
                                         <label for="sorting">Sort By</label>
@@ -77,14 +78,35 @@
                                     <div class="filters-toolbar__item mb-3 col-md-4">
                                         <label for="qty">Quantity</label>
                                         <select name="qty" id="qty" class="form-control">
-                                            <option value="2" selected>2</option>
+                                            <option value="10" selected>10</option>
                                             <option value="25">25</option>
                                             <option value="50">50</option>
                                             <option value="100">100</option>
-                                            <option value="500" selected>500</option>
+                                            <option value="500">500</option>
                                             <option value="1000">1000</option>
                                             <option value="1500">1500</option>
                                             <option value="2000">2000</option>
+                                        </select>
+                                    </div>
+                                    <div class="filters-toolbar__item mb-3 col-md-4">
+                                        <label for="qty">Purpose</label>
+                                        <select name="purpose" id="purpose" class="form-control">
+                                            <option value="">Select Option</option>
+                                            <option value="Payment">Payment</option>
+                                            <option value="expenses">Expenses</option>
+                                            <option value="invesments">Invesments</option>
+                                 
+                                        </select>
+                                    </div>
+                                    <div class="filters-toolbar__item mb-3 col-md-4">
+                                        <label for="qty">Customer</label>
+                                        <select name="customer_id" id="customer_id" class="form-control">
+                                            <option value="">Select Option</option>
+                                            @foreach($customers as $item)
+                                            <option value="{{$item->id}}">{{$item->name}}</option>
+                                            @endforeach
+                                         
+                                 
                                         </select>
                                     </div>
                                     {{-- <div class="filters-toolbar__item mb-3 col-md-4">
@@ -210,6 +232,8 @@
             var direction = $("#direction").val();
             var status = $("#status").val();
             var qty = $("#qty").val();
+            var purpose = $("#purpose").val();
+            var customer_id = $("#customer_id").val();
             var customer_id = $("#customer_id").val();
 
 
@@ -223,6 +247,7 @@
             var bill_no = $("#bill_no").val();
             var first_name = $("#first_name").val();
             var last_name = $("#last_name").val();
+            var amount = $("#amount").val();
             var product_name = $("#product_name").val();
             var cnic = $("#cnic").val();
             var start_date = $("#start_date").val();
@@ -245,6 +270,7 @@
                     bank_id: bank_id,
                     bill_no: bill_no,
                     first_name: first_name,
+                    amount: amount,
                     last_name: last_name,
                     product_name: product_name,
                     cnic: cnic,
@@ -255,6 +281,8 @@
                     end_date: end_date,
                     start_date: start_date,
                     qty: qty,
+                    purpose: purpose,
+                    customer_id: customer_id,
                     ayis_page: ayis_page,
                     _token: '{{csrf_token()}}'
                 },
@@ -296,13 +324,13 @@
             filter_data();
         });
 
-        $("#bill_no,#first_name, #last_name, #product_name, #bank_name").on('keyup keydown', function() {
+        $("#bill_no,#first_name,#amount, #last_name, #product_name, #bank_name").on('keyup keydown', function() {
             filter_data();
         });
 
 
 
-        $('body').on('change', '#sorting,#bank_id, #direction, #is_cheque, #qty, #status, #tehsil_id, #uc_id, #trench,#start_date,#end_date', function(e) {
+        $('body').on('change', '#sorting,#bank_id, #direction, #is_cheque, #qty,#purpose,#customer_id, #status, #tehsil_id, #uc_id, #trench,#start_date,#end_date', function(e) {
             e.preventDefault();
             filter_data();
         });

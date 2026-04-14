@@ -8,6 +8,7 @@
                     <tr>
                         <th>S No</th>
                         <th>Purpose</th>
+                        <th>Bill No</th>
                         <th>Date</th>
                         <th>QTY</th>
                         <th>Amount</th>
@@ -59,11 +60,13 @@
 
                     // Row color
                     $rowColor = $item->table_name == 'Bill' ? '#ff4d4d' : ( $item->table_name == 'Amount Credit' ? '#a5a728' : '#28a745');
+              
                     @endphp
 
                     <tr style="background-color: {{ $rowColor }}; color:white;">
                         <td>{{ $loop->index + 1 }}</td>
                         <td>{{ $item->table_name }}</td>
+                        <td>{{ $item->table_name == 'Bill' ?  $item->bill->bill_no : '-----' }}</td>
                         <td>{{ \Carbon\Carbon::parse($item->ledger_date)->format('d-m-Y') }}</td>
                         <td>{{ $item->table_name == 'Bill' ? $item->bill->qty : '-----' }}</td>
                         <td>{{ number_format($amount) }}</td>

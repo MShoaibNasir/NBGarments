@@ -110,7 +110,7 @@
                             <span class="text-danger small">{{ $message }}</span>
                             @enderror
                         </div>
-
+                       @if($expenses->SupplierData)
                         <div class="mb-3">
                             <label for="name" class="form-label">Supplier Name</label>
                             <select name="supplier_id" class="form-control">
@@ -123,6 +123,7 @@
                             <span class="text-danger small">{{ $message }}</span>
                             @enderror
                         </div>
+                        @endif
 
                         <!-- Submit Button -->
                         <div class="text-end mt-4">
